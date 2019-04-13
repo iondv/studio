@@ -1,0 +1,94 @@
+<%
+let params = {
+  createTitle: 'New workflow transition',
+  updateTitle: 'Update transition'
+};
+%>
+<div id="workflow-transition-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Workflow transition</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'name',
+            label: 'Name',
+            required: true,
+            mask: {
+              regex: '^[a-zA-Z0-9-]+$'
+            }
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'caption',
+            label: 'Caption',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectWorkflowState',
+            name: 'startState',
+            label: 'Start state',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectWorkflowState',
+            name: 'finishState',
+            label: 'End state',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'signBefore',
+            label: 'Sign before'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'signAfter',
+            label: 'Sign after'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'confirm',
+            label: 'Confirmation required'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'confirmMessage',
+            label: 'Confirmation message'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'assignments',
+            label: 'Assignments',
+            defaultValue: []
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'conditions',
+            label: 'Conditions',
+            defaultValue: []
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'roles',
+            label: 'Roles',
+            defaultValue: []
+          }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

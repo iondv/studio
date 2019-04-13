@@ -1,0 +1,17 @@
+<!-- select-object -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr <%- params.cssClass %> form-group<%- params.required %>"
+     data-type="<%- type %>"
+     data-name="<%- params.name %>"
+     data-action="<%- params.action %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <select class="form-control value"></select>
+    <div class="hint-block"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

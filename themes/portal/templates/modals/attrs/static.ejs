@@ -1,0 +1,18 @@
+<!-- static -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group" data-type="static"
+     data-name="<%- params.name %>"
+     data-mask="<%= params.mask %>"
+     data-action="<%- params.action %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <input type="hidden" class="form-control value" value="<%= params.value %>">
+    <div class="form-control-static value-label"></div>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+{
+  "name": "studio",
+  "description": "IONDV. Studio",
+  "version": "1.0.0",
+  "homepage": "https://github.com/iondv/studio",
+  "bugs": {
+    "url": "https://github.com/iondv/studio/issues"
+  },
+  "engines": {
+    "ion": "3.0.0"
+  },
+  "license": "Apache License 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iondv/studio.git"
+  },
+  "node-main": "./www",
+  "main": "http://localhost:8888",
+  "scripts": {
+    "start": "node ./www",
+    "build": "gulp build"
+  },
+  "private": true,
+  "ionModulesDependencies": {
+    "registry": "2.1.4",
+    "portal": "1.4.0",
+    "ionadmin": "2.2.0"
+  },
+  "ionMetaDependencies": {},
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "ejs-locals": "^1.0.2",
+    "express": "^4.16.2",
+    "merge": "^1.2.0",
+    "extend": "^3.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "~4.0.0",
+    "gulp-jsmin": "~0.1.5",
+    "gulp-less": "~4.0.1",
+    "gulp-rename": "~1.4.0"
+  }
+}

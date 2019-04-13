@@ -1,0 +1,32 @@
+<!-- select-external-service -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %>"
+     data-type="selectExternalService"
+     data-name="<%- params.name %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <div class="ref-select">
+      <select class="form-control value">
+        <option class="l10n"><%- params.placeholder %></option>
+      </select>
+      <div class="ref-select-actions">
+        <button type="button" class="btn btn-success btn-sm" data-id="create" title="Create">
+          <span class="fa fa-plus"></span>
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" data-id="update" title="Update">
+          <span class="fa fa-edit"></span>
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" data-id="remove" title="Remove"
+                data-confirm-message="Remove service?">
+          <span class="fa fa-trash"></span>
+        </button>
+      </div>
+    </div>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

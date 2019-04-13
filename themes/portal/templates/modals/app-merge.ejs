@@ -1,0 +1,35 @@
+<%
+let params = {
+};
+%>
+<div id="app-merge-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Application merge</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <fieldset data-id="classGroup">
+            <legend class="l10n">Select classes to overwrite existing ones</legend>
+            <div class="fieldset-body">
+            </div>
+          </fieldset>
+
+          <fieldset data-id="workflowGroup">
+            <legend class="l10n">Select workflows to overwrite existing ones</legend>
+            <div class="fieldset-body">
+            </div>
+          </fieldset>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-cancel btn btn-primary l10n">Ready</button>
+      </div>
+    </div>
+  </div>
+</div>

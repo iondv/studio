@@ -1,0 +1,177 @@
+<%
+let mod = `${module}/${portal}/`;
+let options = {
+  height: '100%',
+  fromElement: false,
+  //storageManager: { autoload: 0 },
+  showOffsets: 1,
+  noticeOnUnload: 0,
+  container: '#gjs',
+  plugins: ['gjs-preset-webpage',
+    //'gjs-blocks-basic', 'grapesjs-plugin-forms', 'grapesjs-plugin-export', 'gjs-navbar',
+    // Включены в 'gjs-preset-webpage',
+    'grapesjs-tabs',
+    'grapesjs-lory-slider',
+    'grapesjs-custom-code',
+    'grapesjs-tables',
+    'grapesjs-studio'
+  ],
+  components: '',
+  protectedCss: `
+    .table-component {
+      border-collapse: collapse;
+    }
+    .table-component .cell {
+      padding: 10px;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table th,
+    .table td {
+      padding: 5px;
+      border: 1px solid #ddd;
+    }
+    .tree-menu-item {
+      padding: 0;
+    }
+    .tree-menu-item-head {
+      position: relative;
+      padding: 2px 0;
+    }
+    .tree-menu-item-title {
+      display: block;
+      overflow: hidden;
+      color: #000;
+      text-decoration: none;
+    }
+    .tree-menu-item-toggle {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 4px;
+      width: 13px;
+      height: 13px;
+      border: 1px solid #888;
+      cursor: pointer;
+    }
+    .tree-menu-item-toggle:before {
+      content: "";
+      position: absolute;
+      left: 1px;
+      top: 5px;
+      width: 9px;
+      height: 1px;
+      background: #000;
+    }
+    .tree-menu-item-toggle:after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 1px;
+      height: 9px;
+      background: #000;
+    }
+    .tree-menu-children {
+      display: none;
+      padding-left: 15px;
+    }
+    .tree-menu-item.has-children > .tree-menu-item-head {
+      padding-right: 20px;
+    }
+    .tree-menu-item.opened > .tree-menu-children,
+    .tree-menu-item.has-children > .tree-menu-item-head > .tree-menu-item-toggle {
+      display: block;
+    }
+    .tree-menu-item.opened > .tree-menu-item-head > .tree-menu-item-toggle:after {
+      display: none;
+    }
+    .col-sm-3 {
+      float: left;
+      width: 25%;
+    }
+    .col-sm-9 {
+      float: left;
+      width: 75%;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+    .control-label {
+      padding-right: 10px;
+    }
+    .form-control {
+      width: 100%;
+    }
+    .form-set {
+      padding-top: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #aaa;
+    }
+    .form-set:last-child {
+      margin-bottom: 0;
+    }
+    .form-set legend {
+      font-weight: bold;
+    }
+    .form-group:after, .form-group:before {
+      display: table;
+      content: " ";
+    }
+    .form-group:after {
+      clear: both;
+    }
+    .form-group.required .control-label:after {
+      content: "*";
+      margin-left: 3px;
+      color: #e00;
+    }
+    .form .tab-content {
+      padding: 10px;
+      border: 1px solid #ccc;
+      animation: none;
+    }
+    .form .tab {
+      transition: none;
+      padding 7px 14px;
+    }
+    .form .tab.tab-active {
+      position: relative;
+      top: 1px;
+      color:#000;
+      border: 1px solid #ccc;
+      border-bottom-color: #fff;
+      background: #fff;
+      font-weight: bold;
+    }
+  `,
+  styleManager: {
+    sectors: []
+  },
+  storageManager: {
+    type: 'studio',
+    autosave: true
+  }
+};
+%>
+
+<% stylesheet(`${mod}vendor/grapesjs/css/grapes.min.css`) -%>
+<% stylesheet(`${mod}vendor/grapesjs-preset-webpage/grapesjs-preset-webpage.min.css`) -%>
+<% stylesheet(`${mod}css/grapesjs.css`) -%>
+
+<% script(`${mod}vendor/grapesjs/grapes.min.js`) -%>
+<% script(`${mod}vendor/grapesjs-preset-webpage/grapesjs-preset-webpage.min.js`) -%>
+<% script(`${mod}vendor/grapesjs-tabs/grapesjs-tabs.min.js`) -%>
+<% script(`${mod}vendor/grapesjs-lory-slider/grapesjs-lory-slider.min.js`) -%>
+<% script(`${mod}vendor/grapesjs-custom-code/grapesjs-custom-code.min.js`) -%>
+<% script(`${mod}vendor/grape-table/grapesjs-tables.min.js`) -%>
+<% script(`${mod}vendor/grape-iondv-studio/grapesjs-studio.min.js`) -%>
+
+<div class="studio-interface-container" data-options="<%= JSON.stringify(options) %>">
+  <div id="gjs"></div>
+</div>

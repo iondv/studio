@@ -1,0 +1,198 @@
+<%
+let params = {
+  createTitle: 'New view attribute',
+  updateTitle: 'Update view attribute'
+};
+%>
+<div id="class-view-attr-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">View attribute</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'name',
+            label: 'Name',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'caption',
+            label: 'Caption',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/select', {
+            name: 'type',
+            label: 'Type',
+            required: true,
+            items: [{
+              value: '1',
+              text: 'String'
+            },{
+              value: '2',
+              text: 'Reference'
+            },{
+              value: '3',
+              text: 'Collection'
+            },{
+              value: '4',
+              text: 'Boolean'
+            },{
+              value: '5',
+              text: 'Drop-down list'
+            },{
+              value: '6',
+              text: 'Date and time choice'
+            },{
+              value: '7',
+              text: 'Text'
+            },{
+              value: '8',
+              text: 'Formatted text'
+            },{
+              value: '9',
+              text: 'Alternative selection'
+            },{
+              value: '10',
+              text: 'Multiple selection'
+            },{
+              value: '11',
+              text: 'File'
+            },{
+              value: '12',
+              text: 'Password'
+            },{
+              value: '13',
+              text: 'Image'
+            },{
+              value: '14',
+              text: 'Integer'
+            },{
+              value: '15',
+              text: 'Real number'
+            },{
+              value: '17',
+              text: 'URL'
+            },{
+              value: '60',
+              text: 'Period'
+            },{
+              value: '100',
+              text: 'Geodata'
+            },{
+              value: '110',
+              text: 'Files set'
+            },{
+              value: '120',
+              text: 'Date choice'
+            },{
+              value: '210',
+              text: 'Schedule'
+            },{
+              value: '220',
+              text: 'Calendar'
+            }]
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectGroup',
+            name: 'group',
+            label: 'Group'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'hint',
+            label: 'Hint'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'orderNumber',
+            label: 'Order number',
+            defaultValue: 0
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'size',
+            label: 'Size'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'maskName',
+            label: 'Mask name'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'mask',
+            label: 'Mask'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'mode',
+            label: 'Mode',
+            defaultValue: 0
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'required',
+            label: 'Required'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'readonly',
+            label: 'Read only'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'sorted',
+            label: 'Sorted'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'selectionPaginated',
+            label: 'Page-oriented selection'
+          }) %>
+
+          <%- partial('./attrs/code', {
+            name: 'visibility',
+            label: 'Visibility',
+            mode: 'javascript'
+          }) %>
+
+          <%- partial('./attrs/code', {
+            name: 'enablement',
+            label: 'Availability',
+            mode: 'javascript'
+          }) %>
+
+          <%- partial('./attrs/code', {
+            name: 'obligation',
+            label: 'Obligation',
+            mode: 'javascript'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'historyDisplayMode',
+            label: 'History display mode',
+            defaultValue: 0
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'tags',
+            label: 'Tags'
+          }) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

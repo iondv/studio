@@ -1,0 +1,12 @@
+<!-- hidden -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %> hidden" data-type="hidden"
+     data-name="<%- params.name %>"
+     data-default-value="<%= params.defaultValue %>">
+  <input type="hidden" class="form-control value" value="<%= params.value %>">
+  <div class="error-block"></div>
+</div>

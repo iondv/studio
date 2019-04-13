@@ -1,0 +1,32 @@
+{
+  "namespace": "studio",
+  "globals": {
+    "pageEndContent": "<div><img src=\"https://mc.iondv.com/watch/github/app/studio\" style=\"position:absolute; left:-9999px;\" alt=\"iondv-metrics\" /></div>"
+  },
+  "deployer": "built-in",
+  "modules": {
+    "portal": {
+      "import" : {
+        "src": "applications/studio/portal",
+        "namespace": "studio"
+      },
+      "globals": {
+        "portalName": "studio",
+        "default": "index",
+        "theme": "studio/portal",
+        "templates": [
+          "applications/studio/themes/portal/templates"
+        ],
+        "statics": {
+          "studio": "applications/studio/themes/portal/static"
+        },
+        "pageTemplates": {
+          "navigation": {
+            "index": "pages/index",
+            "222": "pages/222"
+          }
+        }
+      }
+    }
+  }
+}

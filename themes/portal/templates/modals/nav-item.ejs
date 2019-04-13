@@ -1,0 +1,124 @@
+<%
+let params = {
+  createTitle: 'New navigation item',
+  updateTitle: 'Update navigation item'
+};
+%>
+<div id="nav-item-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Navigation item</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'name',
+            label: 'Name',
+            required: true,
+            mask: {
+              regex: '^[a-zA-Z0-9-]+$'
+            }
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'caption',
+            label: 'Caption',
+            required: true
+          }) %>
+
+            <%- partial('./attrs/select', {
+              name: 'type',
+              label: 'Type',
+              required: true,
+              hasEmpty: false,
+              defaultValue: 1,
+              items: [{
+                value: 0,
+                text: 'Group'
+              }, {
+                value: 1,
+                text: 'Class page'
+              }, {
+                value: 2,
+                text: 'Container page'
+              }, {
+                value: 3,
+                text: 'Hyperlink'
+              }]
+            }) %>
+
+            <%- partial('./attrs/integer', {
+              name: 'orderNumber',
+              label: 'Order number',
+              defaultValue: 0
+            }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'title',
+            label: 'Title'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'hint',
+            label: 'Hint'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClass',
+            name: 'classname',
+            label: 'Class'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'container',
+            label: 'Container'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'collection',
+            label: 'Collection'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectInterface',
+            name: 'interface',
+            label: 'Interface'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'url',
+            label: 'URL'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'conditions',
+            label: 'Conditions',
+            defaultValue: []
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'sorting',
+            label: 'Sorting',
+            defaultValue: []
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'pathChains',
+            label: 'Path chains',
+            defaultValue: []
+          }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

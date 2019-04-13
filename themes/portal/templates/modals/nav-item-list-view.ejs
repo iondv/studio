@@ -1,0 +1,85 @@
+<%
+let params = {
+  createTitle: 'New view',
+  updateTitle: 'Update view'
+};
+%>
+<div id="nav-item-list-view-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">View</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'name',
+            label: 'Name',
+            required: true,
+            mask: {
+              regex: '^[a-zA-Z0-9-]+$'
+            },
+            readOnly: true
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'overrideMode',
+            label: 'Blend mode',
+            defaultValue: 1
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'historyDisplayMode',
+            label: 'History display mode',
+            defaultValue: 0
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'actions',
+            label: 'Actions'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'collectionFilters',
+            label: 'Collection filters'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'commands',
+            label: 'Commands'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'version',
+            label: 'Version'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+             name: 'pageSize',
+             label: 'Page size',
+             defaultValue: 10
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'allowSearch',
+            label: 'Allow search'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'useEditModels',
+            label: 'Use edit models'
+          }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

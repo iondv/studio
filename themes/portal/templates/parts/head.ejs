@@ -1,0 +1,32 @@
+<%
+let mod = `${module}/${portal}/`;
+%>
+<nav class="top-navbar navbar navbar-inverse" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed"
+            data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/" title="Studio">
+      <img class="navbar-brand-logo" src="<%- mod %>images/logo-light.png">
+      <span class="navbar-brand-text"></span>
+    </a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+<!--
+      <li><a href="/">Some menu 1</a></li>
+      <li><a href="/">Some Item 2</a></li>
+-->
+    </ul>
+  </div>
+
+  <div class="language-bar">
+    <a href="<%- module %>#en" class="btn btn-default btn-sm" data-language="en">EN</a>
+    <a href="<%- module %>#ru" class="btn btn-default btn-sm" data-language="ru">RU</a>
+  </div>
+</nav>

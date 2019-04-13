@@ -1,0 +1,30 @@
+<%
+let mod = `${module}/${portal}/`;
+let params = {
+};
+%>
+
+<% script(`${mod}vendor/ace-builds/src-min-noconflict/ace.js`) -%>
+
+<div id="code-editor-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Code editor</h4>
+      </div>
+      <div class="modal-body pad0">
+        <div class="form-alert alert mb0">
+          <button type="button" class="close"><span aria-hidden="true">×</span></button>
+          <div class="alert-content"></div>
+        </div>
+        <div class="code-editor-container"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-save btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

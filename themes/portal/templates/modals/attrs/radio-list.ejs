@@ -1,0 +1,25 @@
+<!-- radio-list -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %>"
+     data-type="radioList"
+     data-name="<%- params.name %>"
+     data-action="<%- params.action %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <div class="radio-list">
+      <% for (let item of items) { %>
+      <label class="radio-inline">
+        <input type="radio" name="<%- params.name %>" class="value"
+               value="<%- item.value %>" <%- item.value === params.value ? 'checked' : '' %>>
+        <span class="l10n"><%= item.text %></span>
+      </label>
+      <% } %>
+    </div>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

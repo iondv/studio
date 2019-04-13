@@ -1,0 +1,6 @@
+{
+	"directory": "./vendor",
+	"vendorDir": "./static/vendor",
+	"strict-ssl": false,
+	"registry": "https://registry.bower.io"
+}

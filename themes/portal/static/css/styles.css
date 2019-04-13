@@ -1,0 +1,205 @@
+html {
+}
+.mb0 {
+  margin-bottom: 0 !important;
+}
+.mb5 {
+  margin-bottom: 5px !important;
+}
+.mb10 {
+  margin-bottom: 10px !important;
+}
+.mb15 {
+  margin-bottom: 15px !important;
+}
+.mb20 {
+  margin-bottom: 20px !important;
+}
+.mb30 {
+  margin-bottom: 30px !important;
+}
+.mb40 {
+  margin-bottom: 40px !important;
+}
+.mt0 {
+  margin-top: 0 !important;
+}
+.mt5 {
+  margin-top: 5px !important;
+}
+.mt10 {
+  margin-top: 10px !important;
+}
+.mt15 {
+  margin-top: 15px !important;
+}
+.mt20 {
+  margin-top: 20px !important;
+}
+.mt30 {
+  margin-top: 30px !important;
+}
+.mt40 {
+  margin-top: 40px !important;
+}
+.ml0 {
+  margin-left: 0 !important;
+}
+.ml5 {
+  margin-left: 5px !important;
+}
+.ml10 {
+  margin-left: 10px !important;
+}
+.ml15 {
+  margin-left: 15px !important;
+}
+.ml20 {
+  margin-left: 20px !important;
+}
+.mr0 {
+  margin-right: 0 !important;
+}
+.mr5 {
+  margin-right: 5px !important;
+}
+.mr10 {
+  margin-right: 10px !important;
+}
+.mr20 {
+  margin-right: 20px !important;
+}
+.mr30 {
+  margin-right: 30px !important;
+}
+.mr40 {
+  margin-right: 40px !important;
+}
+.pad0 {
+  padding: 0 !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.navbar {
+  height: 34px;
+  min-height: 34px;
+}
+
+.nav > li > a {
+  padding-bottom: 6px;
+}
+.navbar {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.top-navbar {
+  z-index: 1;
+}
+.unselectable {
+  cursor: default;
+  user-select: none;
+}
+
+.modal-title {
+  line-height: 1.1em;
+  color: #888;
+}
+.modal-footer {
+  padding: 15px 10px;
+  text-align: center;
+}
+
+.form-group.required .control-label:after {
+  content: "*";
+  margin-left: 3px;
+  color: #f00;
+}
+.form-group .hint-block {
+  margin-top: 5px;
+  color:#666;
+  font-size: 13px;
+}
+.form-group .hint-block:empty {
+  display: none;
+}
+.form-group .error-block {
+  display: none;
+  margin-top: 3px;
+  color:#a00;
+}
+.form-group.has-error .error-block {
+  display: block;
+}
+
+.alert:last-child {
+  margin:0;
+}
+
+.navbar-brand {
+  display: none;
+  padding: 5px 10px;
+}
+.navbar-brand .navbar-brand-logo {
+  display: inline-block;
+  max-height: 100%;
+}
+.navbar-brand-text {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.global-loader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.1);
+  z-index: 10001;
+  text-align: center;
+}
+.global-loader span {
+  position: relative;
+  top: 50%;
+  margin-top: -30px;
+  font-size: 24px;
+  color: #888;
+}
+
+.language-bar {
+  display: none;
+  float: right;
+  padding: 5px 10px 0 0;
+}
+.language-bar .btn {
+  font-weight: bold;
+  padding: 2px 5px 1px;
+  background: transparent;
+  color: #aaa;
+  border-color: #aaa;
+}
+
+fieldset + fieldset {
+  margin-top: 20px;
+}
+legend {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.table > tbody > tr.active > td {
+  background: #ffd !important;
+}
+
+.wrapper .dataTables_wrapper .dataTables_filter {
+  text-align: left;
+}
+.wrapper .dataTables_wrapper .dataTables_length {
+  text-align: right;
+}
+.wrapper .dataTables_wrapper .pagination > li > a,
+.wrapper .dataTables_wrapper .pagination > li > span {
+  padding: 2px 8px;
+}

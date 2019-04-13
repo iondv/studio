@@ -1,0 +1,247 @@
+<%
+let params = {
+  createTitle: 'New class attribute',
+  updateTitle: 'Update class attribute'
+};
+%>
+<div id="class-attr-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Class attribute</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'name',
+            label: 'Name',
+            required: true,
+            mask: {
+              regex: '^[a-zA-Z0-9-]+$'
+            }
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'caption',
+            label: 'Caption',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/select', {
+            name: 'type',
+            label: 'Type',
+            required: true,
+            items: [{
+              value: '0',
+              text: 'String'
+            },{
+              value: '1',
+              text: 'Text'
+            },{
+              value: '2',
+              text: 'HTML'
+            },{
+              value: '3',
+              text: 'URL'
+            },{
+              value: '4',
+              text: 'Image'
+            },{
+              value: '5',
+              text: 'File'
+            },{
+              value: '6',
+              text: 'Integer'
+            },{
+              value: '7',
+              text: 'Real number'
+            },{
+              value: '8',
+              text: 'Decimal number'
+            },{
+              value: '9',
+              text: 'Date and time'
+            },{
+              value: '10',
+              text: 'Boolean'
+            },{
+              value: '11',
+              text: 'Password'
+            },{
+              value: '12',
+              text: 'Global identifier'
+            },{
+              value: '13',
+              text: 'Reference'
+            },{
+              value: '14',
+              text: 'Collection'
+            },{
+              value: '15',
+              text: 'Set'
+            },{
+              value: '16',
+              text: 'Structure'
+            },{
+              value: '17',
+              text: 'Custom type'
+            },{
+              value: '18',
+              text: 'User'
+            },{
+              value: '60',
+              text: 'Period'
+            },{
+              value: '100',
+              text: 'Geodata'
+            },{
+              value: '110',
+              text: 'Files set'
+            },{
+              value: '210',
+              text: 'Schedule'
+            }],
+            defaultValue: '0'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'orderNumber',
+            label: 'Order number'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'size',
+            label: 'Size'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'decimals',
+            label: 'Decimals',
+            defaultValue: 0
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'allowedFileTypes',
+            label: 'Allowed file types'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'maxFileCount',
+            label: 'Maximum number of files',
+            defaultValue: 0
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'hint',
+            label: 'Hint'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'semantic',
+            label: 'Semantic'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClass',
+            name: 'refClass',
+            label: 'Reference class'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClass',
+            name: 'itemsClass',
+            label: 'Item class'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClass',
+            name: 'backRef',
+            label: 'Back reference',
+            cssClass: 'hidden'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClass',
+            name: 'backColl',
+            label: 'Back collection',
+            cssClass: 'hidden'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'defaultValue',
+            label: 'Default value'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'binding',
+            label: 'Binding'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'selConditions',
+            label: 'Selection conditions'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'selSorting',
+            label: 'Sorting selection'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'selectionProvider',
+            label: 'Selection provider'
+          }) %>
+
+          <%- partial('./attrs/json', {
+            name: 'formula',
+            label: 'Formula'
+          }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'eagerLoading',
+              label: 'Eager loading'
+            }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'readonly',
+              label: 'Read only'
+            }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'indexed',
+              label: 'Indexed'
+            }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'nullable',
+              label: 'Nullable'
+            }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'unique',
+              label: 'Unique'
+            }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'autoassigned',
+              label: 'Auto assigned'
+            }) %>
+
+            <%- partial('./attrs/checkbox', {
+              name: 'indexSearch',
+              label: 'Index search'
+            }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

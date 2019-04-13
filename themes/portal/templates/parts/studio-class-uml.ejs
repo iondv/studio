@@ -1,0 +1,55 @@
+
+<div class="studio-class-uml studio-uml uml-container">
+
+  <div class="uml-pages">
+  </div>
+
+  <div class="uml-samples hidden">
+
+    <div data-id="page">
+      <div class="uml-page" data-id="{{id}}"></div>
+    </div>
+
+    <div data-id="rect">
+      <div class="uml-rect uml-draggable {{cssClass}}" data-id="{{id}}">
+        <div class="uml-rect-head">
+          <div class="uml-rect-title uml-draggable-touch" title="{{title}}"
+               data-update-rect-id="title">
+            {{title}}
+          </div>
+        </div>
+        <div class="uml-rect-body">
+          {{attrs}}
+        </div>
+      </div>
+    </div>
+
+    <div data-id="attr">
+      <div class="uml-rect-attr {{cssClass}}" data-id="{{id}}">
+        <div class="uml-rect-attr-title" title="{{title}}"
+             data-update-attr-id="title">
+          {{title}}
+        </div>
+      </div>
+    </div>
+
+    <div data-id="parentLink">
+      <div class="uml-parent-link uml-link {{cssClass}}" title="Parent">
+        <span class="uml-link-arrow glyphicon glyphicon-menu-right"></span>
+      </div>
+    </div>
+
+    <div data-id="refLink">
+      <div class="uml-ref-link uml-link {{cssClass}}" title="Reference">
+        <span class="uml-link-arrow glyphicon glyphicon-triangle-right"></span>
+      </div>
+    </div>
+
+    <div data-id="collectionLink">
+      <div class="uml-collection-link uml-link {{cssClass}}" title="Collection">
+        <span class="uml-link-arrow glyphicon glyphicon-forward"></span>
+      </div>
+    </div>
+
+  </div>
+</div>

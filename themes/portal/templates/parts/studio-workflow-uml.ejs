@@ -1,0 +1,81 @@
+
+<div class="studio-workflow-uml studio-uml uml-container">
+
+  <div class="uml-pages">
+  </div>
+
+  <div class="uml-pull-line">
+    <span class="uml-pull-line-arrow glyphicon glyphicon-triangle-right"></span>
+  </div>
+
+  <div class="uml-samples hidden">
+
+    <div data-id="page">
+      <div class="uml-page" data-id="{{id}}"></div>
+    </div>
+
+    <div data-id="state">
+      <div class="uml-state-rect uml-rect uml-draggable {{cssClass}}"
+           data-id="{{id}}" data-type="state">
+        <div class="uml-rect-head">
+          <div class="uml-rect-title uml-draggable-touch" title="{{name}}"
+               data-update-rect-id="title"
+               data-update-rect-id-name="title">
+            {{title}}
+          </div>
+        </div>
+        <div class="uml-pull-touch" data-pos="bottom"></div>
+      </div>
+    </div>
+
+    <div data-id="transition">
+      <div class="uml-transition-rect uml-rect uml-draggable {{cssClass}}"
+           data-id="{{id}}" data-type="transition">
+        <div class="uml-rect-head">
+          <div class="uml-rect-title uml-draggable-touch" title="{{name}}"
+               data-update-rect-id="title"
+               data-update-rect-id-name="title">
+            {{title}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-id="link">
+      <div class="transition-link uml-parent-link uml-link uml-link-select"
+           data-id="{{id}}" title="{{title}}">
+        <span class="uml-link-arrow glyphicon glyphicon-triangle-right"></span>
+      </div>
+    </div>
+
+    <div data-id="linkWithCondition">
+      <div class="with-condition transition-link uml-parent-link uml-link uml-link-select"
+           data-id="{{id}}" title="{{title}}">
+        <span class="uml-link-arrow glyphicon glyphicon-triangle-right"></span>
+        <span class="uml-link-condition uml-link-extra uml-link-arrow glyphicon glyphicon-pause"
+              title="Has transition condition"></span>
+      </div>
+    </div>
+
+    <div data-id="linkWithAssignment">
+      <div class="with-assignment transition-link uml-parent-link uml-link uml-link-select"
+           data-id="{{id}}" title="{{title}}">
+        <span class="uml-link-arrow glyphicon glyphicon-triangle-right"></span>
+        <span class="uml-link-extra uml-link-arrow glyphicon glyphicon-step-forward"
+              title="Has assignment"></span>
+      </div>
+    </div>
+
+    <div data-id="linkWithAssignmentAndCondition">
+      <div class="with-assignment with-condition transition-link uml-parent-link uml-link uml-link-select"
+           data-id="{{id}}" title="{{title}}">
+        <span class="uml-link-arrow uml-link-select glyphicon glyphicon-triangle-right"></span>
+        <span class="uml-link-condition uml-link-extra uml-link-arrow glyphicon glyphicon-pause"
+              title="Has transition condition"></span>
+        <span class="uml-link-extra uml-link-arrow glyphicon glyphicon-step-forward"
+              title="Has assignment"></span>
+      </div>
+    </div>
+
+  </div>
+</div>

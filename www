@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 8888;
+const deploy = require('./deploy.json');
+
+let staticFolder = 'themes/portal/static';
+let template = 'themes/portal/templates';
+let defaultPage = 'index';
+let defaultPageNav = 'pages/index';
+
+app.engine('ejs', require('ejs-locals'));
+app.set('views', path.posix.join(__dirname, template));
+app.set('view engine', 'ejs');
+
+// Emulate starting IONDV. Portal
+function getDeploy(deployParam) {
+  if (deployParam) {
+    const getParam = deployParam.split('.');
+    if (getParam.length === 1) {
+      return deploy.globals[getParam[0]] ? deploy.globals[getParam[0]] : null;
+    } else if (getParam.length === 2){
+      return deploy.modules[getParam[0]].globals[getParam[1]] ?
+        deploy.modules[getParam[0]].globals[getParam[1]] : null;
+    } else {
+      throw ('Не предусмотрена обработки более двух параметров deploy. Нужно запускать через фреймворк');
+    }
+  } else {
+    return null;
+  }
+}
+const moduleName = 'portal';
+
+app.locals.pageEndContent = getDeploy( moduleName + '.pageEndContent') || getDeploy('pageEndContent') || '';
+
+app.use('/', express.static(__dirname));
+app.get('/' + defaultPage, (request, response) => {
+  response.render(defaultPageNav, {
+    module: '',
+    portal: staticFolder,
+    baseUrl: '/'
+  });
+});
+app.get('/*', (request, response) => {
+  response.redirect('/' + defaultPage);
+});
+app.listen(port, (err) => {
+  if (err) {
+    return console.log(JSON.stringify(err, null, '\t'));
+  }
+  console.log(`Server is listening on ${port}`);
+});

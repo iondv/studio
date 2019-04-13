@@ -1,0 +1,75 @@
+<%
+let params = {
+  createTitle: 'New print view',
+  updateTitle: 'Update print view'
+};
+%>
+<div id="class-print-view-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Print view</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+            <%- partial('./attrs/radio-list', {
+              name: 'type',
+              label: 'Type',
+              items: [{
+                value: 'item',
+                text: 'Object'
+              },{
+                value: 'list',
+                text: 'List'
+              }],
+              required: true
+            }) %>
+
+
+            <%- partial('./attrs/string', {
+              name: 'name',
+              label: 'Name',
+              required: true,
+              mask: {
+                regex: '^[a-zA-Z0-9-]+$'
+              }
+            }) %>
+
+            <%- partial('./attrs/string', {
+              name: 'caption',
+              label: 'Caption',
+              required: true
+            }) %>
+
+            <%- partial('./attrs/string', {
+              name: 'mimeType',
+              label: 'MIME-type',
+              required: true,
+              defaultValue: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            }) %>
+
+            <%- partial('./attrs/string', {
+              name: 'extension',
+              label: 'Extension',
+              required: true,
+              defaultValue: 'docx'
+            }) %>
+
+            <%- partial('./attrs/file', {
+              name: 'file',
+              label: 'File',
+              required: true
+            }) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

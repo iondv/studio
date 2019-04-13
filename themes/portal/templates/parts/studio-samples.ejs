@@ -1,0 +1,98 @@
+
+<script type="sample" data-id="alert">
+  <div class="alert alert-{{type}}">{{message}}</div>
+</script>
+
+<script type="sample" data-id="studio-sidebar-menu-item">
+  <div class="menu-item {{cssClass}}"
+         data-id="{{id}}"
+         data-type="{{type}}">
+      <div class="menu-item-head">
+        <div class="menu-item-icon glyphicon"></div>
+        <div class="menu-item-title" data-update-id="title" title="{{name}}">
+          {{title}}
+        </div>
+      </div>
+      <div class="menu-item-children" data-update-id="children">
+        {{children}}
+      </div>
+    </div>
+</script>
+
+<script type="sample" data-id="class-attr">
+  <div class="view-class-attr droppable-item {{cssClass}}"
+         data-id="{{id}}">{{title}}</div>
+</script>
+
+<script type="sample" data-id="view-tab-nav">
+  <div class="tab-nav-item droppable-touch droppable-item {{cssClass}}" data-id="{{id}}">{{title}}</div>
+</script>
+
+<script type="sample" data-id="view-tab-pane">
+  <div class="tab-pane {{cssClass}}" data-id="{{id}}">{{children}}</div>
+</script>
+
+<script type="sample" data-id="view-group">
+  <div class="view-group droppable-item {{cssClass}}" data-id="{{id}}">
+      <div class="view-group-head droppable-touch">{{title}}</div>
+      <div class="view-group-body">{{children}}</div>
+  </div>
+</script>
+
+<script type="sample" data-id="view-attr">
+  <div class="view-attr droppable-touch droppable-item {{cssClass}}" data-id="{{id}}">
+    <div class="view-attr-head">{{title}}</div>
+    <div class="view-attr-body">{{type}}</div>
+  </div>
+</script>
+
+<script type="sample" data-id="list-view-attr">
+  <div class="list-view-attr droppable-item {{cssClass}}" data-id="{{id}}" title="{{name}}">
+    <div class="list-view-attr-head">{{title}}</div>
+    <div class="list-view-attr-body">{{type}}</div>
+  </div>
+</script>
+
+<script type="sample" data-id="merge-checkbox">
+  <div class="attr form-group mb0" data-type="checkbox">
+      <div class="col-sm-offset-1 col-sm-11">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" class="value" data-name="{{name}}">
+            {{title}}
+          </label>
+        </div>
+      </div>
+    </div>
+</script>
+
+<script type="sample" data-id="print-view-item">
+  <div class="print-view-item" data-id="{{id}}">{{title}}</div>
+</script>
+
+<script type="sample" data-id="file-download-link">
+  {{name}}&nbsp; <small>({{size}})</small>
+</script>
+
+<script type="sample" data-id="interface-html">
+  <!DOCTYPE html>
+    <html>
+      <head>
+        <title>{{title}}</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{static}}style.css">
+    </head>
+    <body>
+      {{body}}
+      {{vendorScripts}}
+      {{commonScripts}}
+    </body>
+  <html>
+</script>
+
+<script type="sample" data-id="appTab">
+  <div class="tab" data-id="{{id}}" title="{{description}}">
+    {{title}}
+    <div class="tab-close">&times;</div>
+  </div>
+</script>

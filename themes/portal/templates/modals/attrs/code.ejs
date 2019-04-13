@@ -1,0 +1,21 @@
+<!-- code -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+<%
+  params.defaultValue = typeof defaultValue === 'undefined' ? null : defaultValue;
+%>
+<div class="attr form-group<%- params.required %>"
+     data-type="code"
+     data-name="<%- params.name %>"
+     data-mode="<%- mode %>"
+     data-default-value="<%= JSON.stringify(params.defaultValue) %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <textarea class="json-form-control form-control value" rows="3"
+              placeholder="<%- params.placeholder %>"><%= JSON.stringify(params.value) %></textarea>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

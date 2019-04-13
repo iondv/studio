@@ -1,0 +1,136 @@
+<%
+let params = {
+  createTitle: 'New task',
+  updateTitle: 'Update task'
+};
+%>
+<div id="task-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Task</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'code',
+            label: 'Code',
+            required: true,
+            mask: {
+              regex: '^[a-zA-Z0-9-]+$'
+            }
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'title',
+            label: 'Name',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectWorkflow',
+            name: 'workflow',
+            label: 'Workflow'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'active',
+            label: 'Active task'
+          }) %>
+
+          <%- partial('./attrs/select', {
+            name: 'interval',
+            label: 'Execution period',
+            items: [{
+              value: 0,
+              text: 'Once'
+            },{
+              value: 1,
+              text: '1 minute'
+            },{
+              value: 5,
+              text: '5 minutes'
+            },{
+              value: 10,
+              text: '10 minutes'
+            },{
+              value: 15,
+              text: '15 minutes'
+            },{
+              value: 30,
+              text: '30 minutes'
+            },{
+              value: 60,
+              text: '1 hour'
+            },{
+              value: 120,
+              text: '2 hours'
+            },{
+              value: 240,
+              text: '4 hours'
+            },{
+              value: 360,
+              text: '6 hours'
+            },{
+              value: 720,
+              text: '12 hours'
+            },{
+              value: 1440,
+              text: '24 hours'
+            },{
+              value: 2880,
+              text: '2 days'
+            },{
+              value: 4320,
+              text: '3 days'
+            },{
+              value: 10080,
+              text: '1 week'
+            },{
+              value: 43200,
+              text: '1 month'
+            },{
+              value: 86400,
+              text: '2 months'
+            },{
+              value: 259200,
+              text: '6 months'
+            },{
+              value: 525600,
+              text: '1 year'
+            }]
+          }) %>
+
+          <%- partial('./attrs/date-time', {
+            name: 'startDate',
+            label: 'Start date'
+          }) %>
+
+          <%- partial('./attrs/date-time', {
+            name: 'endDate',
+            label: 'End date'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'javaClass',
+            label: 'Java class'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'javaHandler',
+            label: 'Java handler'
+          }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

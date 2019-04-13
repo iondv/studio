@@ -1,0 +1,380 @@
+
+<div class="studio-toolbar">
+
+  <div class="toolbar-section" data-id="class">
+    <button class="btn btn-sm btn-default" title="Create class" data-action="createClass">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Class</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update class" data-action="updateClass"
+            data-select-message="Select a class to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Clone class" data-action="cloneClass"
+            data-confirm-message="Clone class?">
+      <span class="fa fa-clone"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove class" data-action="removeClass"
+            data-select-message="Select a class to remove"
+            data-confirm-message="Remove class?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="classAttr">
+    <button class="btn btn-sm btn-default" title="Create attribute" data-action="createClassAttr">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Attribute</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update attribute" data-action="updateClassAttr"
+            data-select-message="Select an attribute to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove attribute" data-action="removeClassAttr"
+            data-select-message="Select an attribute to remove"
+            data-confirm-message="Remove class attribute?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="classView">
+    <label class="l10n">View</label>
+    <select class="form-control mr5" data-action="selectClassView"></select>
+    <!--
+    <button class="btn btn-sm btn-default" title="Create view" data-action="createClassView">
+      <span class="fa fa-plus"></span>
+    </button>
+    -->
+    <button class="btn btn-sm btn-default" title="Update view" data-action="updateClassView"
+            data-select-message="Select a view to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <!--
+    <button class="btn btn-sm btn-default" title="Remove view" data-action="removeClassView"
+            data-select-message="Select a view to remove"
+            data-confirm-message="Remove class view?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+    -->
+  </div>
+  <div class="toolbar-section" data-id="classViewAttr">
+    <button class="btn btn-sm btn-default" title="Create attribute" data-action="createClassViewAttr">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Attribute</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update attribute" data-action="updateClassViewAttr"
+            data-select-message="Select an attribute to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove attribute" data-action="removeClassViewAttr"
+            data-select-message="Select an attribute to remove"
+            data-confirm-message="Remove attribute?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Append all attributes" data-action="appendAllClassAttrs">
+      <span class="fa fa-backward"></span>
+    </button>
+  </div>
+  <div class="toolbar-section" data-id="classViewGroup">
+    <button class="btn btn-sm btn-default" title="Create group" data-action="createClassViewGroup">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Group</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update group" data-action="updateClassViewGroup"
+            data-select-message="Select a group to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove group" data-action="removeClassViewGroup"
+            data-select-message="Select a group to remove"
+            data-confirm-message="Remove group?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+
+  <div class="toolbar-section" data-id="classPrintView">
+    <button class="btn btn-sm btn-default" title="Create print view" data-action="createClassPrintView">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Print view</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update print view" data-action="updateClassPrintView"
+            data-select-message="Select a print view to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove print view" data-action="removeClassPrintView"
+            data-select-message="Select a print view to remove"
+            data-confirm-message="Remove print view?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+
+  <div class="toolbar-section" data-id="workflow">
+    <button class="btn btn-sm btn-default" title="Create workflow" data-action="createWorkflow">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Workflow</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update workflow" data-action="updateWorkflow"
+            data-select-message="Select a workflow to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Clone workflow" data-action="cloneWorkflow"
+            data-confirm-message="Clone workflow?">
+      <span class="fa fa-clone"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove workflow" data-action="removeWorkflow"
+            data-select-message="Select a workflow to remove"
+            data-confirm-message="Remove workflow?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowState">
+    <button class="btn btn-sm btn-default" title="Create state" data-action="createWorkflowState">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">State</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update state" data-action="updateWorkflowState"
+            data-select-message="Select a state to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove state" data-action="removeWorkflowState"
+            data-select-message="Select a state to remove"
+            data-confirm-message="Remove state?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowTransition">
+    <button class="btn btn-sm btn-default" title="Create transition" data-action="createWorkflowTransition">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Transition</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update transition" data-action="updateWorkflowTransition"
+            data-select-message="Select a transition to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove transition" data-action="removeWorkflowTransition"
+            data-select-message="Select a transition to remove"
+            data-confirm-message="Remove transition?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="navSection">
+    <button class="btn btn-sm btn-default" title="Create section" data-action="createNavSection">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Section</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update section" data-action="updateNavSection"
+            data-select-message="Select a section to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove section" data-action="removeNavSection"
+            data-select-message="Select a section to remove"
+            data-confirm-message="Remove section?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="navItem">
+    <button class="btn btn-sm btn-default" title="Create item" data-action="createNavItem">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Item</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update item" data-action="updateNavItem"
+            data-select-message="Select an item to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove item" data-action="removeNavItem"
+            data-select-message="Select an item to remove"
+            data-confirm-message="Remove item?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="navItemListView">
+    <button class="btn btn-sm btn-default" title="Create navigation view" data-action="createNavItemListView">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">View</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update navigation view" data-action="updateNavItemListView">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove navigation view" data-action="removeNavItemListView"
+            data-confirm-message="Remove navigation view?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="navListAttr">
+    <button class="btn btn-sm btn-default" title="Create attribute" data-action="createNavListAttr">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Attribute</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update attribute" data-action="updateNavListAttr"
+            data-select-message="Select an attribute to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove attribute" data-action="removeNavListAttr"
+            data-select-message="Select an attribute to remove"
+            data-confirm-message="Remove attribute?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="task">
+    <button class="btn btn-sm btn-default" title="Create task" data-action="createTask">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Task</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update task" data-action="updateTask"
+            data-select-message="Select a task to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove task" data-action="removeTask"
+            data-select-message="Select a task to remove"
+            data-confirm-message="Remove task?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="taskUtil">
+    <button class="btn btn-sm btn-default" title="Import tasks" data-action="importTasks">
+      <span class="glyphicon glyphicon-import"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="interface">
+    <button class="btn btn-sm btn-default" title="Create interface" data-action="createInterface">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Interface</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update interface" data-action="updateInterface"
+            data-select-message="Select a interface to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove interface" data-action="removeInterface"
+            data-select-message="Select a interface to remove"
+            data-confirm-message="Remove interface?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="classMode">
+    <button class="btn btn-sm btn-default l10n" data-action="classMode">Class</button>
+  </div>
+
+  <div class="toolbar-section" data-id="viewMode">
+    <button class="btn btn-sm btn-default l10n" data-action="viewMode">View</button>
+    <button class="btn btn-sm btn-default" title="Print view" data-action="printViewMode">
+      <span class="fa fa-print"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowUtil">
+    <button class="btn btn-sm btn-default" title="Auto alignment" data-action="alignWorkflowItems"
+            data-confirm-message="Align items?">
+      <span class="fa fa-th"></span>
+    </button>
+  </div>
+
+  <!-- WORKFLOW VIEW -->
+
+  <div class="toolbar-section" data-id="workflowViewMode">
+    <button class="btn btn-sm btn-default l10n" data-action="workflowViewMode">Views</button>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowViewClass">
+    <label class="l10n">Class</label>
+    <select class="form-control" data-action="selectWorkflowViewClass"></select>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowViewState">
+    <label class="l10n">State</label>
+    <select class="form-control" data-action="selectWorkflowViewState"></select>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowView">
+    <label class="l10n">View</label>
+    <button class="btn btn-sm btn-default" title="Update view" data-action="updateWorkflowView"
+            data-select-message="Select a state to update">
+      <span class="fa fa-edit"></span>
+    </button>
+  </div>
+  <div class="toolbar-section" data-id="workflowViewAttr">
+    <button class="btn btn-sm btn-default" title="Create attribute" data-action="createWorkflowViewAttr">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Attribute</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update attribute" data-action="updateWorkflowViewAttr"
+            data-select-message="Select an attribute to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove attribute" data-action="removeWorkflowViewAttr"
+            data-select-message="Select an attribute to remove"
+            data-confirm-message="Remove attribute?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Append all attributes" data-action="appendAllWorkflowAttrs">
+      <span class="fa fa-backward"></span>
+    </button>
+  </div>
+  <div class="toolbar-section" data-id="workflowViewGroup">
+    <button class="btn btn-sm btn-default" title="Create group" data-action="createWorkflowViewGroup">
+      <span class="fa fa-plus"></span>
+      <span class="l10n">Group</span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Update group" data-action="updateWorkflowViewGroup"
+            data-select-message="Select a group to update">
+      <span class="fa fa-edit"></span>
+    </button>
+    <button class="btn btn-sm btn-default" title="Remove group" data-action="removeWorkflowViewGroup"
+            data-select-message="Select a group to remove"
+            data-confirm-message="Remove group?">
+      <span class="fa fa-trash text-danger"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section" data-id="workflowMode">
+    <button class="btn btn-sm btn-default l10n" data-action="workflowMode">Workflow</button>
+  </div>
+
+  <!-- CHANGELOG -->
+
+  <div class="toolbar-section" data-id="changelog">
+    <label class="l10n">Logs</label>
+  </div>
+
+  <!-- PULL RIGHT -->
+
+  <div class="toolbar-section pull-right mr0" data-id="uploadApp">
+    <button class="btn btn-sm btn-default" title="Upload application" data-action="uploadApp"
+            data-file="#uploadApp">
+      <span class="glyphicon glyphicon-open"></span>
+    </button>
+    <input type="file" class="upload-app-file hidden" accept=".zip">
+  </div>
+
+  <div class="toolbar-section pull-right" data-id="exportApp">
+    <button class="btn btn-sm btn-default" title="Download application" data-action="downloadApp"
+            data-select-message="Select an application to download">
+      <span class="glyphicon glyphicon-save"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section pull-right" data-id="util">
+    <button class="btn btn-sm btn-default" title="Auto alignment" data-action="alignClasses"
+            data-confirm-message="Force items to align?">
+      <span class="fa fa-th"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section pull-right" data-id="workflowUtil">
+    <button class="btn btn-sm btn-default" title="Auto alignment" data-action="alignWorkflowItems"
+            data-confirm-message="Force items to align?">
+      <span class="fa fa-th"></span>
+    </button>
+  </div>
+
+</div>

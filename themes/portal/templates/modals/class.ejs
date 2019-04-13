@@ -1,0 +1,96 @@
+<%
+let params = {
+  createTitle: 'New class',
+  updateTitle: 'Update class'
+};
+%>
+<div id="class-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Class</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./attrs/string', {
+            name: 'name',
+            label: 'Name',
+            required: true,
+            mask: {
+              regex: '^[a-zA-Z0-9-]+$'
+            }
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'caption',
+            label: 'Caption',
+            required: true
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClassAttr',
+            name: 'key',
+            label: 'Key',
+            required: true,
+            action: 'update'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'semantic',
+            label: 'Semantic title'
+          }) %>
+
+
+          <%- partial('./attrs/string', {
+            name: 'version',
+            label: 'Version'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClass',
+            name: 'ancestor',
+            label: 'Ancestor'
+          }) %>
+
+          <%- partial('./attrs/string', {
+            name: 'container',
+            label: 'Container'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClassAttr',
+            name: 'creationTracker',
+            label: 'Creation tracker',
+            action: 'update'
+          }) %>
+
+          <%- partial('./attrs/select-object', {
+            type: 'selectClassAttr',
+            name: 'changeTracker',
+            label: 'Modification tracker',
+            action: 'update'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'journaling',
+            label: 'Journaling'
+          }) %>
+
+          <%- partial('./attrs/checkbox', {
+            name: 'isStruct',
+            label: 'Is struct'
+          }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<%
+let mod = `${module}/${portal}/`;
+let studio = `${mod}js/studio/`;
+%>
+<% layout('../layouts/main') -%>
+
+<%- partial('../parts/head') %>
+
+<div class="studio-main">
+
+  <%- partial('../parts/studio-tabs') %>
+
+  <div class="studio-content">
+    <%- partial('../parts/studio-toolbar') %>
+    <%- partial('../parts/studio-class-uml') %>
+    <%- partial('../parts/studio-list-view') %>
+    <%- partial('../parts/studio-print-view') %>
+    <%- partial('../parts/studio-view') %>
+    <%- partial('../parts/studio-workflow-view') %>
+    <%- partial('../parts/studio-task-area') %>
+    <%- partial('../parts/studio-workflow-uml') %>
+    <%- partial('../parts/studio-ui-editor')%>
+    <%- partial('../parts/studio-changelog-area')%>
+  </div>
+
+  <div class="studio-sidebar unselectable">
+    <div class="sidebar-section">
+      <div class="studio-sidebar-menu sidebar-menu"></div>
+    </div>
+  </div>
+
+  <div class="studio-alert alert alert-danger">
+    <button type="button" class="close"><span aria-hidden="true">×</span></button>
+    <div class="alert-content"></div>
+  </div>
+
+  <%- partial('../parts/studio-samples') %>
+
+</div>
+
+<%- partial('../modals/app') %>
+<%- partial('../modals/app-merge') %>
+<%- partial('../modals/class') %>
+<%- partial('../modals/class-attr') %>
+<%- partial('../modals/class-view') %>
+<%- partial('../modals/class-view-attr') %>
+<%- partial('../modals/class-view-group') %>
+<%- partial('../modals/class-print-view') %>
+<%- partial('../modals/nav-section') %>
+<%- partial('../modals/nav-item') %>
+<%- partial('../modals/nav-item-list-view') %>
+<%- partial('../modals/task') %>
+<%- partial('../modals/interface') %>
+<%- partial('../modals/workflow') %>
+<%- partial('../modals/workflow-state') %>
+<%- partial('../modals/workflow-transition') %>
+<%- partial('../modals/import-tasks') %>
+<%- partial('../modals/export') %>
+<%- partial('../modals/external-service') %>
+<%- partial('../modals/studio-alert') %>
+<%- partial('../modals/code-editor') %>
+
+<% stylesheet(`${mod}css/uml.css`) -%>
+
+<% script(`${mod}js/uml/uml.js`) -%>
+<% script(`${mod}js/uml/page.js`) -%>
+<% script(`${mod}js/uml/rect.js`) -%>
+<% script(`${mod}js/uml/rect-attr.js`) -%>
+<% script(`${mod}js/uml/draggable.js`) -%>
+<% script(`${mod}js/uml/pulling.js`) -%>
+<% script(`${mod}js/uml/link.js`) -%>
+<% script(`${mod}js/uml/helper.js`) -%>
+
+<% stylesheet(`${mod}css/studio.css`) -%>
+
+<% script(`${studio}studio.js`) -%>
+<% script(`${studio}adapters/class-uml.js`) -%>
+<% script(`${studio}adapters/workflow-uml.js`) -%>
+<% script(`${studio}adapters/ui.js`) -%>
+<% script(`${studio}components/alert.js`) -%>
+<% script(`${studio}components/modal-alert.js`) -%>
+<% script(`${studio}components/task-area.js`) -%>
+<% script(`${studio}components/toolbar.js`) -%>
+<% script(`${studio}components/tabs.js`) -%>
+<% script(`${studio}components/sidebar.js`) -%>
+<% script(`${studio}components/sidebar-menu.js`) -%>
+<% script(`${studio}components/list-view-maker.js`) -%>
+<% script(`${studio}components/print-view-maker.js`) -%>
+<% script(`${studio}components/view-maker.js`) -%>
+<% script(`${studio}components/workflow-view-maker.js`) -%>
+<% script(`${studio}components/changelog-area.js`) -%>
+<% script(`${studio}models/model.js`) -%>
+<% script(`${studio}models/app.js`) -%>
+<% script(`${studio}models/class.js`) -%>
+<% script(`${studio}models/class-attr.js`) -%>
+<% script(`${studio}models/class-view.js`) -%>
+<% script(`${studio}models/class-view-attr.js`) -%>
+<% script(`${studio}models/class-view-group.js`) -%>
+<% script(`${studio}models/class-print-view.js`) -%>
+<% script(`${studio}models/nav-section.js`) -%>
+<% script(`${studio}models/nav-item.js`) -%>
+<% script(`${studio}models/task.js`) -%>
+<% script(`${studio}models/interface.js`) -%>
+<% script(`${studio}models/workflow.js`) -%>
+<% script(`${studio}models/workflow-state.js`) -%>
+<% script(`${studio}models/workflow-transition.js`) -%>
+<% script(`${studio}models/external-service.js`) -%>
+<% script(`${studio}forms/form.js`) -%>
+<% script(`${studio}forms/model-form.js`) -%>
+<% script(`${studio}forms/app-form.js`) -%>
+<% script(`${studio}forms/app-merge-form.js`) -%>
+<% script(`${studio}forms/class-form.js`) -%>
+<% script(`${studio}forms/class-attr-form.js`) -%>
+<% script(`${studio}forms/class-view-form.js`) -%>
+<% script(`${studio}forms/class-view-attr-form.js`) -%>
+<% script(`${studio}forms/class-view-group-form.js`) -%>
+<% script(`${studio}forms/class-print-view-form.js`) -%>
+<% script(`${studio}forms/nav-section-form.js`) -%>
+<% script(`${studio}forms/nav-item-form.js`) -%>
+<% script(`${studio}forms/task-form.js`) -%>
+<% script(`${studio}forms/interface-form.js`) -%>
+<% script(`${studio}forms/workflow-form.js`) -%>
+<% script(`${studio}forms/workflow-state-form.js`) -%>
+<% script(`${studio}forms/workflow-transition-form.js`) -%>
+<% script(`${studio}forms/export-form.js`) -%>
+<% script(`${studio}forms/external-service-form.js`) -%>
+<% script(`${studio}forms/import-task-form.js`) -%>
+<% script(`${studio}forms/code-editor-form.js`) -%>
+<% script(`${studio}forms/attrs/attr.js`) -%>
+<% script(`${studio}forms/attrs/checkbox.js`) -%>
+<% script(`${studio}forms/attrs/date.js`) -%>
+<% script(`${studio}forms/attrs/integer.js`) -%>
+<% script(`${studio}forms/attrs/file.js`) -%>
+<% script(`${studio}forms/attrs/code.js`) -%>
+<% script(`${studio}forms/attrs/radio-list.js`) -%>
+<% script(`${studio}forms/attrs/select-model.js`) -%>
+<% script(`${studio}forms/attrs/select-external-service.js`) -%>
+<% script(`${studio}behaviors/behavior.js`) -%>
+<% script(`${studio}validation/validator.js`) -%>
+<% script(`${studio}validation/unique.js`) -%>
+<% script(`${studio}util/store.js`) -%>
+<% script(`${studio}util/app-download.js`) -%>
+<% script(`${studio}util/app-deploy.js`) -%>
+<% script(`${studio}util/app-vendor.js`) -%>
+<% script(`${studio}util/app-upload.js`) -%>
+<% script(`${studio}util/alignment.js`) -%>
+<% script(`${studio}util/droppable.js`) -%>

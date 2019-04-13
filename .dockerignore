@@ -1,0 +1,21 @@
+**/.eslintrc.yml
+.eslinignore
+.editorconfig
+.gitignore
+.npmignore
+.tern-project
+/.git/**
+/.git-*/**
+# Log
+log/**
+# Tests
+test/**
+# Temp
+/tmp/**
+#Docs
+/docs/**
+dappfile.yml
+changelog*
+.dockerignore
+.gitignore
+.gitlab-ci.yml

@@ -1,0 +1,20 @@
+{
+  "name": "studio-vendors",
+  "version": "1.0.0",
+  "description": "Frontend packages for studio app",
+  "license": "Apache-2.0",
+  "vendorDir": "./static/vendor",
+  "dependencies": {
+    "grapesjs": "^0.14.57",
+    "grapesjs-blocks-basic": "^0.1.8",
+    "grapesjs-custom-code": "^0.1.1",
+    "grapesjs-lory-slider": "^0.1.5",
+    "grapesjs-navbar": "^0.1.5",
+    "grapesjs-plugin-export": "^1.0.7",
+    "grapesjs-plugin-forms": "^1.0.2",
+    "grapesjs-preset-webpage": "^0.1.10",
+    "grapesjs-tabs": "^0.1.2",
+    "grape-table": "git+https://github.com/iondv/grape-table.git#master",
+    "grape-iondv-studio": "git+https://github.com/iondv/grape-iondv-studio.git#master"
+  }
+}

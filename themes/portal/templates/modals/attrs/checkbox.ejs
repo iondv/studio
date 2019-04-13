@@ -1,0 +1,18 @@
+<!-- checkbox -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %>" data-type="checkbox" data-name="<%- params.name %>">
+  <div class="col-sm-offset-3 col-sm-9">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" class="value">
+        <span class="l10n"><%- params.label %></span>
+      </label>
+    </div>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

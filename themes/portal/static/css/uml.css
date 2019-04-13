@@ -1,0 +1,274 @@
+
+.uml-dragging {
+  cursor: default;
+  user-select: none;
+}
+.uml-container {
+  position: relative;
+}
+.uml-pages {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+.uml-page {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+.uml-page.active {
+  display: block;
+}
+.uml-page.updating .uml-link {
+  visibility: hidden;
+}
+
+/* RECT */
+
+.uml-rect {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  max-width: 200px;
+  border: 1px solid #ccc;
+  background: #fff;
+  z-index: 700;
+  user-select: none;
+}
+.uml-rect-title {
+  padding: 5px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+.uml-rect-body {
+  /*max-height: 200px;
+  overflow: auto;*/
+}
+
+.uml-state-rect.start-state {
+  border-color:#0a0;
+  color:#060;
+}
+.uml-state-rect.start-state .uml-rect-head {
+  background: #f0fff0;
+}
+
+.active.uml-rect {
+  border-color:#a80;
+  background: #fafaf0;
+  color: #840;
+  z-index: 1040;
+}
+.active.uml-rect .uml-rect-head {
+  background: #ffd;
+}
+.active.uml-rect-attr {
+  color:#200;
+  background:#ffe0c0;
+}
+
+.active.uml-draggable.uml-rect .uml-draggable-touch {
+  cursor: move;
+  z-index: 101;
+}
+
+.uml-rect-attr {
+  border-top: 1px solid #eee;
+}
+.uml-rect-attr:first-child {
+  border-top-color: #ddd;
+}
+.uml-rect-attr-title {
+  padding: 3px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.active.uml-rect .uml-rect-attr-title {
+  cursor: pointer;
+}
+
+.uml-state-rect,
+.uml-transition-rect {
+  max-width: 250px;
+}
+.uml-state-rect {
+  border-color:#08a;
+  background: #f0f8ff;
+  color:#048;
+}
+.uml-state-rect .uml-rect-title {
+  padding: 8px 8px;
+  font-size: 13px;
+  white-space: normal;
+}
+.uml-transition-rect {
+  border-color:#0a0;
+  background: #f0fff0;
+  color:#060;
+}
+.uml-transition-rect,
+.uml-transition-rect .uml-rect-head {
+  border-radius: 16px;
+}
+.uml-transition-rect .uml-rect-title {
+  padding: 8px 12px;
+  font-weight: normal;
+  font-size: 13px;
+  white-space: normal;
+}
+
+/* LINK */
+
+.uml-link {
+  position: absolute;
+  left:0;
+  top:0;
+  height: 1px;
+  background: #666;
+  z-index: 0;
+}
+.uml-link-arrow {
+  position: absolute;
+  top: -5px;
+  left: calc(100% - 8px);
+  font-size: 11px;
+  color: #666;
+}
+.uml-link-flip .uml-link-arrow {
+  transform: rotate(180deg);
+  left: -2px;
+}
+
+.uml-ref-link {
+  background: #0c0;
+}
+.uml-ref-link .uml-link-arrow {
+  top: -6px;
+  font-size: 12px;
+  color: #0c0;
+}
+.uml-ref-link.uml-link-flip .uml-link-arrow {
+  /*top:-5px;*/
+  left: -4px;
+}
+
+.uml-collection-link {
+  background: #08f;
+}
+.uml-collection-link .uml-link-arrow {
+  top: -6px;
+  font-size: 12px;
+  color: #08f;
+}
+.uml-collection-link.uml-link-flip .uml-link-arrow {
+  /*top:-5px;*/
+  left: -2px;
+}
+.uml-link-select {
+  cursor: pointer;
+}
+
+.studio-workflow-uml .uml-link-arrow {
+  top: -6px;
+  font-size: 13px;
+}
+.studio-workflow-uml .uml-link-flip .uml-link-arrow {
+  left: -4px;
+}
+.studio-workflow-uml .uml-link-extra {
+  color: #04a;
+  left: calc(100% - 20px);
+}
+.studio-workflow-uml .uml-link-flip .uml-link-extra {
+  left: 8px;
+}
+.studio-workflow-uml .uml-link-extra + .uml-link-extra {
+  left: calc(100% - 34px);
+}
+.studio-workflow-uml .uml-link-flip .uml-link-extra + .uml-link-extra {
+  left: 22px;
+}
+
+.studio-workflow-uml .uml-link-condition {
+  color: #a00;
+}
+
+.active.uml-link {
+  background: #c60;
+  z-index: 699;
+}
+.active.uml-link .uml-link-arrow {
+  color: #c60;
+}
+
+/* PULL */
+
+.uml-pull-touch {
+  display: none;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border: 1px solid #c60;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.uml-pull-touch:hover,
+.uml-pull-touch.active {
+  background: #c60;
+}
+.uml-rect.active .uml-pull-touch {
+  display: block;
+}
+.uml-pull-touch[data-pos="top"] {
+  left: calc(50% - 5px);
+  top: -5px;
+}
+.uml-pull-touch[data-pos="bottom"] {
+  left: calc(50% - 5px);
+  bottom: -5px;
+}
+.uml-pull-touch[data-pos="left"] {
+  left: -5px;
+  top: calc(50% - 5px);
+}
+.uml-pull-touch[data-pos="right"] {
+  right: -5px;
+  top: calc(50% - 5px);
+}
+
+.uml-pull-line {
+  display: none;
+  position: absolute;
+  height: 1px;
+  background: #c60;
+  transform-origin: left top;
+  z-index: 2001;
+}
+.uml-pull-line-arrow {
+  position: absolute;
+  display: block;
+  right: -3px;
+  top: -5px;
+  font-size: 11px;
+  color: #c60;
+}
+
+.uml-pull-target.uml-rect {
+  color: #840;
+  background: #ffd;
+  border-color:#a80;
+}

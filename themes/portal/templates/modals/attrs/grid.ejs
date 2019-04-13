@@ -1,0 +1,37 @@
+<!-- grid -->
+<%
+  let params = {};
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %>"
+     data-type="grid"
+     data-name="<%- params.name %>"
+     data-columns="<%= JSON.stringify(columns) %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <input type="hidden" class="value" value="<%= params.value %>">
+    <div class="attr-grid">
+      <div class="attr-grid-actions">
+        <button type="button" class="btn btn-success btn-xs" data-id="create">
+          <span class="fa fa-plus"></span>
+        </button>
+        <button type="button" class="btn btn-primary btn-xs" data-id="update">
+          <span class="fa fa-edit"></span>
+        </button>
+        <button type="button" class="btn btn-danger btn-xs" data-id="remove"
+                data-confirm-message="Remove this row?">
+          <span class="fa fa-trash"></span>
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-condensed table-striped">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="hint-block l10n"><%- params.hint %></div>
+      <div class="error-block"></div>
+    </div>
+  </div>
+</div>
