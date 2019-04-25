@@ -14,7 +14,11 @@ $.extend(Studio.CodeFormAttr.prototype, Studio.FormAttr.prototype, {
 
   onClickValue: function () {
     this.$value.blur();
-    this.form.studio.codeEditorForm.show(this.getValue(), this, this.mode);
+    this.form.studio.codeEditorForm.show(this.getValue(), this.mode, this.afterSave.bind(this));
+  },
+
+  afterSave: function (value) {
+    this.setValue(value);
   }
 });
 

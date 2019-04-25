@@ -106,6 +106,8 @@ $.extend(Studio.Toolbar.prototype, {
     this.getTool('selectWorkflowViewClass').change(this.onSelectWorkflowViewClass.bind(this));
     this.getTool('selectWorkflowViewState').change(this.onSelectWorkflowViewState.bind(this));
 
+    this.getTool('help').click(this.onHelp.bind(this));
+
     this.getSections().hide();
   },
 
@@ -851,4 +853,7 @@ $.extend(Studio.Toolbar.prototype, {
     this.removeModel(this.studio.getActiveWorkflowViewGroup(), 'removeWorkflowViewGroup');
   },
 
+  onHelp: function () {
+    this.studio.modalHelp.show();
+  },
 });

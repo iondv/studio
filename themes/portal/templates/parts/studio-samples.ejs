@@ -25,7 +25,8 @@
 </script>
 
 <script type="sample" data-id="view-tab-nav">
-  <div class="tab-nav-item droppable-touch droppable-item {{cssClass}}" data-id="{{id}}">{{title}}</div>
+  <div class="tab-nav-item droppable-touch droppable-place droppable-item {{cssClass}}" data-pos="inner"
+       data-id="{{id}}">{{title}}</div>
 </script>
 
 <script type="sample" data-id="view-tab-pane">
@@ -34,15 +35,24 @@
 
 <script type="sample" data-id="view-group">
   <div class="view-group droppable-item {{cssClass}}" data-id="{{id}}">
-      <div class="view-group-head droppable-touch">{{title}}</div>
-      <div class="view-group-body">{{children}}</div>
+    <div class="droppable-place-before droppable-place" data-pos="before"></div>
+    <div class="droppable-place-inner droppable-place" data-pos="inner">
+      <div class="view-group-container">
+        <div class="view-group-head droppable-touch">{{title}}</div>
+        <div class="view-group-body">{{children}}</div>
+      </div>
+    </div>
+    <div class="droppable-place-after droppable-place" data-pos="after"></div>
   </div>
 </script>
 
 <script type="sample" data-id="view-attr">
   <div class="view-attr droppable-touch droppable-item {{cssClass}}" data-id="{{id}}">
-    <div class="view-attr-head">{{title}}</div>
-    <div class="view-attr-body">{{type}}</div>
+    <div class="droppable-place-before droppable-place" data-pos="before"></div>
+    <div class="droppable-place-after droppable-place" data-pos="after">
+      <div class="view-attr-head">{{title}}</div>
+      <div class="view-attr-body">{{type}}</div>
+    </div>
   </div>
 </script>
 

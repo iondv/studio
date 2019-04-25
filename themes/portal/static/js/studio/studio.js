@@ -1,6 +1,7 @@
 "use strict";
 
 window.Studio = function ($main) {
+  this.VISITED_STORE_KEY = 'iondv-studio-visited';
   this.$main = $main;
   this.$main.data('studio', this);
   this.$samples = this.$main.find('script').filter('[type="sample"]');
@@ -31,6 +32,7 @@ window.Studio = function ($main) {
   this.exportForm = new Studio.ExportForm($('#export-modal'), this);
   this.importTaskForm = new Studio.ImportTaskForm($('#import-task-modal'), this);
   this.codeEditorForm = new Studio.CodeEditorForm($('#code-editor-modal'), this);
+  this.modalHelp = new Studio.Modal($('#studio-modal-help'), this);
   this.alert = new Studio.ModalAlert($('#studio-modal-alert'), this);
   this.classUml = new Studio.ClassUmlAdapter(this.$main.find('.studio-class-uml'), this);
   this.workflowUml = new Studio.WorkflowUmlAdapter(this.$main.find('.studio-workflow-uml'), this);
@@ -57,6 +59,12 @@ $.extend(Studio.prototype, {
     this.setContentMode('class');
     this.toggleLoader(false);
     this.menu.setActiveFirstApp();
+    this.toggleCreateTooltip(!this.apps.length);
+    this.resolveAutoHelp();
+
+    setTimeout(function () {
+      store.set(this.VISITED_STORE_KEY, true);
+    }.bind(this), 0);
     /*
     setTimeout(function () {
       $('.menu-item[data-type="classes"]').find('.menu-item-title').click();
@@ -202,6 +210,7 @@ $.extend(Studio.prototype, {
     try {
       var model = new Studio.AppModel(this, data);
       this.apps.push(model);
+      this.toggleCreateTooltip(false);
       return model;
     } catch (err) {
       console.error(err);
@@ -220,6 +229,7 @@ $.extend(Studio.prototype, {
     Helper.Array.removeValue(model, this.apps);
     this.syncFiles();
     this.triggerModelChanging('removeApp', model);
+    this.toggleCreateTooltip(!this.apps.length);
   },
 
   onUploadApp: function (data) {
@@ -647,5 +657,23 @@ $.extend(Studio.prototype, {
     var result = {};
     Helper.Array.eachMethod('indexFiles', this.apps, result);
     Helper.File.sync(result);
+  },
+
+  toggleCreateTooltip: function (state) {
+    if (!state) {
+      return this.tabs.$add.tooltip('destroy');
+    }
+    this.tabs.$add.tooltip({
+      'title': Helper.L10n.translate('Create your first app'),
+      'trigger': 'manual',
+      'placement': 'bottom',
+      'animation': false
+    }).tooltip('show');
+  },
+
+  resolveAutoHelp: function () {
+    if (!store.get(this.VISITED_STORE_KEY)) {
+      this.toolbar.getTool('help').click();
+    }
   }
 });

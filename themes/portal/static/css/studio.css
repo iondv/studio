@@ -1,15 +1,17 @@
+.tooltip {
+  z-index: 1048;
+}
 .btn {
   border-radius: 0;
 }
 .text-orange {
   color: #e07626 !important;
 }
-
 .studio-main {
   display: none;
   position: absolute;
   left: 0;
-  top: 34px;
+  top: 0;
   bottom: 0;
   width: 100%;
   overflow: hidden;
@@ -27,19 +29,18 @@
   position: relative;
   padding-left: 260px;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 35px);
   background: #eeeeee;
 }
 .studio-toolbar {
-  height: 36px;
-  padding: 6px 12px;
+  padding: 6px 12px 0;
   background: #fff;
-  white-space: nowrap;
   user-select: none;
 }
 .toolbar-section {
   display: inline-block;
   margin-right: 10px;
+  margin-bottom: 5px;
 }
 .studio-toolbar .form-control {
   display: inline-block;
@@ -241,14 +242,20 @@
 .studio-view-target .nav-tabs {
   font-weight: bold;
 }
+.studio-view-target > .tab-content > .tab-pane {
+  padding: 5px 15px;
+}
+.studio-view-target > .tab-content > .view-attr:first-child,
+.studio-view-target > .tab-content > .view-group:first-child {
+  margin-top: -15px
+}
+.studio-view-target > .tab-content > .view-attr:last-child,
+.studio-view-target > .tab-content > .view-group:last-child {
+  margin-bottom: -15px
+}
 
 .view-group {
   position: relative;
-  border: 1px solid #ded;
-  margin-bottom: 10px;
-}
-.view-group:last-child {
-  margin-bottom: 0;
 }
 .view-group-head {
   padding: 3px 10px;
@@ -257,7 +264,8 @@
   background: #eaf4ea;
 }
 .view-group-body {
-  padding: 15px 10px;
+  padding: 0 10px;
+  min-height: 30px;
   background: #fff;
 }
 .view-group.has-empty-title {
@@ -266,19 +274,11 @@
 .view-group.has-empty-title > .view-group-head {
   background: #eef;
 }
-.view-group.selected {
-  border-color: #eda;
-}
-.view-group.selected > .view-group-head {
-  background: #fed;
-  color: #d60;
-}
 .view-group.selected > .droppable-touch {
   cursor: move;
 }
 .view-attr {
   position: relative;
-  margin-bottom: 15px;
 }
 .view-attr:last-child {
   margin-bottom: 0;
@@ -288,8 +288,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: bold;
-  line-height: 1.4;
-  padding-top: 4px;
+  line-height: 26px;
+  white-space: nowrap;
 }
 .view-attr-body {
   position: absolute;
@@ -390,6 +390,10 @@
 }
 
 /* MODAL */
+
+.modal-body {
+  min-height: 50px;
+}
 
 .modal.in ~ .modal.in  {
   z-index: 1060;
@@ -548,13 +552,62 @@
   pointer-events:none;
 }
 .droppable-item.dragged {
-  opacity: 0.2 !important;
+  opacity: 0.1 !important;
 }
 .droppable-touch {
   cursor: pointer;
 }
 .droppable-touch.selected {
   cursor: move;
+}
+
+.droppable-place {
+  position: relative;
+}
+.droppable-item:first-child > .droppable-place-before {
+  height: 14px;
+}
+.droppable-place:before {
+  display: none;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #400;
+}
+.droppable-place-before:before {
+  top: 7px;
+}
+.droppable-place-after:before {
+  bottom: 7px;
+}
+.droppable-place-before.target:before,
+.droppable-place-after.target:before {
+  display: block;
+}
+
+.view-group > .droppable-place > .view-group-container {
+  border: 1px solid #ded;
+}
+.view-group > .droppable-place-after {
+  height: 14px;
+}
+.view-group.selected > .droppable-place > .view-group-container {
+  border-color: #eda;
+}
+.view-group.selected > .droppable-place > .view-group-container > .view-group-head {
+  background: #fed;
+  color: #d60;
+}
+.view-group > .droppable-place-inner.target:before {
+  display: block;
+  top: 30px;
+  left: 10px;
+  right: 10px;
+}
+.view-attr > .droppable-place-after {
+  padding-bottom: 14px;
 }
 
 /* TASK */
@@ -618,7 +671,7 @@
 
 .code-editor-container {
   position: relative;
-  height: 480px;
+  height: 640px;
 }
 
 /* TABS */
@@ -697,4 +750,17 @@
 }
 .studio-tabs .tab-add:hover {
   color: #000;
+}
+.studio-logo {
+  display: block;
+  float: left;
+  width: 130px;
+  height: 34px;
+  background: url(../images/iondv.svg) center no-repeat;
+  background-size: 112px;
+  opacity: 0.6;
+}
+.studio-logo:hover {
+  opacity: 1.0;
+  color: #aaa;
 }

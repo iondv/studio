@@ -158,19 +158,19 @@ let params = {
             label: 'Page-oriented selection'
           }) %>
 
-          <%- partial('./attrs/code', {
+          <%- partial('./attrs/text', {
             name: 'visibility',
             label: 'Visibility',
             mode: 'javascript'
           }) %>
 
-          <%- partial('./attrs/code', {
+          <%- partial('./attrs/text', {
             name: 'enablement',
             label: 'Availability',
             mode: 'javascript'
           }) %>
 
-          <%- partial('./attrs/code', {
+          <%- partial('./attrs/text', {
             name: 'obligation',
             label: 'Obligation',
             mode: 'javascript'
@@ -189,6 +189,7 @@ let params = {
         </form>
       </div>
       <div class="modal-footer">
+        <button type="button" class="form-json btn btn-default l10n pull-right">JSON</button>
         <button type="button" class="form-create btn btn-success l10n">Create</button>
         <button type="button" class="form-update btn btn-primary l10n">Save</button>
         <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>

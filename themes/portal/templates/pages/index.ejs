@@ -4,8 +4,6 @@ let studio = `${mod}js/studio/`;
 %>
 <% layout('../layouts/main') -%>
 
-<%- partial('../parts/head') %>
-
 <div class="studio-main">
 
   <%- partial('../parts/studio-tabs') %>
@@ -59,6 +57,7 @@ let studio = `${mod}js/studio/`;
 <%- partial('../modals/external-service') %>
 <%- partial('../modals/studio-alert') %>
 <%- partial('../modals/code-editor') %>
+<%- partial('../modals/help') %>
 
 <% stylesheet(`${mod}css/uml.css`) -%>
 
@@ -78,6 +77,7 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}adapters/workflow-uml.js`) -%>
 <% script(`${studio}adapters/ui.js`) -%>
 <% script(`${studio}components/alert.js`) -%>
+<% script(`${studio}components/modal.js`) -%>
 <% script(`${studio}components/modal-alert.js`) -%>
 <% script(`${studio}components/task-area.js`) -%>
 <% script(`${studio}components/toolbar.js`) -%>

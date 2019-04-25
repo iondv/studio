@@ -31,7 +31,7 @@ $.extend(Studio.SelectClassFormAttr.prototype, Studio.SelectModelFormAttr.protot
 
   getModels: function () {
     return this.form.app.classes.filter(function (model) {
-      return !this.form.cls || this.form.cls.id !== model.id;
+      return !this.form.cls || !this.selfExcept || this.form.cls.id !== model.id;
     }, this);
   }
 });

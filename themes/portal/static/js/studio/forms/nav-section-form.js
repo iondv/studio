@@ -23,6 +23,7 @@ $.extend(Studio.NavSectionForm.prototype, Studio.ModelForm.prototype, {
       name: [
         ['required'],
         ['identifier'],
+        ['reservedName'],
         ['uniqueModel', {
           getModel: this.getUniqueModel
         }]

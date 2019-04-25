@@ -312,5 +312,4 @@ $.extend(Studio.ClassModel.prototype, Studio.Model.prototype, {
     data.key = data.key instanceof Array ? data.key[0] : data.key;
     this.replaceClassAttrNameToId('key', data, this);
   }
-
 });

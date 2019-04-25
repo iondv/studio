@@ -169,19 +169,6 @@ html {
   color: #888;
 }
 
-.language-bar {
-  display: none;
-  float: right;
-  padding: 5px 10px 0 0;
-}
-.language-bar .btn {
-  font-weight: bold;
-  padding: 2px 5px 1px;
-  background: transparent;
-  color: #aaa;
-  border-color: #aaa;
-}
-
 fieldset + fieldset {
   margin-top: 20px;
 }
@@ -202,4 +189,21 @@ legend {
 .wrapper .dataTables_wrapper .pagination > li > a,
 .wrapper .dataTables_wrapper .pagination > li > span {
   padding: 2px 8px;
+}
+.loadable-overlay {
+  display: none;
+  text-align: center;
+}
+.loadable-container.loading .loadable-overlay {
+  display: block;
+}
+.loadable-container.loaded .loadable-overlay {
+  display: none;
+}
+
+.help-content h3 {
+  margin: 10px 0 20px;
+}
+.help-content h4 {
+  margin: 20px 0 15px;
 }

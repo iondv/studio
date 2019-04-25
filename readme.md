@@ -1,20 +1,56 @@
-Эта страница на [Русском](/docs/ru/readme.md)
+<h1 align="center"> <a href="https://www.iondv.com/"><img src="/ion-logo-black-mini.png" alt="IONDV. Framework" width="600" align="center"></a>
+</h1>  
+
+<h4 align="center">JS framework for rapid business application development</h4>
+  
+<p align="center">
+<a href="http://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat" alt="license" title=""></a>
+</p>
+
+<div align="center">
+  <h3>
+    <a href="https://www.iondv.com/" target="_blank">
+      Website
+    </a>
+    <span> | </span>
+    <a href="https://www.iondv.com/portal/get-it" target="_blank">
+      Get it Free
+    </a>
+    <span> | </span>
+    <a href="https://github.com/iondv/framework/docs/en/index.md" target="_blank">
+      Documentation
+    </a>
+  </h3>
+</div>
+
+<p align="center">
+<a href="https://twitter.com/ion_dv" target="_blank"><img src="/twitter.png" height="36px" alt="" title=""></a>
+<a href="https://www.facebook.com/iondv/" target="_blank"><img src="/facebook.png" height="36px" margin-left="20px" alt="" title=""></a>
+<a href="https://www.linkedin.com/company/iondv/" target="_blank"><img src="/linkedin.png" height="36px" margin-left="20px" alt="" title=""></a>
+<a href="https://www.instagram.com/iondv/" target="_blank"><img src="/insta.png" height="36px" margin-left="20px" alt="" title=""></a> 
+</p>
 
 # IONDV. Studio
 
-Studio is a IONDV. Framework application.
+Эта страница на [Русском](/readme_ru.md)
 
-Also it may be used as standalone node.js application or Desktop application.
+Studio is a IONDV. Framework application. Also it may be used as standalone node.js application or Desktop application.
 
 #### Start with IONDV. Framework
 
 * [IONDV. Framework](https://github.com/iondv/framework/)
 * [IONDV. Framework Docs](https://github.com/iondv/framework/blob/master/docs/en/index.md)
 
+<h1 align="center"> <a href="https://www.iondv.com/"><img src="/iondv-studio.png" alt="IONDV. Studio" align="center"></a>
+</h1>  
+
+
 ## Description 
 
 **Studio** is created for developing or editing metadata (for example class, navigation, view, workflow, 
 portal interface) that can be deployed as an IONDV application. 
+
+
 
 ### Demo
 Go to <a href="https://studio.iondv.com">studio.iondv.com</a>. No registration or account needed.
@@ -41,14 +77,14 @@ After that  and:
 application extract in the `applications` folder of your application package.
 * Further you need to build and deploy your application as typical 
 [IONDV. Framework](https://github.com/iondv/framework) application
+
+
 ### Docker
 Follow these steps to deploy docker container:
 
-Start application
+Start application as docker container `docker run -d -p 8888:8888 --name studio iondv/studio`. 
 
-
-Open . 
-
+Open Studio link `http://localhost:8888` in your browser
 
 ## Specific Studio use
 ###  Standalone node.js version

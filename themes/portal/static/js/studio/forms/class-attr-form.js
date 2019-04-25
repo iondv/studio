@@ -59,9 +59,6 @@ $.extend(Studio.ClassAttrForm.prototype, Studio.ModelForm.prototype, {
       type: [
         ['required']
       ],
-      defaultValue: [
-        ['json']
-      ],
       selConditions: [
         ['json']
       ],

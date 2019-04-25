@@ -6,6 +6,7 @@ Studio.Form = function ($modal, studio) {
   this.$form = $modal.find('form');
   this.params = $modal.data('params');
   this.$cancel = $modal.find('.form-cancel');
+  this.$json = $modal.find('.form-json');
   this.events = new Helper.Events('form:');
   this.init();
 };
@@ -15,8 +16,10 @@ $.extend(Studio.Form.prototype, {
   init: function () {
     this.createAttrs();
     this.$cancel.click(this.onCancel.bind(this));
+    this.$json.click(this.onJson.bind(this));
     this.$modal.on('hide.bs.modal', this.onClose.bind(this));
-    this.$modal.on('hidden.bs.modal', this.onCloseAfter.bind(this));
+    this.$modal.on('hidden.bs.modal', this.onAfterClose.bind(this));
+    this.$modal.on('shown.bs.modal', this.onAfterShow.bind(this));
   },
 
   getData: function () {
@@ -66,10 +69,25 @@ $.extend(Studio.Form.prototype, {
     this.events.trigger('close');
   },
 
-  onCloseAfter: function () {
+  onAfterClose: function () {
     if ($('.modal:visible').length) {
       $(document.body).addClass('modal-open');
     }
+  },
+
+  onAfterShow: function () {
+  },
+
+  onJson: function () {
+    this.studio.codeEditorForm.show(this.getJsonData(), 'json', this.setJsonData.bind(this));
+  },
+
+  getJsonData: function () {
+    return this.getData();
+  },
+
+  setJsonData: function (value) {
+    this.setData(JSON.parse(value));
   },
 
   show: function (defaults) {
@@ -94,7 +112,7 @@ $.extend(Studio.Form.prototype, {
 
   jumpToError: function () {
     this.$modal.animate({
-      scrollTop: this.$form.find('.has-error').first().position().top
+      'scrollTop': this.$form.find('.has-error').first().position().top
     }, 700);
   },
 

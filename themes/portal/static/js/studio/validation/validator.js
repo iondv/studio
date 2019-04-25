@@ -13,6 +13,7 @@ Studio.Validator.create = function (attr, data) {
   switch (data[0]) {
     case 'handler': Validator = Studio.HandlerValidator; break;
     case 'identifier': Validator = Studio.IdentifierValidator; break;
+    case 'reservedName': Validator = Studio.ReservedNameValidator; break;
     case 'mask': Validator = Studio.MaskValidator; break;
     case 'required': Validator = Studio.RequiredValidator; break;
     case 'json': Validator = Studio.JsonValidator; break;
@@ -86,7 +87,29 @@ $.extend(Studio.IdentifierValidator.prototype, Studio.Validator.prototype, {
   }
 });
 
-// IDENTIFIER
+// RESERVED NAME
+
+Studio.ReservedNameValidator = function (attr, params) {
+  Studio.Validator.call(this, attr, $.extend({
+    pattern: /^(con|prn|aux|nul|com[0-9]|lpt[0-9])$/i
+  }, params));
+};
+
+$.extend(Studio.ReservedNameValidator.prototype, Studio.Validator.prototype, {
+  constructor: Studio.ReservedNameValidator,
+
+  getMessage () {
+    return this.createMessage('Value must not be a reserved word');
+  },
+
+  validate: function (value) {
+    if (this.params.pattern.test(value)) {
+      this.addError();
+    }
+  }
+});
+
+// MASK
 
 Studio.MaskValidator = function (attr, params) {
   Studio.Validator.call(this, attr, $.extend({

@@ -51,10 +51,32 @@ $.extend(Studio.ClassViewAttrModel.prototype, Studio.Model.prototype, {
 
   exportData: function () {
     let data = Object.assign({}, this.getData());
+    return this.normalizeExportData(data);
+  },
+
+  normalizeExportData: function (data) {
+    if (data) {
+      data.type = parseInt(data.type);
+      this.replaceIdToGroupName(data);
+    }
     return data;
   },
 
   afterImport: function () {
-  }
+    this.normalizeImportData(this.data);
+  },
 
+  normalizeImportData: function (data) {
+    this.replaceGroupNameToId(data);
+  },
+
+  replaceIdToGroupName: function (data) {
+    var group = this.view.getGroup(data.group);
+    data.group = group ? group.data.name : '';
+  },
+
+  replaceGroupNameToId: function (data) {
+    var group = this.view.getGroupByName(data.group);
+    data.group = group ? group.id : '';
+  }
 });

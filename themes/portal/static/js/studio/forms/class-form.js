@@ -24,6 +24,7 @@ $.extend(Studio.ClassForm.prototype, Studio.ModelForm.prototype, {
       name: [
         ['required'],
         ['identifier'],
+        ['reservedName'],
         ['uniqueModel', {
           getModel: this.getUniqueModel
         }]

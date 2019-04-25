@@ -23,7 +23,7 @@
         "pageTemplates": {
           "navigation": {
             "index": "pages/index",
-            "222": "pages/222"
+            "help": "pages/help"
           }
         }
       }

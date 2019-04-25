@@ -45,11 +45,20 @@ $.extend(Studio.ModelForm.prototype, Studio.Form.prototype, {
     return data;
   },
 
+  getJsonData: function () {
+    return this.model.normalizeExportData(this.getData());
+  },
+
+  setJsonData: function (value) {
+    this.setData(this.model.normalizeImportData(JSON.parse(value)));
+  },
+
   create: function (defaults) {
     this.model = null;
     this.reset();
     this.$update.hide();
     this.$create.show();
+    this.$json.hide();
     this.setTitle(this.getCreateTitle());
     this.prepareAttrs();
     this.setData(defaults || {});
@@ -72,6 +81,7 @@ $.extend(Studio.ModelForm.prototype, Studio.Form.prototype, {
     this.reset();
     this.$update.show();
     this.$create.hide();
+    this.$json.show();
     this.setTitle(this.getUpdateTitle());
     this.prepareAttrs();
     this.setData(model.getData());

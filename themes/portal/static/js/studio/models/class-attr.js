@@ -73,18 +73,28 @@ $.extend(Studio.ClassAttrModel.prototype, Studio.Model.prototype, {
 
   exportData: function () {
     let data = Object.assign({}, this.getData());
-    data.type = parseInt(data.type);
-    this.replaceIdToClassName('refClass', data);
-    this.replaceIdToClassName('itemsClass', data);
-    this.replaceIdToClassName('backRef', data);
-    this.replaceIdToClassName('backColl', data);
+    return this.normalizeExportData(data);
+  },
+
+  normalizeExportData: function (data) {
+    if (data) {
+      data.type = parseInt(data.type);
+      this.replaceIdToClassName('refClass', data);
+      this.replaceIdToClassName('itemsClass', data);
+      this.replaceIdToClassName('backRef', data);
+      this.replaceIdToClassName('backColl', data);
+    }
     return data;
   },
 
   afterImport: function () {
-    this.replaceClassNameToId('refClass', this.data);
-    this.replaceClassNameToId('itemsClass', this.data);
-    this.replaceClassNameToId('backRef', this.data);
-    this.replaceClassNameToId('backColl', this.data);
+    this.normalizeImportData(this.data);
+  },
+
+  normalizeImportData: function (data) {
+    this.replaceClassNameToId('refClass', data);
+    this.replaceClassNameToId('itemsClass', data);
+    this.replaceClassNameToId('backRef', data);
+    this.replaceClassNameToId('backColl', data);
   }
 });

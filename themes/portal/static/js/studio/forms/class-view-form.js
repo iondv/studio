@@ -32,6 +32,17 @@ $.extend(Studio.ClassViewForm.prototype, Studio.ModelForm.prototype, {
   getUniqueModel: function (value, validator) {
     return validator.attr.form.cls.getViewByKeyValue(value, validator.attr.name);
   },
+
+  getBehaviorMap: function () {
+    return {
+      'customHandler': {
+        beforeCreate: this.beforeCreate.bind(this)
+      }
+    };
+  },
+
+  beforeCreate: function () {
+  }
 });
 
 // NAV ITEM LIST VIEW
@@ -47,8 +58,6 @@ $.extend(Studio.NavItemListViewForm.prototype, Studio.ClassViewForm.prototype, {
     this.navItem = navItem;
     this.cls = navItem.getClass();
     this.app = this.cls.app;
-    Studio.ModelForm.prototype.create.call(this, {
-      name: 'list'
-    });
+    Studio.ModelForm.prototype.create.call(this, {'name': 'list'});
   },
 });

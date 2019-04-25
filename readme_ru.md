@@ -43,6 +43,11 @@ This page on [English](/readme.md)
 * Далее необходимо собрать и развернуть приложение, согласно инструкции 
 [IONDV. Framework](https://github.com/iondv/framework)
 
+### Docker
+
+Запустите в docker-конейтнере выполнив `docker run -d -p 8888:8888 --name studio iondv/studio`. 
+
+Откройтейте в браузере по ссылке `http://localhost:8888`
 
 ## Варианты использования Студии
 ### Отдельное приложение node.js

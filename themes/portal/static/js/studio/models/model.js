@@ -41,6 +41,10 @@ $.extend(Studio.Model.prototype, {
     return Helper.generateId();
   },
 
+  idEmptyValue: function (attrName) {
+    return !this.data.hasOwnProperty(attrName) || this.data[attrName] === '' || this.data[attrName] === null;
+  },
+
   getId: function () {
     return this.id;
   },
@@ -83,6 +87,12 @@ $.extend(Studio.Model.prototype, {
 
   setOldValue: function (attrName) {
     this.oldData[attrName] = this.data[attrName];
+  },
+
+  setDefaultValue: function (attrName, value) {
+    if (this.idEmptyValue(attrName)) {
+      this.data[attrName] = value;
+    }
   },
 
   getData: function (key) {

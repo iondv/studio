@@ -112,11 +112,13 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
     var rect = data.umlTarget.getActiveItem();
     if (rect) {
       rect.deactivate();
+      var app = this.studio.getActiveApp();
+      this.menu.activate(this.menu.getItemByType('classes', this.menu.getItem(app.id)));
     }
   },
 
   onClickRect: function (event, data) {
-    this.studio.menu.activate(this.menu.getItem(data.umlTarget.id));
+    this.menu.activate(this.menu.getItem(data.umlTarget.id));
   },
 
   onClickRectAttr: function (event, data) {
@@ -240,7 +242,9 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
     var links = [];
     var refClass = this.getClassAttrRef('refClass', attr);
     var itemsClass = this.getClassAttrCollection('itemsClass', attr);
-    Helper.Array.pushNotEmpty(links, refClass, itemsClass);
+    var backRef = this.getClassBackRef('backRef', attr);
+    var backColl = this.getClassBackCollection('backColl', attr);
+    Helper.Array.pushNotEmpty(links, refClass, itemsClass, backRef, backColl);
     return links;
   },
 
@@ -257,6 +261,30 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
   },
 
   getClassAttrCollection: function (prop, attr) {
+    let target = attr.getRefClass(prop);
+    if (target) {
+      return {
+        'type': 'collection',
+        'class': attr.cls.id,
+        'source': attr.id,
+        'target': target.id
+      };
+    }
+  },
+
+  getClassBackRef: function (prop, attr) {
+    let target = attr.getRefClass(prop);
+    if (target) {
+      return {
+        'type': 'ref',
+        'class': attr.cls.id,
+        'source': attr.id,
+        'target': target.id
+      };
+    }
+  },
+
+  getClassBackCollection: function (prop, attr) {
     let target = attr.getRefClass(prop);
     if (target) {
       return {
@@ -298,7 +326,7 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
   showClassCreateForm: function (data) {
     this.studio.classForm.create(this.studio.getActiveApp(), {
       options: {
-        uml: {
+        'uml': {
           offset: {
             'left': data.offsetX,
             'top': data.offsetY

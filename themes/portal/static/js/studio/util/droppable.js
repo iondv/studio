@@ -44,7 +44,7 @@ $.extend(Studio.Droppable.prototype, {
       'top': event.pageY - this._y
     };
     if (this.isDragOffset(offset)) {
-      this._dragged ? this.drag(offset) : this.start(offset);
+      this._dragged ? this.drag(offset, event) : this.start(offset);
     }
   },
 
@@ -75,7 +75,7 @@ $.extend(Studio.Droppable.prototype, {
     }
   },
 
-  drag: function (offset) {
+  drag: function (offset, event) {
     offset.left += this._pos.left;
     offset.top += this._pos.top;
     if (offset.left < this._areaOffset.left) {
@@ -87,6 +87,7 @@ $.extend(Studio.Droppable.prototype, {
     this.$clone.offset(offset);
     this.events.trigger('drag', {
       '$item': this.$clone,
+      '$target': $(document.elementFromPoint(event.clientX, event.clientY)),
       'position': this.getPosition(offset)
     });
   },

@@ -1,0 +1,90 @@
+
+<div id="studio-modal-help" class="modal-alert modal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">IONDV. Studio Help</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-loadable loadable-container loading loaded" data-url="<%= module %>/help">
+          <div class="loadable-content">
+            <div class="help-content">
+              <h3>
+                Metadata Description
+              </h3>
+              <p>
+                <a href="https://iondv.com" target="_blank">IONDV. Framework</a> is based on metadata. Metadata (Meta) - a complex of JSON files that describe the set of structures, which the app uses to operate.
+                We have three main types of meta: meta class, meta view and meta navigation.
+                In this sandbox you should configure only the meta class, the system creates the view and navigation for classes by itself.
+              </p>
+              <h4>
+                Meta class
+              </h4>
+              <p>
+                Click plus to create a new class, you will see a new window with five fields to fill in.
+                Two of them - marked with a red asterisk - are mandatory to fill: <strong>Name</strong> and <strong>Caption</strong>.
+                The other three fields are the properties that describe the class: <strong>Ancestor</strong>, <strong>Creation tracker</strong>,
+                <strong>Modification tracker</strong>.
+              </p>
+
+              <p>
+                <strong>Name</strong> - the system name.<br>
+                <strong>Caption</strong> - the logical name that is displayed in the UI.<br>
+                <strong>Ancestor</strong> - the inheritance that allows you to create a new meta class based on a parent one with all its attributes.
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/ancestor.md" target="_blank">
+                  <strong>Read more</strong></a>.<br>
+                <strong>Creation tracker</strong>- the time tag of created objects:  allows you to save the date/time of creation of the object in the class.
+                It requires the corresponding class attribute, "name" of which should be entered into this field.
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/time_user_tracker.md" target="_blank">
+                  <strong>Read more</strong></a>.<br>
+                <strong>Modification tracker</strong> - the time tag of committed changes: allows you to save the date/time of committed changes of the object in the class.
+                It requires the corresponding class attribute, "name" of which be entered into this field.
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/time_user_tracker.md" target="_blank">
+                  <strong>Read more</strong></a>.<br>
+              </p>
+
+              <h4>
+                Class Attributes
+              </h4>
+
+              <p>
+                Click plus to create a new class attribute, and you will see a new window with seven fildes to fill in.<br>
+                Three of them are mandatory to fill - <strong>Name</strong> and <strong>Caption</strong> mean the same as for class.
+              </p>
+
+              <p>
+                <strong>Attribute types</strong> - indicates the type of data supported by the attribute.
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/property_types.md" target="_blank">
+                  <strong>Read more</strong></a>.<br>
+                <strong>Order number</strong> - sets the position of the attribute regarding the other attributes of the same class.<br>
+                <strong>Hint</strong> - specifies the message that will appear in the UI next to the attribute name.<br>
+                <strong>Reference class</strong> - is a data type that stores a simple value and that system interprets as a reference to the key attribute of an object of another class.
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/atr_ref_backref.md" target="_blank">
+                  <strong>Read more</strong></a>.<br>
+                <strong>Item class</strong> -  is a data type that allows you to display the list of other objects in one.
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/atr_itemclass_backcoll.md" target="_blank">
+                  <strong>Read more</strong></a>.<br>
+                <strong>Read-only</strong> - allows or denies changing attribute value.<br>
+                <strong>Nullable</strong> - allows or denies an empty attribute value.<br>
+                <strong>Unique</strong> - is a unique value that disables create two class objects with the same values.<br>
+                <strong>Auto-assigned</strong> - allows or denies autocompletion of the fields.
+              </p>
+
+              <h4>
+                IONDV.Framework Documentation
+              </h4>
+              <p>
+                The IONDV.Framework documentation is available in two languages —  English and Russian. See the full detailed information
+                in our <a href="https://github.com/iondv/framework/blob/master/docs/en/index.md" target="_blank"><strong>documentation</strong></a>.
+              </p>
+            </div>
+          </div>
+          <div class="loadable-overlay">
+            <span class="fa fa-refresh fa-spin"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

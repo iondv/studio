@@ -11,7 +11,8 @@ $.extend(Studio.AppForm.prototype, Studio.ModelForm.prototype, {
     return {
       name: [
         ['required'],
-        ['identifier']
+        ['identifier'],
+        ['reservedName']
       ],
       version: [
         ['required'],

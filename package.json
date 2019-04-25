@@ -1,7 +1,7 @@
 {
   "name": "studio",
   "description": "IONDV. Studio",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "homepage": "https://github.com/iondv/studio",
   "bugs": {
     "url": "https://github.com/iondv/studio/issues"
@@ -22,9 +22,7 @@
   },
   "private": true,
   "ionModulesDependencies": {
-    "registry": "2.1.4",
-    "portal": "1.4.0",
-    "ionadmin": "2.2.0"
+    "portal": "1.4.0"
   },
   "ionMetaDependencies": {},
   "dependencies": {

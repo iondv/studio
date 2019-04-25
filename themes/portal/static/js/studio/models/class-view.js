@@ -10,6 +10,65 @@ Studio.ClassViewModel = function (cls, data) {
 $.extend(Studio.ClassViewModel.prototype, Studio.Model.prototype, {
   constructor: Studio.ClassViewModel,
 
+  init: function () {
+    Studio.Model.prototype.init.call(this);
+    switch (this.data.name) {
+      case 'list': this.initAsList(); break;
+      case 'create': this.initAsCreate(); break;
+      case 'item': this.initAsItem(); break;
+    }
+  },
+
+  initAsList: function () {
+    this.setDefaultValue('commands', [
+      this.getCommandParams({
+        'id': 'CREATE',
+        'caption': 'Create'
+      }), this.getCommandParams({
+        'id': 'EDIT',
+        'caption': 'Edit',
+        'needSelectedItem': true
+      })]);
+  },
+
+  initAsCreate: function () {
+    this.setDefaultValue('commands', [
+      this.getCommandParams({
+        'id': 'SAVE',
+        'caption': 'Create'
+      }), this.getCommandParams({
+        'id': 'SAVEANDCLOSE',
+        'caption': 'Create and close'
+      })]);
+  },
+
+  initAsItem: function () {
+    this.setDefaultValue('commands', [
+      this.getCommandParams({
+        'id': 'SAVE',
+        'caption': 'Save'
+      }), this.getCommandParams({
+        'id': 'SAVEANDCLOSE',
+        'caption': 'Save and close'
+      }), this.getCommandParams({
+        'id': 'DELETE',
+        'caption': 'Delete'
+      })]);
+  },
+
+  getCommandParams: function (params) {
+    return Object.assign({
+      'id': 'ID',
+      'caption': 'Caption',
+      'visibilityCondition': null,
+      'enableCondition': null,
+      'needSelectedItem': false,
+      'signBefore': false,
+      'signAfter': false,
+      'isBulk': false
+    }, params);
+  },
+
   isEmpty: function () {
     return !this.attrs.length && !this.groups.length;
   },
@@ -72,6 +131,16 @@ $.extend(Studio.ClassViewModel.prototype, Studio.Model.prototype, {
   },
 
   // MOVING
+
+  moveItemBefore: function (item, target) {
+    if (target) {
+      item.data.group = target.data.group;
+      item.data.orderNumber = target.data.orderNumber - 1;
+    } else {
+      item.data.orderNumber = 0;
+    }
+    this.normalizeItemOrder(item.data.group);
+  },
 
   moveItemAfter: function (item, target) {
     if (target) {

@@ -38,14 +38,15 @@ $.extend(Studio.ViewMaker.prototype, {
   },
 
   initMakerListeners: function () {
+    this.droppable.events.on('drag', this.onDrag.bind(this));
     this.droppable.events.on('drop', this.onDrop.bind(this));
-    this.$sourceAttrList.on('click', '.view-class-attr', this.onClickClassAttr.bind(this));
+    this.$sourceAttrList.on('mousedown', '.view-class-attr', this.onClickClassAttr.bind(this));
     // this.$sourceAttrList.on('dblclick', '.view-class-attr', this.onDoubleClickClassAttr.bind(this));
-    this.$targetTabNav.on('click', '.tab-nav-item', this.onClickTabNav.bind(this));
+    this.$targetTabNav.on('mousedown', '.tab-nav-item', this.onClickTabNav.bind(this));
     this.$targetTabNav.on('dblclick', '.tab-nav-item', this.onDoubleClickViewGroup.bind(this));
-    this.$targetTabContent.on('click', '.view-attr', this.onClickViewAttr.bind(this));
+    this.$targetTabContent.on('mousedown', '.view-attr', this.onClickViewAttr.bind(this));
     this.$targetTabContent.on('dblclick', '.view-attr', this.onDoubleClickViewAttr.bind(this));
-    this.$targetTabContent.on('click', '.view-group-head', this.onClickViewGroup.bind(this));
+    this.$targetTabContent.on('mousedown', '.view-group-head', this.onClickViewGroup.bind(this));
     this.$targetTabContent.on('dblclick', '.view-group-head', this.onDoubleClickViewGroup.bind(this));
   },
 
@@ -161,7 +162,7 @@ $.extend(Studio.ViewMaker.prototype, {
 
   onClickViewGroup: function (event) {
     this.clearSelectedTarget();
-    $(event.currentTarget).parent().addClass('selected');
+    $(event.currentTarget).closest('.view-group').addClass('selected');
   },
 
   onDoubleClickViewGroup: function (event) {
@@ -293,13 +294,28 @@ $.extend(Studio.ViewMaker.prototype, {
     });
   },
 
+  clearDroppableTarget: function () {
+    this.$targetTabContent.find('.target').removeClass('target');
+  },
+
   // DRAG
 
   onDrag: function (event, data) {
+    var $place = data.$target.closest('.droppable-place');
+    var $item = $place.closest('.droppable-item');
+    var id = data.$item.data('id');
+    if (!$place.hasClass('target')) {
+      this.clearDroppableTarget();
+      if (!$item.closest('.dragged').length && !$item.closest('[data-id="'+ id +'"]').length) {
+        $place.addClass('target');
+      }
+    }
   },
 
   onDrop: function (event, data) {
     var id = data.$item.data('id');
+    data.pos = data.$target.closest('.droppable-place').data('pos');
+    this.clearDroppableTarget();
     data.classAttr = this.view.cls.getAttr(id);
     data.viewItem = this.view.getItem(id);
     if (data.classAttr) {
@@ -320,7 +336,7 @@ $.extend(Studio.ViewMaker.prototype, {
 
   dropViewItem: function (data) {
     data.target = this.getViewTarget(data.$target);
-    data.isGroupTarget = data.target instanceof Studio.ClassViewGroupModel;
+    data.isGroupTarget = data.pos === 'inner' && data.target instanceof Studio.ClassViewGroupModel;
     if (data.target === data.viewItem) {
       return false;
     }
@@ -350,7 +366,9 @@ $.extend(Studio.ViewMaker.prototype, {
       this.view.moveItemInto(data.viewItem, data.target);
       return true;
     } else if (data.target) {
-      this.view.moveItemAfter(data.viewItem, data.target);
+      data.pos === 'before'
+        ? this.view.moveItemBefore(data.viewItem, data.target)
+        : this.view.moveItemAfter(data.viewItem, data.target);
       return true;
     } else if (this.inTargetNav(data.$target)) {
       this.view.moveGroupToTab(data.viewItem);
@@ -363,7 +381,9 @@ $.extend(Studio.ViewMaker.prototype, {
       this.view.moveItemInto(data.viewItem, data.target);
       return true;
     } else if (data.target) {
-      this.view.moveItemAfter(data.viewItem, data.target);
+      data.pos === 'before'
+        ? this.view.moveItemBefore(data.viewItem, data.target)
+        : this.view.moveItemAfter(data.viewItem, data.target);
       return true;
     } else if (this.inTargetArea(data.$target)) {
       this.view.moveItemInto(data.viewItem, this.view.getDefaultGroup());
@@ -371,18 +391,18 @@ $.extend(Studio.ViewMaker.prototype, {
     }
   },
 
-  getViewTarget: function ($item) {
-    return this.view.getAttr($item.closest('.view-attr').data('id'))
-        || this.view.getGroup($item.closest('.view-group').data('id'))
-        || this.view.getGroup($item.closest('.tab-nav-item').data('id'))
-        || this.view.getGroup($item.closest('.tab-pane').data('id'));
+  getViewTarget: function ($target) {
+    return this.view.getAttr($target.closest('.view-attr').data('id'))
+        || this.view.getGroup($target.closest('.view-group').data('id'))
+        || this.view.getGroup($target.closest('.tab-nav-item').data('id'))
+        || this.view.getGroup($target.closest('.tab-pane').data('id'));
   },
 
-  inTargetArea: function ($item) {
-    return $item.closest('.studio-view-target .tab-content').length > 0;
+  inTargetArea: function ($target) {
+    return $target.closest('.studio-view-target .tab-content').length > 0;
   },
 
-  inTargetNav: function ($item) {
-    return $item.closest('.studio-view-target .nav').length > 0;
+  inTargetNav: function ($target) {
+    return $target.closest('.studio-view-target .nav').length > 0;
   }
 });

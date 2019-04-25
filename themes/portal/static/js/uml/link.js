@@ -105,7 +105,7 @@ $.extend(Uml.Link.prototype, {
 // PARENT LINK
 
 Uml.ParentLink = function (data, page) {
-  this.sample = 'parentLink';
+  this.sample = this.sample || 'parentLink';
   Uml.Link.call(this, data, page);
 };
 
@@ -120,7 +120,7 @@ $.extend(Uml.ParentLink.prototype, Uml.Link.prototype, {
 // REF LINK
 
 Uml.RefLink = function (data, page) {
-  this.sample = 'refLink';
+  this.sample = this.sample || 'refLink';
   Uml.Link.call(this, data, page);
 };
 

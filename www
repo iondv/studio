@@ -24,7 +24,7 @@ function getDeploy(deployParam) {
       return deploy.modules[getParam[0]].globals[getParam[1]] ?
         deploy.modules[getParam[0]].globals[getParam[1]] : null;
     } else {
-      throw ('Не предусмотрена обработки более двух параметров deploy. Нужно запускать через фреймворк');
+      throw ('It is not possible to process deploy parameters with a depth of more than two. Need to run through the framework');
     }
   } else {
     return null;
@@ -35,16 +35,34 @@ const moduleName = 'portal';
 app.locals.pageEndContent = getDeploy( moduleName + '.pageEndContent') || getDeploy('pageEndContent') || '';
 
 app.use('/', express.static(__dirname));
-app.get('/' + defaultPage, (request, response) => {
-  response.render(defaultPageNav, {
-    module: '',
-    portal: staticFolder,
-    baseUrl: '/'
+
+const pageTemplates = getDeploy( moduleName + '.pageTemplates');
+const navigation = pageTemplates ? pageTemplates.navigation : null;
+
+if(navigation) {
+  Object.keys(navigation).forEach((item) => {
+    app.get('/' + item, (request, response) => {
+      response.render(navigation[item], {
+        module: '',
+        portal: staticFolder,
+        baseUrl: '/'
+      });
+    });
   });
-});
+} else {
+  app.get('/' + defaultPage, (request, response) => {
+    response.render(defaultPageNav, {
+      module: '',
+      portal: staticFolder,
+      baseUrl: '/'
+    });
+  });
+}
 app.get('/*', (request, response) => {
   response.redirect('/' + defaultPage);
 });
+
+
 app.listen(port, (err) => {
   if (err) {
     return console.log(JSON.stringify(err, null, '\t'));

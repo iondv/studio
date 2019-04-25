@@ -18,8 +18,8 @@ $.extend(Studio.CodeEditorForm.prototype, Studio.Form.prototype, {
     this.$save.click(this.onSave.bind(this));
   },
 
-  show: function (value, attr, mode) {
-    this.attr = attr;
+  show: function (value, mode, afterSave) {
+    this.afterSave = afterSave;
     this.editor.session.setMode('ace/mode/'+ mode);
     this.editor.setValue(Helper.stringifyJson(value, 3));
     //this.editor.clearSelection();
@@ -27,6 +27,15 @@ $.extend(Studio.CodeEditorForm.prototype, Studio.Form.prototype, {
     this.editor.focus();
     this.alert.hide();
     this.$modal.modal('show');
+  },
+
+  onAfterShow: function () {
+    this.setFormHeight();
+  },
+
+  setFormHeight: function () {
+    var modalH = this.$modal.find('.modal-content');
+    var winH = $(window).height();
   },
 
   hasError: function () {
@@ -37,7 +46,7 @@ $.extend(Studio.CodeEditorForm.prototype, Studio.Form.prototype, {
     if (this.hasError()) {
       return this.alert.danger(Helper.L10n.translate('Invalid code'));
     }
-    this.attr.setValue(this.editor.getValue());
     this.$modal.modal('hide');
-  },
+    this.afterSave(this.editor.getValue());
+  }
 });

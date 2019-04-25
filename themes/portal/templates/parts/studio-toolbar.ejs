@@ -1,5 +1,5 @@
 
-<div class="studio-toolbar">
+<div class="studio-toolbar clearfix">
 
   <div class="toolbar-section" data-id="class">
     <button class="btn btn-sm btn-default" title="Create class" data-action="createClass">
@@ -348,7 +348,18 @@
 
   <!-- PULL RIGHT -->
 
-  <div class="toolbar-section pull-right mr0" data-id="uploadApp">
+  <div class="language-bar pull-right mr0" data-id="language">
+    <a href="portal#en" class="btn btn-default btn-sm" data-language="en">EN</a>
+    <a href="portal#ru" class="btn btn-default btn-sm" data-language="ru">RU</a>
+  </div>
+
+  <div class="pull-right mr10">
+    <button class="btn btn-sm btn-primary" title="Help" data-action="help">
+      <span class="fa fa-question"></span>
+    </button>
+  </div>
+
+  <div class="toolbar-section pull-right" data-id="uploadApp">
     <button class="btn btn-sm btn-default" title="Upload application" data-action="uploadApp"
             data-file="#uploadApp">
       <span class="glyphicon glyphicon-open"></span>
@@ -356,7 +367,7 @@
     <input type="file" class="upload-app-file hidden" accept=".zip">
   </div>
 
-  <div class="toolbar-section pull-right" data-id="exportApp">
+  <div class="toolbar-section pull-right mr5" data-id="exportApp">
     <button class="btn btn-sm btn-default" title="Download application" data-action="downloadApp"
             data-select-message="Select an application to download">
       <span class="glyphicon glyphicon-save"></span>
