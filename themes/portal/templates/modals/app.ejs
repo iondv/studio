@@ -16,30 +16,115 @@ let params = {
         <h4 class="modal-title l10n">Application</h4>
       </div>
       <div class="modal-body">
+
+        <div class="form-alert alert">
+          <button type="button" class="close"><span aria-hidden="true">×</span></button>
+          <div class="alert-content"></div>
+        </div>
+
         <form class="form form-horizontal">
+          <div class="tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="active"><a href="#app-main" data-toggle="tab">Main</a></li>
+              <li><a href="#app-dependencies" role="tab" data-toggle="tab">Dependencies</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="app-main">
+                <%- partial('./attrs/checkbox', {
+                  name: 'serverSync',
+                  label: 'Server sync'
+                }) %>
 
-          <%- partial('./attrs/string', {
-            name: 'name',
-            label: 'Name',
-            required: true,
-            mask: {
-              regex: '^[a-zA-Z0-9-]+$'
-            }
-          }) %>
+                <%- partial('./attrs/string', {
+                  name: 'path',
+                  label: 'Path',
+                  required: true,
+                  extension: {
+                    visibility: {serverSync: true}
+                  }
+                }) %>
 
-          <%- partial('./attrs/string', {
-            name: 'description',
-            label: 'Description'
-          }) %>
+                <%- partial('./attrs/string', {
+                  name: 'name',
+                  label: 'Name',
+                  required: true,
+                  mask: {regex: '^[a-zA-Z0-9-]+$'},
+                  extension: {
+                    visibility: ['OR', {serverSync: false}, {$update: true}]
+                  }
+                }) %>
 
-          <%- partial('./attrs/string', {
-            name: 'version',
-            label: 'Version',
-            required: true,
-            mask: '9[9][9].9[9][9].9[9][9]',
-            defaultValue: '0.0.0'
-          }) %>
+                <%- partial('./attrs/string', {
+                  name: 'description',
+                  label: 'Description',
+                  extension: {
+                    visibility: ['OR', {serverSync: false}, {$update: true}]
+                  }
+                }) %>
 
+                <%- partial('./attrs/string', {
+                  name: 'version',
+                  label: 'Version',
+                  mask: '9[9][9].9[9][9].9[9][9]',
+                  defaultValue: '0.0.0',
+                  extension: {
+                    visibility: ['OR', {serverSync: false}, {$update: true}]
+                  }
+                }) %>
+              </div>
+
+              <div class="tab-pane" id="app-dependencies">
+                <%- partial('./attrs/check-list', {
+                  name: 'ionModulesDependencies',
+                  label: 'Ion modules',
+                  items: [{
+                    value: 'ionadmin',
+                    text: 'ionadmin'
+                  },{
+                    value: 'registry',
+                    text: 'registry'
+                  },{
+                    value: 'report',
+                    text: 'report'
+                  },{
+                    value: 'rest',
+                    text: 'rest'
+                  },{
+                    value: 'soap',
+                    text: 'soap'
+                  },{
+                    value: 'dashboard',
+                    text: 'dashboard'
+                  },{
+                    value: 'geomap',
+                    text: 'geomap'
+                  },{
+                    value: 'gantt-chart',
+                    text: 'gantt-chart'
+                  },{
+                    value: 'portal',
+                    text: 'portal'
+                  }]
+                }) %>
+
+                <%- partial('./attrs/check-list', {
+                  name: 'ionMetaDependencies',
+                  label: 'Ion meta',
+                  items: [{
+                    value: 'viewlib',
+                    text: 'viewlib'
+                  },{
+                    value: 'viewlib-extra',
+                    text: 'viewlib-extra'
+                  },{
+                    value: 'extensions',
+                    text: 'extensions'
+                  }]
+                }) %>
+              </div>
+            </div>
+
+          </div>
         </form>
       </div>
       <div class="modal-footer">

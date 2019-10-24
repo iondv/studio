@@ -12,6 +12,9 @@ $.extend(Studio.CheckboxFormAttr.prototype, Studio.FormAttr.prototype, {
   },
 
   setValue: function (value) {
+    if (value === null || value === undefined) {
+      value = this.getDefaultValue();
+    }
     this.$value.prop('checked', !!value);
   }
 });

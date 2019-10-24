@@ -17,8 +17,27 @@ $.extend(Studio.AppModel.prototype, Studio.Model.prototype, {
     this.setChangedState(true);
   },
 
+  isServerSync: function () {
+    return this.data.serverSync;
+  },
+
+  getPath: function () {
+    return this.data.path;
+  },
+
   getDescription: function () {
     return this.data.description;
+  },
+
+  getModuleNames: function () {
+    return this.data.ionModulesDependencies;
+  },
+
+  setData: function () {
+    Studio.Model.prototype.setData.apply(this, arguments);
+    if (this.deploy) {
+      this.deploy.updateModules();
+    }
   },
 
   getExternalId: function () {
@@ -310,9 +329,26 @@ $.extend(Studio.AppModel.prototype, Studio.Model.prototype, {
   },
 
   cropChangeLogs: function () {
-    if (this.changeLogs.length > 150) {
-      this.changeLogs = this.changeLogs.slice(0, 100);
+    if (this.changeLogs.length > 100) {
+      this.changeLogs = this.changeLogs.slice(0, 50);
     }
+  },
+
+  // DEPLOY
+
+  createDeploy: function (data) {
+    this.deploy = new Studio.DeployModel(this, {
+      'namespace': this.data.name,
+      'parametrised': true,
+      'deployer': 'built-in',
+      ...data
+    });
+  },
+
+  // PACKAGE
+
+  createPackage: function (data) {
+    this.package = new Studio.PackageModel(this, data);
   },
 
   // STORE
@@ -325,11 +361,14 @@ $.extend(Studio.AppModel.prototype, Studio.Model.prototype, {
     data.tasks = Helper.Array.mapMethod('exportData', this.tasks);
     data.interfaces = Helper.Array.mapMethod('exportData', this.interfaces);
     data.changeLogs = this.changeLogs;
+    data.package = this.package.exportData();
+    data.deploy = this.deploy.exportData();
     return data;
   },
 
   importData: function (data) {
     data = data || {};
+    data.name = data.name || '-';
     this.setData(data);
     this.clear();
     this.createClasses(data.classes);
@@ -338,17 +377,23 @@ $.extend(Studio.AppModel.prototype, Studio.Model.prototype, {
     this.createTasks(data.tasks);
     this.createInterfaces(data.interfaces);
     this.createChangeLogs(data.changeLogs);
+    this.createPackage(data.package);
+    this.createDeploy(data.deploy);
     Helper.Array.eachMethod('afterImport', this.classes);
     Helper.Array.eachMethod('afterImport', this.navSections);
     Helper.Array.eachMethod('afterImport', this.workflows);
     Helper.Array.eachMethod('afterImport', this.tasks);
     Helper.Array.eachMethod('afterImport', this.interfaces);
+    this.package.afterImport();
+    this.deploy.afterImport();
     delete this.data.classes;
     delete this.data.navSections;
     delete this.data.workflows;
     delete this.data.tasks;
     delete this.data.interfaces;
     delete this.data.changeLogs;
+    delete this.data.deploy;
+    delete this.data.package;
   },
 
   afterUpload: function () {

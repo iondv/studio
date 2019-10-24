@@ -1,0 +1,57 @@
+<%
+  let params = {};
+%>
+<%- partial('../attrs/params', {params}) %>
+
+<div class="list-attr attr <%- params.cssClass %> form-group<%- params.required %>"
+     data-type="deployRestAuthMode"
+     data-name="<%- params.name %>"
+     data-extension="<%= params.extension %>"
+     data-model="<%= params.model %>"
+     data-action="<%- params.action %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <div class="table-container">
+      <table class="table">
+        <thead>
+        <tr>
+          <td>Active</td>
+          <td>Name</td>
+          <td>Auth type</td>
+          <td class="action-cell hidden"></td>
+        </tr>
+        </thead>
+        <tbody>
+          <%- partial('./module-rest-auth-mode-row', {id: 'acceptor'}) %>
+          <%- partial('./module-rest-auth-mode-row', {id: 'crud'}) %>
+          <%- partial('./module-rest-auth-mode-row', {id: 'custom'}) %>
+        </tbody>
+      </table>
+    </div>
+    <div class="hidden actions mt10">
+      <button type="button" data-id="append" class="btn-sm btn btn-success l10n">Append</button>
+    </div>
+    <div class="hint-block"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+
+  <template data-id="row">
+    <tr data-id="{{id}}">
+      <td><input type="checkbox" name="active"></td>
+      <td>
+        <input name="name" type="text" class="form-control" value="{{name}}" >
+      </td>
+      <td>
+        <select name="type" class="form-control">
+          <option value="header">Header</option>
+          <option value="none">None</option>
+          <option value="token">Token</option>
+        </select>
+      </td>
+      <td class="action-cell hidden">
+        <span data-action="remove" class="fa fa-trash text-danger" title="Remove"></span>
+      </td>
+    </tr>
+  </template>
+</div>
+

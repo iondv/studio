@@ -8,12 +8,21 @@ $.extend(Studio.FileFormAttr.prototype, Studio.FormAttr.prototype, {
   constructor: Studio.FileFormAttr,
 
   init: function () {
+    this.image = this.$attr.data('image');
     this.$file = this.$attr.find('[type="file"]');
     this.$link = this.$attr.find('.file-download-link');
-
     this.$file.change(this.onChangeFile.bind(this));
     this.$value.change(this.onChangeValue.bind(this));
     this.$link.click(this.onClickLink.bind(this));
+  },
+
+  getExtension: function () {
+    let index = this.file.name.lastIndexOf('.');
+    return this.file.name.substring(index + 1);
+  },
+
+  getMimeType: function () {
+    return this.file.type;
   },
 
   prepare: function () {
@@ -21,15 +30,18 @@ $.extend(Studio.FileFormAttr.prototype, Studio.FormAttr.prototype, {
     this.fileId = Helper.generateId();
   },
 
-  onChangeValue: function () {
+  onChangeValue: function (event) {
     this.drawLink();
+    this.onChange(event);
   },
 
   onClickLink: function () {
     var file = Helper.File.get(this.getValue());
     if (file) {
       var blob = Helper.File.getBlob(file.content);
-      blob && saveAs(blob, file.name);
+      if (blob) {
+        saveAs(blob, file.name);
+      }
     }
   },
 

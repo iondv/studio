@@ -12,6 +12,7 @@ window.Studio = function ($main) {
   this.sidebar = new Studio.Sidebar(this.$main.find('.studio-sidebar'), this);
   this.tabs = new Studio.Tabs(this.$main.find('.studio-tabs'), this);
   this.menu = new Studio.SidebarMenu(this.$main.find('.studio-sidebar-menu'), this);
+
   this.appForm = new Studio.AppForm($('#app-modal'), this);
   this.appMergeForm = new Studio.AppMergeForm($('#app-merge-modal'), this);
   this.classForm = new Studio.ClassForm($('#class-modal'), this);
@@ -32,6 +33,18 @@ window.Studio = function ($main) {
   this.exportForm = new Studio.ExportForm($('#export-modal'), this);
   this.importTaskForm = new Studio.ImportTaskForm($('#import-task-modal'), this);
   this.codeEditorForm = new Studio.CodeEditorForm($('#code-editor-modal'), this);
+
+  this.deployForm = new Studio.DeployForm($('#deploy-modal'), this);
+  this.deployGlobalForm = new Studio.DeployGlobalForm($('#deploy-global-modal'), this);
+  this.deployGlobalModuleTitleForm = new Studio.DeployGlobalModuleTitleForm($('#deploy-global-module-title-modal'), this);
+  this.deployGlobalTopMenuForm = new Studio.DeployGlobalTopMenuForm($('#deploy-global-top-menu-modal'), this);
+  this.deployGlobalPluginForm = new Studio.DeployGlobalPluginForm($('#deploy-global-plugin-modal'), this);
+  this.deployGlobalJobForm = new Studio.DeployGlobalJobForm($('#deploy-global-job-modal'), this);
+
+  this.deployModuleForm = new Studio.DeployModuleForm($('#deploy-module-modal'), this);
+  this.deployModuleRegistryForm = new Studio.DeployModuleRegistryForm($('#deploy-module-registry-modal'), this);
+  this.deployModuleRestForm = new Studio.DeployModuleRestForm($('#deploy-module-rest-modal'), this);
+
   this.modalHelp = new Studio.Modal($('#studio-modal-help'), this);
   this.alert = new Studio.ModalAlert($('#studio-modal-alert'), this);
   this.classUml = new Studio.ClassUmlAdapter(this.$main.find('.studio-class-uml'), this);
@@ -43,6 +56,18 @@ window.Studio = function ($main) {
   this.workflowViewMaker = new Studio.WorkflowViewMaker(this.$main.find('.studio-workflow-view-container'), this);
   this.taskArea = new Studio.TaskArea(this.$main.find('.studio-task-container'), this);
   this.changelogArea = new Studio.ChangelogArea(this.$main.find('.studio-changelog-container'), this);
+
+  this.deploy = new Studio.DeployModelView(this.$main.find('.studio-deploy'), this);
+  this.deployGlobal = new Studio.DeployGlobalModelView(this.$main.find('.studio-deploy-global'), this);
+  this.deployGlobalModuleTitleList = new Studio.DeployGlobalModuleTitleList(this.$main.find('.deploy-global-module-title-list'), this);
+  this.deployGlobalTopMenuList = new Studio.DeployGlobalTopMenuList(this.$main.find('.deploy-global-top-menu-list'), this);
+  this.deployGlobalPluginList = new Studio.DeployGlobalPluginList(this.$main.find('.deploy-global-plugin-list'), this);
+  this.deployGlobalJobList = new Studio.DeployGlobalJobList(this.$main.find('.deploy-global-job-list'), this);
+  this.deployModuleList = new Studio.DeployModuleList(this.$main.find('.deploy-module-list'), this);
+  this.deployModule = new Studio.DeployModuleModelView(this.$main.find('.studio-deploy-module'), this);
+
+  this.standalone = new Studio.Standalone(this, this.$main.data('standalone'));
+
   this.init();
 };
 
@@ -65,12 +90,14 @@ $.extend(Studio.prototype, {
     setTimeout(function () {
       store.set(this.VISITED_STORE_KEY, true);
     }.bind(this), 0);
+
     /*
     setTimeout(function () {
-      $('.menu-item[data-type="classes"]').find('.menu-item-title').click();
-      $('.btn[data-action="viewMode"]').click();
-      var $select = $('[data-action="selectClassView"]');
-      $select.val($select.find('option').last().attr('value'));
+      $('.menu-item[data-type="deploy"]').find('>.menu-item-head >.menu-item-title').click();
+      $('.menu-item[data-type="deployModules"]').find('>.menu-item-head >.menu-item-title').click();
+      //$('.btn[data-action="viewMode"]').click();
+      //var $select = $('[data-action="selectClassView"]');
+      //$select.val($select.find('option').last().attr('value'));
     }.bind(this), 300); //*/
   },
 
@@ -88,6 +115,16 @@ $.extend(Studio.prototype, {
     this.workflowViewMaker.initListeners();
     this.taskArea.initListeners();
     this.changelogArea.initListeners();
+    this.standalone.initListeners();
+
+    this.deploy.initListeners();
+    this.deployGlobal.initListeners();
+    this.deployGlobalModuleTitleList.initListeners();
+    this.deployGlobalTopMenuList.initListeners();
+    this.deployGlobalPluginList.initListeners();
+    this.deployGlobalJobList.initListeners();
+    this.deployModuleList.initListeners();
+    this.deployModule.initListeners();
 
     this.appForm.events.on('create', this.onCreateApp.bind(this));
     this.appForm.events.on('update', this.onUpdateApp.bind(this));
@@ -104,6 +141,7 @@ $.extend(Studio.prototype, {
     this.classViewGroupForm.events.on('update', this.onUpdateClassViewGroup.bind(this));
     this.classPrintViewForm.events.on('create', this.onCreateClassPrintView.bind(this));
     this.classPrintViewForm.events.on('update', this.onUpdateClassPrintView.bind(this));
+
     this.workflowForm.events.on('create', this.onCreateWorkflow.bind(this));
     this.workflowForm.events.on('update', this.onUpdateWorkflow.bind(this));
     this.workflowStateForm.events.on('create', this.onCreateWorkflowState.bind(this));
@@ -120,6 +158,22 @@ $.extend(Studio.prototype, {
     this.taskForm.events.on('update', this.onUpdateTask.bind(this));
     this.interfaceForm.events.on('create', this.onCreateInterface.bind(this));
     this.interfaceForm.events.on('update', this.onUpdateInterface.bind(this));
+
+    this.deployForm.events.on('update', this.onUpdateDeploy.bind(this));
+    this.deployGlobalForm.events.on('update', this.onUpdateDeployGlobal.bind(this));
+    this.deployGlobalModuleTitleForm.events.on('create', this.onCreateDeployGlobalModuleTitle.bind(this));
+    this.deployGlobalModuleTitleForm.events.on('update', this.onUpdateDeployGlobalModuleTitle.bind(this));
+    this.deployGlobalTopMenuForm.events.on('create', this.onCreateDeployGlobalTopMenu.bind(this));
+    this.deployGlobalTopMenuForm.events.on('update', this.onUpdateDeployGlobalTopMenu.bind(this));
+    this.deployGlobalPluginForm.events.on('create', this.onCreateDeployGlobalPlugin.bind(this));
+    this.deployGlobalPluginForm.events.on('update', this.onUpdateDeployGlobalPlugin.bind(this));
+    this.deployGlobalJobForm.events.on('create', this.onCreateDeployGlobalJob.bind(this));
+    this.deployGlobalJobForm.events.on('update', this.onUpdateDeployGlobalJob.bind(this));
+
+    //this.deployModuleForm.events.on('create', this.onCreateDeployModule.bind(this));
+    this.deployModuleForm.events.on('update', this.onUpdateDeployModule.bind(this));
+    this.deployModuleRegistryForm.events.on('update', this.onUpdateDeployModule.bind(this));
+    this.deployModuleRestForm.events.on('update', this.onUpdateDeployModule.bind(this));
   },
 
   canExport: function () {
@@ -142,6 +196,9 @@ $.extend(Studio.prototype, {
 
   setContentMode: function (mode) {
     var app = this.getActiveApp();
+    if (!app) {
+      mode = null;
+    }
     if (mode !== this.contentMode || app !== this.lastActiveApp) {
       this.lastActiveApp = app;
       this.contentMode = mode;
@@ -150,7 +207,12 @@ $.extend(Studio.prototype, {
     }
   },
 
+  togglePendingApp: function (state) {
+    this.$main.toggleClass('pending-app', state);
+  },
+
   toggleLoader: function (state) {
+    $(':focus').blur();
     this.$globalLoader.toggle(state);
   },
 
@@ -221,6 +283,11 @@ $.extend(Studio.prototype, {
     this.triggerModelChanging('createApp', model);
   },
 
+  loadApp: function (model, data) {
+    model.importData(data);
+    this.events.trigger('loadApp', model);
+  },
+
   onUpdateApp: function (event, model) {
     this.triggerModelChanging('updateApp', model);
   },
@@ -240,7 +307,6 @@ $.extend(Studio.prototype, {
     app = this.createApp(data);
     app.afterUpload();
     this.triggerCreateApp(app);
-
   },
 
   onCloseAppMerge: function () {
@@ -675,5 +741,126 @@ $.extend(Studio.prototype, {
     if (!store.get(this.VISITED_STORE_KEY)) {
       this.toolbar.getTool('help').click();
     }
+  },
+
+  // DEPLOY
+
+  getActiveDeploy: function () {
+    return this.getActiveApp().deploy;
+  },
+  onUpdateDeploy: function (event, model) {
+    this.triggerModelChanging('updateDeploy', model);
+  },
+
+  // DEPLOY GLOBAL
+
+  getActiveDeployGlobal: function () {
+    return this.getActiveDeploy().global;
+  },
+  onUpdateDeployGlobal: function (event, model) {
+    this.triggerModelChanging('updateDeployGlobal', model);
+  },
+
+  // DEPLOY GLOBAL MODULE TITLE
+
+  getActiveDeployGlobalModuleTitle: function () {
+    return this.deployGlobalModuleTitleList.getActiveModel();
+  },
+  onCreateDeployGlobalModuleTitle: function (event, data) {
+    this.triggerCreateDeployGlobalModuleTitle(this.getActiveDeployGlobal().createModuleTitle(data));
+  },
+  onUpdateDeployGlobalModuleTitle: function (event, model) {
+    this.triggerModelChanging('updateDeployGlobalModuleTitle', model);
+  },
+  triggerCreateDeployGlobalModuleTitle: function (model) {
+    this.triggerModelChanging('createDeployGlobalModuleTitle', model);
+  },
+  triggerRemoveDeployGlobalModuleTitle: function (model) {
+    this.triggerModelChanging('removeDeployGlobalModuleTitle', model);
+  },
+
+  // DEPLOY GLOBAL TOP MENU
+
+  getActiveDeployGlobalTopMenu: function () {
+    return this.deployGlobalTopMenuList.getActiveModel();
+  },
+  onCreateDeployGlobalTopMenu: function (event, data) {
+    this.triggerCreateDeployGlobalTopMenu(this.getActiveDeployGlobal().createTopMenuItem(data));
+  },
+  onUpdateDeployGlobalTopMenu: function (event, model) {
+    this.triggerModelChanging('updateDeployGlobalTopMenu', model);
+  },
+  triggerCreateDeployGlobalTopMenu: function (model) {
+    this.triggerModelChanging('createDeployGlobalTopMenu', model);
+  },
+  triggerRemoveDeployGlobalTopMenu: function (model) {
+    this.triggerModelChanging('removeDeployGlobalTopMenu', model);
+  },
+
+  // DEPLOY GLOBAL PLUGIN
+
+  getActiveDeployGlobalPlugin: function () {
+    return this.deployGlobalPluginList.getActiveModel();
+  },
+  onCreateDeployGlobalPlugin: function (event, data) {
+    this.triggerCreateDeployGlobalPlugin(this.getActiveDeployGlobal().createPlugin(data));
+  },
+  onUpdateDeployGlobalPlugin: function (event, model) {
+    this.triggerModelChanging('updateDeployGlobalPlugin', model);
+  },
+  triggerCreateDeployGlobalPlugin: function (model) {
+    this.triggerModelChanging('createDeployGlobalPlugin', model);
+  },
+  triggerRemoveDeployGlobalPlugin: function (model) {
+    this.triggerModelChanging('removeDeployGlobalPlugin', model);
+  },
+
+  // DEPLOY GLOBAL JOB
+
+  getActiveDeployGlobalJob: function () {
+    return this.deployGlobalJobList.getActiveModel();
+  },
+  onCreateDeployGlobalJob: function (event, data) {
+    this.triggerCreateDeployGlobalJob(this.getActiveDeployGlobal().createJob(data));
+  },
+  onUpdateDeployGlobalJob: function (event, model) {
+    this.triggerModelChanging('updateDeployGlobalJob', model);
+  },
+  triggerCreateDeployGlobalJob: function (model) {
+    this.triggerModelChanging('createDeployGlobalJob', model);
+  },
+  triggerRemoveDeployGlobalJob: function (model) {
+    this.triggerModelChanging('removeDeployGlobalJob', model);
+  },
+
+  // DEPLOY MODULE
+
+  getActiveDeployModule: function () {
+    return this.menu.getActiveDeployModule();
+    //return this.deployModuleList.getActiveModel();
+  },
+  getDeployModule: function (module, appId) {
+    var app = this.getApp(appId);
+    return app ? app.deploy.getModule(module) : null;
+  },
+  getDeployModuleForm: function (name) {
+    switch (name.name || name) {
+      case 'registry': return this.deployModuleRegistryForm;
+      case 'rest': return this.deployModuleRestForm;
+    }
+    return this.deployModuleForm;
+  },
+
+  onUpdateDeployModule: function (event, model) {
+    this.triggerModelChanging('updateDeployModule', model);
+  },
+  onCreateDeployModule: function (event, data) {
+    this.triggerCreateDeployGlobalJob(this.getActiveDeploy().createModule(data));
+  },
+  triggerCreateDeployModule: function (model) {
+    this.triggerModelChanging('createDeployModule', model);
+  },
+  triggerRemoveDeployModule: function (model) {
+    this.triggerModelChanging('removeDeployModule', model);
   }
 });

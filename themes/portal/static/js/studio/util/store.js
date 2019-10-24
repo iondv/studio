@@ -12,7 +12,8 @@ $.extend(Studio.Store.prototype, {
   },
 
   save: function () {
-    store.set(this.id, this.getData());
+    let data = this.getData();
+    store.set(this.id, data);
     this.lastTime = Date.now();
   },
 
@@ -23,7 +24,15 @@ $.extend(Studio.Store.prototype, {
   },
 
   getAppData: function (app) {
-    return app.exportData();
+    if (!app.isServerSync()) {
+      return app.exportData();
+    }
+    return {
+      'serverSync': true,
+      'path': app.getPath(),
+      'name': app.getName(),
+      'description': app.getDescription()
+    };
   },
 
   load: function () {

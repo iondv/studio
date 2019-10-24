@@ -108,6 +108,29 @@ $.extend(Studio.Toolbar.prototype, {
 
     this.getTool('help').click(this.onHelp.bind(this));
 
+    this.getTool('updateDeploy').click(this.onUpdateDeploy.bind(this));
+    this.getTool('updateDeployGlobal').click(this.onUpdateDeployGlobal.bind(this));
+
+    this.getTool('createDeployGlobalModuleTitle').click(this.onCreateDeployGlobalModuleTitle.bind(this));
+    this.getTool('updateDeployGlobalModuleTitle').click(this.onUpdateDeployGlobalModuleTitle.bind(this));
+    this.getTool('removeDeployGlobalModuleTitle').click(this.onRemoveDeployGlobalModuleTitle.bind(this));
+
+    this.getTool('createDeployGlobalTopMenu').click(this.onCreateDeployGlobalTopMenu.bind(this));
+    this.getTool('updateDeployGlobalTopMenu').click(this.onUpdateDeployGlobalTopMenu.bind(this));
+    this.getTool('removeDeployGlobalTopMenu').click(this.onRemoveDeployGlobalTopMenu.bind(this));
+
+    this.getTool('createDeployGlobalPlugin').click(this.onCreateDeployGlobalPlugin.bind(this));
+    this.getTool('updateDeployGlobalPlugin').click(this.onUpdateDeployGlobalPlugin.bind(this));
+    this.getTool('removeDeployGlobalPlugin').click(this.onRemoveDeployGlobalPlugin.bind(this));
+
+    this.getTool('createDeployGlobalJob').click(this.onCreateDeployGlobalJob.bind(this));
+    this.getTool('updateDeployGlobalJob').click(this.onUpdateDeployGlobalJob.bind(this));
+    this.getTool('removeDeployGlobalJob').click(this.onRemoveDeployGlobalJob.bind(this));
+
+    this.getTool('createDeployModule').click(this.onCreateDeployModule.bind(this));
+    this.getTool('updateDeployModule').click(this.onUpdateDeployModule.bind(this));
+    this.getTool('removeDeployModule').click(this.onRemoveDeployModule.bind(this));
+
     this.getSections().hide();
   },
 
@@ -178,6 +201,14 @@ $.extend(Studio.Toolbar.prototype, {
       case 'workflowView': return this.showWorkflowViewModeTools(type);
       case 'task': return this.showTaskModeTools(type);
       case 'interface': return this.showInterfaceModeTools(type);
+      case 'deploy': return this.showDeployModeTools(type);
+      case 'deployGlobal': return this.showDeployGlobalModeTools(type);
+      case 'deployGlobalModuleTitle': return this.showDeployGlobalModuleTitleModeTools(type);
+      case 'deployGlobalTopMenu': return this.showDeployGlobalTopMenuModeTools(type);
+      case 'deployGlobalPlugin': return this.showDeployGlobalPluginModeTools(type);
+      case 'deployGlobalJob': return this.showDeployGlobalJobModeTools(type);
+      case 'deployModules': return this.showDeployModulesModeTools(type);
+      case 'deployModule': return this.showDeployModuleModeTools(type);
     }
   },
 
@@ -317,6 +348,38 @@ $.extend(Studio.Toolbar.prototype, {
         this.getSection('interface').show();
         break;
     }
+  },
+
+  showDeployModeTools: function () {
+    this.getSection('deploy').show();
+  },
+
+  showDeployGlobalModeTools: function () {
+    this.getSection('deployGlobal').show();
+  },
+
+  showDeployGlobalModuleTitleModeTools: function () {
+    this.getSection('deployGlobalModuleTitle').show();
+  },
+
+  showDeployGlobalTopMenuModeTools: function () {
+    this.getSection('deployGlobalTopMenu').show();
+  },
+
+  showDeployGlobalPluginModeTools: function () {
+    this.getSection('deployGlobalPlugin').show();
+  },
+
+  showDeployGlobalJobModeTools: function () {
+    this.getSection('deployGlobalJob').show();
+  },
+
+  showDeployModulesModeTools: function () {
+    this.getSection('deployModules').show();
+  },
+
+  showDeployModuleModeTools: function () {
+    this.getSection('deployModule').show();
   },
 
   alertNotice: function (message) {
@@ -746,7 +809,9 @@ $.extend(Studio.Toolbar.prototype, {
   },
 
   onWorkflowViewMode: function () {
-    this.studio.setContentMode('workflowView');
+    if (this.studio.getActiveWorkflow().getClass()) {
+      this.studio.setContentMode('workflowView');
+    }
   },
 
   onWorkflowMode: function () {
@@ -757,7 +822,8 @@ $.extend(Studio.Toolbar.prototype, {
 
   createWorkflowViewClassSelect: function () {
     var wf = this.studio.menu.getActiveWorkflow();
-    var classes = [wf.getClass()].concat(wf.getClass().getDescendants());
+    var cls = wf.getClass();
+    var classes = [cls].concat(cls.getDescendants());
     var content = Helper.Html.createSelectItems({
       'hasEmpty': false,
       'items': classes.map(function (item) {
@@ -855,5 +921,86 @@ $.extend(Studio.Toolbar.prototype, {
 
   onHelp: function () {
     this.studio.modalHelp.show();
+  },
+
+  // DEPLOY
+
+  onUpdateDeploy: function () {
+    this.updateModel(this.studio.getActiveDeploy(), 'updateDeploy', this.studio.deployForm);
+  },
+
+  onUpdateDeployGlobal: function () {
+    this.updateModel(this.studio.getActiveDeployGlobal(), 'updateDeployGlobal', this.studio.deployGlobalForm);
+  },
+
+  // DEPLOY GLOBAL MODULE TITLE
+
+  onCreateDeployGlobalModuleTitle: function () {
+    this.studio.deployGlobalModuleTitleForm.create(this.studio.getActiveApp());
+  },
+
+  onUpdateDeployGlobalModuleTitle: function () {
+    this.updateModel(this.studio.getActiveDeployGlobalModuleTitle(), 'updateDeployGlobalModuleTitle', this.studio.deployGlobalModuleTitleForm);
+  },
+
+  onRemoveDeployGlobalModuleTitle: function () {
+    this.removeModel(this.studio.getActiveDeployGlobalModuleTitle(), 'removeDeployGlobalModuleTitle');
+  },
+
+  // DEPLOY GLOBAL MENU
+
+  onCreateDeployGlobalTopMenu: function () {
+    this.studio.deployGlobalTopMenuForm.create(this.studio.getActiveApp());
+  },
+
+  onUpdateDeployGlobalTopMenu: function () {
+    this.updateModel(this.studio.getActiveDeployGlobalTopMenu(), 'updateDeployGlobalTopMenu', this.studio.deployGlobalTopMenuForm);
+  },
+
+  onRemoveDeployGlobalTopMenu: function () {
+    this.removeModel(this.studio.getActiveDeployGlobalTopMenu(), 'removeDeployGlobalTopMenu');
+  },
+
+  // DEPLOY GLOBAL PLUGIN
+
+  onCreateDeployGlobalPlugin: function () {
+    this.studio.deployGlobalPluginForm.create(this.studio.getActiveApp());
+  },
+
+  onUpdateDeployGlobalPlugin: function () {
+    this.updateModel(this.studio.getActiveDeployGlobalPlugin(), 'updateDeployGlobalPlugin', this.studio.deployGlobalPluginForm);
+  },
+
+  onRemoveDeployGlobalPlugin: function () {
+    this.removeModel(this.studio.getActiveDeployGlobalPlugin(), 'removeDeployGlobalPlugin');
+  },
+
+  // DEPLOY GLOBAL JOB
+
+  onCreateDeployGlobalJob: function () {
+    this.studio.deployGlobalJobForm.create(this.studio.getActiveApp());
+  },
+
+  onUpdateDeployGlobalJob: function () {
+    this.updateModel(this.studio.getActiveDeployGlobalJob(), 'updateDeployGlobalJob', this.studio.deployGlobalJobForm);
+  },
+
+  onRemoveDeployGlobalJob: function () {
+    this.removeModel(this.studio.getActiveDeployGlobalJob(), 'removeDeployGlobalJob');
+  },
+
+  // DEPLOY MODULE
+
+  onCreateDeployModule: function () {
+    this.studio.deployModuleForm.create(this.studio.getActiveApp());
+  },
+
+  onUpdateDeployModule: function () {
+    var module = this.studio.getActiveDeployModule();
+    this.updateModel(module, 'updateDeployModule', this.studio.getDeployModuleForm(module));
+  },
+
+  onRemoveDeployModule: function () {
+    this.removeModel(this.studio.getActiveDeployModule(), 'removeDeployModule');
   },
 });

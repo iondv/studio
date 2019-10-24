@@ -7,8 +7,14 @@
 <div class="attr form-group<%- params.required %>" data-type="string"
      data-name="<%- params.name %>"
      data-mask="<%= params.mask %>"
+     data-extension="<%= params.extension %>"
      data-default-value="<%= params.defaultValue %>">
-  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <label class="control-label col-sm-3">
+    <span class="l10n"><%- params.label %></span>
+    <% if (params.labelHint) { %>
+    <span class="label-hint glyphicon glyphicon-question-sign" title="<%- params.labelHint %>"></span>
+    <% } %>
+  </label>
   <div class="col-sm-9">
     <input type="text" class="form-control value" <%- params.readOnly %>
            value="<%= params.value %>" placeholder="<%- params.placeholder %>">

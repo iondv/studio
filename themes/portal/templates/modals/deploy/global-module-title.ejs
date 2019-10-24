@@ -1,0 +1,64 @@
+<%
+let params = {
+  createTitle: 'New module title',
+  updateTitle: 'Update module title'
+};
+%>
+<div id="deploy-global-module-title-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Deploy</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('../attrs/select', {
+            name: 'type',
+            label: 'Type',
+            required: true,
+            items: [{
+              value: 'registry',
+              text: 'Registry'
+            },{
+              value: 'report',
+              text: 'Report'
+            },{
+              value: 'portal',
+              text: 'Portal'
+            },{
+              value: 'geomap',
+              text: 'Geomap'
+            },{
+              value: 'gantt-chart',
+              text: 'Gantt-chart'
+            }]
+          }) %>
+
+          <%- partial('../attrs/string', {
+            name: 'description',
+            label: 'Description'
+          }) %>
+
+          <%- partial('../attrs/integer', {
+            name: 'order',
+            label: 'Order number',
+            defaultValue: 10
+          }) %>
+
+          <%- partial('../attrs/checkbox', {
+            name: 'skipModules',
+            label: 'Skip modules'
+          }) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

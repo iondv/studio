@@ -14,8 +14,10 @@ Studio.FormAttr.create = function ($attr, form) {
   var Attr = Studio.FormAttr;
   switch ($attr.data('type')) {
     case 'checkbox': Attr = Studio.CheckboxFormAttr; break;
+    case 'checkList': Attr = Studio.CheckListFormAttr; break;
     case 'code': Attr = Studio.CodeFormAttr; break;
     case 'dateTime': Attr = Studio.DateTimeFormAttr; break;
+    case 'deployRestAuthMode': Attr = Studio.DeployRestAuthModeFormAttr; break;
     case 'file': Attr = Studio.FileFormAttr; break;
     case 'integer': Attr = Studio.IntegerFormAttr; break;
     case 'json': Attr = Studio.JsonFormAttr; break;
@@ -23,10 +25,14 @@ Studio.FormAttr.create = function ($attr, form) {
     case 'selectClass': Attr = Studio.SelectClassFormAttr; break;
     case 'selectClassAttr': Attr = Studio.SelectClassAttrFormAttr; break;
     case 'selectGroup': Attr = Studio.SelectGroupFormAttr; break;
+    case 'selectNavSection': Attr = Studio.SelectNavSectionFormAttr; break;
+    case 'selectNavItem': Attr = Studio.SelectNavItemFormAttr; break;
     case 'selectInterface': Attr = Studio.SelectInterfaceFormAttr; break;
     case 'selectWorkflow': Attr = Studio.SelectWorkflowFormAttr; break;
     case 'selectWorkflowState': Attr = Studio.SelectWorkflowStateFormAttr; break;
     case 'selectExternalService': Attr = Studio.SelectExternalServiceFormAttr; break;
+    case 'selectHandler': Attr = Studio.SelectHandlerFormAttr; break;
+    case 'static': Attr = Studio.StaticFormAttr; break;
   }
   return new Attr($attr, form);
 };
@@ -34,6 +40,15 @@ Studio.FormAttr.create = function ($attr, form) {
 $.extend(Studio.FormAttr.prototype, {
 
   init: function () {
+    this.$value.change(this.onChange.bind(this));
+  },
+
+  getType: function () {
+    return this.$attr.data('type');
+  },
+
+  onChange: function (event) {
+    this.form.onChangeAttr(this, event);
   },
 
   prepare: function () {
@@ -47,9 +62,14 @@ $.extend(Studio.FormAttr.prototype, {
       || (this.action === 'update' && !this.form.isNew());
   },
 
-  disable: function () {
-    this.$value.attr('disabled', true);
-    this.$attr.addClass('disabled');
+  disable: function (state) {
+    if (state) {
+      this.$value.attr('disabled', true);
+      this.$attr.addClass('disabled');
+    } else {
+      this.$value.removeAttr('disabled');
+      this.$attr.removeClass('disabled');
+    }
   },
 
   setMask: function () {
@@ -102,5 +122,46 @@ $.extend(Studio.FormAttr.prototype, {
 
   toggle: function (state) {
     this.$attr.toggle(state);
+  },
+
+  setTargetAttr: function () {
+    let target = this.form.getAttr(this.$attr.data('targetAttr'));
+    if (target) {
+      let value = this.getRawValue();
+      if (value) {
+        target.setValue(value);
+      }
+    }
+  }
+});
+
+/* SELECT HANDLER */
+
+Studio.SelectHandlerFormAttr = function () {
+  Studio.FormAttr.apply(this, arguments);
+};
+
+$.extend(Studio.SelectHandlerFormAttr.prototype, Studio.FormAttr.prototype, {
+  constructor: Studio.SelectHandlerFormAttr,
+
+  prepare: function () {
+    this.$value.html(Helper.Html.createSelectItems({
+      'items': this.form.getSelectItems(this.name)
+    }));
+  }
+});
+
+/* STATIC */
+
+Studio.StaticFormAttr = function () {
+  Studio.FormAttr.apply(this, arguments);
+};
+
+$.extend(Studio.StaticFormAttr.prototype, Studio.FormAttr.prototype, {
+  constructor: Studio.StaticFormAttr,
+
+  setValue: function () {
+    Studio.FormAttr.prototype.setValue.apply(this, arguments);
+    this.$attr.find('.value-label').html(this.getValue());
   }
 });

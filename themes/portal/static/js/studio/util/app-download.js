@@ -24,7 +24,6 @@ $.extend(Studio.AppDownload.prototype, {
   execute: function () {
     var zip = new JSZip;
     var root = zip.folder(this.app.getName());
-    this.studioData = {};
     this.saveMeta(root.folder('meta'));
     this.saveViews(root.folder('views'));
     this.savePrintViews(root.folder('export'));
@@ -34,11 +33,11 @@ $.extend(Studio.AppDownload.prototype, {
     this.saveNavItemViews(root.folder('views'));
     this.saveTasks(root);
     this.saveInterfaces(root);
-    this.saveChangeLogs();
     this.savePackage(root);
     this.saveDeploy(root);
+    this.saveLogo(root);
     this.saveVendors(root);
-    this.saveJsonFile('studio.json', this.studioData, root);
+    this.saveJsonFile('studio.json', this.getStudioData(), root);
 
     return Promise.all([
       this.saveCommonInterfaceAssets(root)
@@ -48,11 +47,9 @@ $.extend(Studio.AppDownload.prototype, {
   },
 
   saveMeta: function (root) {
-    var items = this.app.classes.map(function (model) {
-      return this.getClassData(model);
-    }, this);
-    this.studioData.classes = this.getClassStudioData(items);
-    items.forEach(function (data) {
+    this.app.classes.forEach(function (model) {
+      let data = this.getClassData(model);
+      delete data.options;
       this.saveJsonFile(data.name +'.class.json', data, root);
     }, this);
   },
@@ -99,11 +96,9 @@ $.extend(Studio.AppDownload.prototype, {
   },
 
   saveWorkflows: function (root) {
-    var items = this.app.workflows.map(function (model) {
-      return this.getWorkflowData(model);
-    }, this);
-    this.studioData.workflows = this.getWorkflowStudioData(items);
-    items.forEach(function (data) {
+    this.app.workflows.forEach(function (model) {
+      let data = this.getWorkflowData(model);
+      delete data.options;
       this.saveJsonFile(data.name +'.wf.json', data, root);
     }, this);
   },
@@ -160,20 +155,20 @@ $.extend(Studio.AppDownload.prototype, {
   },
 
   saveTasks: function (root) {
-    var items = this.app.tasks.map(function (model) {
+    this.saveJsonFile('tasks.json', this.getTaskData(), root);
+  },
+
+  getTaskData: function () {
+    return this.app.tasks.map(function (model) {
       let data = Object.assign({}, model.getData());
       model.normalizeExportData(data);
       return data;
     }, this);
-    this.saveJsonFile('tasks.json', items, root);
   },
 
   // INTERFACE
 
   saveInterfaces: function (root) {
-    this.studioData.interfaces = this.app.interfaces.map(function (model) {
-      return model.getData();
-    });
     if (this.app.interfaces.length) {
       this.app.interfaces.forEach(function (model) {
         this.saveInterface(model, root);
@@ -246,18 +241,39 @@ $.extend(Studio.AppDownload.prototype, {
     return $.get(Helper.createStaticUrl('lib/interface-handler/'+ name +'.js'));
   },
 
-  saveChangeLogs: function () {
-    this.studioData.changeLogs = this.app.changeLogs;
-  },
-
   savePackage: function (root) {
-    let data = Object.assign({}, this.app.data.package, this.app.data);
+    var data = this.app.package.exportData();
     this.saveJsonFile('package.json', data, root);
   },
 
   saveDeploy: function (root) {
     var data = (new Studio.AppDeploy(this.app)).create();
     this.saveJsonFile('deploy.json', data, root);
+    this.saveDeployAuthModeService(root, data);
+  },
+
+  saveDeployAuthModeService: function (root, data) {
+    data = Helper.Object.getNestedValue('modules.rest.globals.di', data, {});
+    for (var key of Object.keys(data)) {
+      var value = data[key] && data[key].module;
+      if (value && value.indexOf('applications/') === 0) {
+        try {
+          root.folder('service').file(key +'.js', this.renderAuthServiceFile(key));
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  },
+
+  saveLogo: function (root) {
+    var folder = root.folder('templates').folder('static');
+    this.app.deploy.modules.forEach(function (module) {
+      var file = Helper.File.get(module.data.logoFile);
+      if (file) {
+        folder.file('logo.png', Helper.File.getBlob(file.content));
+      }
+    }, this);
   },
 
   saveVendors: function (root) {
@@ -269,34 +285,6 @@ $.extend(Studio.AppDownload.prototype, {
 
   saveJsonFile: function (name, data, folder) {
     folder.file(name, JSON.stringify(data, null, 2));
-  },
-
-  // STUDIO
-
-  getClassStudioData: function (classes) {
-    return this.indexItemOptionsByName(classes);
-  },
-
-  getWorkflowStudioData: function (workflows) {
-    var result = {};
-    workflows.forEach(function (data) {
-      result[data.name] = {
-        'states': this.indexItemOptionsByName(data.states),
-        'transitions': this.indexItemOptionsByName(data.transitions)
-      };
-    }, this);
-    return result;
-  },
-
-  indexItemOptionsByName: function (items) {
-    var result = {};
-    if (items instanceof Array) {
-      items.forEach(function (data) {
-        result[data.name] = data.options;
-        delete data.options;
-      });
-    }
-    return result;
   },
 
   // CLASS
@@ -404,8 +392,6 @@ $.extend(Studio.AppDownload.prototype, {
 
   // WORKFLOW VIEWS
 
-
-
   // NAV SECTION
 
   getNavSectionData: function (model) {
@@ -417,7 +403,7 @@ $.extend(Studio.AppDownload.prototype, {
 
   getNavItemData: function (model) {
     let data = Object.assign({
-      code: model.getCode()
+      'code': model.getCode()
     }, model.getData());
     this.normalizeNavItemInterface(model, data);
     model.normalizeExportData(data);
@@ -431,5 +417,66 @@ $.extend(Studio.AppDownload.prototype, {
     if (!model.getUrl() && face) {
       data.url = face.getUrl();
     }
+  },
+
+  // STUDIO DATA
+
+  getStudioData: function () {
+    return {
+      'classes': this.getClassStudioData(this.app.classes.map(this.getClassData, this)),
+      'workflows': this.getWorkflowStudioData(this.app.workflows.map(this.getWorkflowData, this)),
+      'interfaces': this.app.interfaces.map(function (model) { return model.getData(); }),
+      'changeLogs': this.app.changeLogs
+    };
+  },
+
+  getClassStudioData: function (classes) {
+    return this.indexItemOptionsByName(classes);
+  },
+
+  getWorkflowStudioData: function (workflows) {
+    var result = {};
+    workflows.forEach(function (data) {
+      result[data.name] = {
+        'states': this.indexItemOptionsByName(data.states),
+        'transitions': this.indexItemOptionsByName(data.transitions)
+      };
+    }, this);
+    return result;
+  },
+
+  indexItemOptionsByName: function (items) {
+    var result = {};
+    if (items instanceof Array) {
+      items.forEach(function (data) {
+        result[data.name] = data.options;
+        delete data.options;
+      });
+    }
+    return result;
+  },
+
+  renderAuthServiceFile: function (name) {
+    return `const Service = require('modules/rest/lib/interfaces/Service');
+/** Simple app service - REST module
+ * @param {{dataRepo: DataRepository, metaRepo: MetaRepository}} options
+ * @constructor
+ */
+function ${name}(options) {
+  this._route = function(router) {
+    this.addHandler(router, '/', 'POST', (req) => {
+      return Promise.resolve({
+        echo: 'ok'
+      });
+    });
+    this.addHandler(router, '/', 'GET', (req) => {
+      return Promise.resolve({
+        echo: 'ok'
+      });
+    });
+  };
+}
+${name}.prototype = new Service();
+module.exports = ${name};`;
   }
 });

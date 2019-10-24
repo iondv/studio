@@ -1,24 +1,33 @@
 <%
 let mod = `${module}/${portal}/`;
 let studio = `${mod}js/studio/`;
+let standaloneData = typeof standalone !== 'undefined' ? JSON.stringify(standalone) : '';
 %>
 <% layout('../layouts/main') -%>
 
-<div class="studio-main">
+<div class="studio-main" data-standalone="<%= standaloneData %>">
 
-  <%- partial('../parts/studio-tabs') %>
+  <%- partial('../parts/tabs') %>
 
   <div class="studio-content">
-    <%- partial('../parts/studio-toolbar') %>
-    <%- partial('../parts/studio-class-uml') %>
-    <%- partial('../parts/studio-list-view') %>
-    <%- partial('../parts/studio-print-view') %>
-    <%- partial('../parts/studio-view') %>
-    <%- partial('../parts/studio-workflow-view') %>
-    <%- partial('../parts/studio-task-area') %>
-    <%- partial('../parts/studio-workflow-uml') %>
-    <%- partial('../parts/studio-ui-editor')%>
-    <%- partial('../parts/studio-changelog-area')%>
+    <%- partial('../parts/toolbar') %>
+    <%- partial('../parts/class-uml') %>
+    <%- partial('../parts/list-view') %>
+    <%- partial('../parts/print-view') %>
+    <%- partial('../parts/view') %>
+    <%- partial('../parts/workflow-view') %>
+    <%- partial('../parts/task-area') %>
+    <%- partial('../parts/workflow-uml') %>
+    <%- partial('../parts/ui-editor')%>
+    <%- partial('../parts/changelog-area')%>
+
+    <%- partial('../parts/deploy/deploy')%>
+    <%- partial('../parts/deploy/global')%>
+    <%- partial('../parts/deploy/global-module-title')%>
+    <%- partial('../parts/deploy/global-top-menu')%>
+    <%- partial('../parts/deploy/global-plugin')%>
+    <%- partial('../parts/deploy/global-job')%>
+    <%- partial('../parts/deploy/module')%>
   </div>
 
   <div class="studio-sidebar unselectable">
@@ -32,7 +41,9 @@ let studio = `${mod}js/studio/`;
     <div class="alert-content"></div>
   </div>
 
-  <%- partial('../parts/studio-samples') %>
+  <%- partial('../parts/samples') %>
+
+  <div class="pending-app-loader overlay"><span class="fa fa-refresh fa-spin"></span></div>
 
 </div>
 
@@ -44,6 +55,18 @@ let studio = `${mod}js/studio/`;
 <%- partial('../modals/class-view-attr') %>
 <%- partial('../modals/class-view-group') %>
 <%- partial('../modals/class-print-view') %>
+
+<%- partial('../modals/deploy/deploy') %>
+<%- partial('../modals/deploy/global') %>
+<%- partial('../modals/deploy/global-module-title') %>
+<%- partial('../modals/deploy/global-top-menu') %>
+<%- partial('../modals/deploy/global-plugin') %>
+<%- partial('../modals/deploy/global-job') %>
+
+<%- partial('../modals/deploy/module') %>
+<%- partial('../modals/deploy/module-registry') %>
+<%- partial('../modals/deploy/module-rest') %>
+
 <%- partial('../modals/nav-section') %>
 <%- partial('../modals/nav-item') %>
 <%- partial('../modals/nav-item-list-view') %>
@@ -76,9 +99,11 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}adapters/class-uml.js`) -%>
 <% script(`${studio}adapters/workflow-uml.js`) -%>
 <% script(`${studio}adapters/ui.js`) -%>
+
 <% script(`${studio}components/alert.js`) -%>
 <% script(`${studio}components/modal.js`) -%>
 <% script(`${studio}components/modal-alert.js`) -%>
+<% script(`${studio}components/base-table.js`) -%>
 <% script(`${studio}components/task-area.js`) -%>
 <% script(`${studio}components/toolbar.js`) -%>
 <% script(`${studio}components/tabs.js`) -%>
@@ -89,6 +114,18 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}components/view-maker.js`) -%>
 <% script(`${studio}components/workflow-view-maker.js`) -%>
 <% script(`${studio}components/changelog-area.js`) -%>
+<% script(`${studio}components/model-view.js`) -%>
+<% script(`${studio}components/form-condition.js`) -%>
+<% script(`${studio}components/form-extension.js`) -%>
+<% script(`${studio}components/standalone.js`) -%>
+
+<% script(`${studio}components/deploy/module-list.js`) -%>
+<% script(`${studio}components/deploy/global-module-title-list.js`) -%>
+<% script(`${studio}components/deploy/global-top-menu-list.js`) -%>
+<% script(`${studio}components/deploy/global-plugin-list.js`) -%>
+<% script(`${studio}components/deploy/global-job-list.js`) -%>
+<% script(`${studio}components/deploy/view.js`) -%>
+
 <% script(`${studio}models/model.js`) -%>
 <% script(`${studio}models/app.js`) -%>
 <% script(`${studio}models/class.js`) -%>
@@ -105,6 +142,18 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}models/workflow-state.js`) -%>
 <% script(`${studio}models/workflow-transition.js`) -%>
 <% script(`${studio}models/external-service.js`) -%>
+
+<% script(`${studio}models/deploy/deploy.js`) -%>
+<% script(`${studio}models/deploy/global.js`) -%>
+<% script(`${studio}models/deploy/global-module-title.js`) -%>
+<% script(`${studio}models/deploy/global-top-menu.js`) -%>
+<% script(`${studio}models/deploy/global-plugin.js`) -%>
+<% script(`${studio}models/deploy/global-job.js`) -%>
+<% script(`${studio}models/deploy/module.js`) -%>
+<% script(`${studio}models/deploy/module-registry.js`) -%>
+
+<% script(`${studio}models/package/package.js`) -%>
+
 <% script(`${studio}forms/form.js`) -%>
 <% script(`${studio}forms/model-form.js`) -%>
 <% script(`${studio}forms/app-form.js`) -%>
@@ -127,6 +176,7 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}forms/import-task-form.js`) -%>
 <% script(`${studio}forms/code-editor-form.js`) -%>
 <% script(`${studio}forms/attrs/attr.js`) -%>
+<% script(`${studio}forms/attrs/check-list.js`) -%>
 <% script(`${studio}forms/attrs/checkbox.js`) -%>
 <% script(`${studio}forms/attrs/date.js`) -%>
 <% script(`${studio}forms/attrs/integer.js`) -%>
@@ -135,9 +185,24 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}forms/attrs/radio-list.js`) -%>
 <% script(`${studio}forms/attrs/select-model.js`) -%>
 <% script(`${studio}forms/attrs/select-external-service.js`) -%>
+<% script(`${studio}forms/attrs/deploy-rest-auth-mode.js`) -%>
+
+<% script(`${studio}forms/deploy/form.js`) -%>
+<% script(`${studio}forms/deploy/global-form.js`) -%>
+<% script(`${studio}forms/deploy/global-module-title-form.js`) -%>
+<% script(`${studio}forms/deploy/global-top-menu-form.js`) -%>
+<% script(`${studio}forms/deploy/global-plugin-form.js`) -%>
+<% script(`${studio}forms/deploy/global-job-form.js`) -%>
+
+<% script(`${studio}forms/deploy/module-form.js`) -%>
+<% script(`${studio}forms/deploy/module-registry-form.js`) -%>
+<% script(`${studio}forms/deploy/module-rest-form.js`) -%>
+
 <% script(`${studio}behaviors/behavior.js`) -%>
+
 <% script(`${studio}validation/validator.js`) -%>
 <% script(`${studio}validation/unique.js`) -%>
+
 <% script(`${studio}util/store.js`) -%>
 <% script(`${studio}util/app-download.js`) -%>
 <% script(`${studio}util/app-deploy.js`) -%>
@@ -145,3 +210,4 @@ let studio = `${mod}js/studio/`;
 <% script(`${studio}util/app-upload.js`) -%>
 <% script(`${studio}util/alignment.js`) -%>
 <% script(`${studio}util/droppable.js`) -%>
+<% script(`${studio}util/meta-parser.js`) -%>

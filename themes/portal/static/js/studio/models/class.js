@@ -4,7 +4,6 @@ Studio.ClassModel = function (app, data) {
   this.app = app;
   this.clear();
   Studio.Model.call(this, 'class:', app.studio, data);
-
 };
 
 Studio.ClassModel.DEFAULT_VIEW_NAMES = ['create', 'item', 'list'];
@@ -311,5 +310,35 @@ $.extend(Studio.ClassModel.prototype, Studio.Model.prototype, {
   normalizeImportKeyAttr: function (data) {
     data.key = data.key instanceof Array ? data.key[0] : data.key;
     this.replaceClassAttrNameToId('key', data, this);
+  },
+
+  // DEPENDENCIES (using this class name)
+
+  getDependentClasses: function () {
+    return this.app.classes.filter(function (item) {
+      return item !== this && (item.data.ancestor === this.id
+          || item.data.refClass === this.id
+          || item.data.itemsClass === this.id
+          || item.data.backRef === this.id
+          || item.data.backColl === this.id);
+    }, this);
+  },
+
+  getDependentWorkflows: function () {
+    return this.app.workflows.filter(function (item) {
+      return item.data.wfClass === this.id;
+    }, this);
+  },
+
+  getDependentNavItems: function () {
+    let items = [];
+    this.app.navSections.forEach(function (section) {
+      section.getNestedItems().forEach(function (item) {
+        if (item.data.classname === this.id) {
+          items.push(item);
+        }
+      }, this);
+    }, this);
+    return items;
   }
 });

@@ -1,3 +1,14 @@
+.list-area {
+  padding: 15px;
+  font-size: 13px;
+}
+.list-area .table {
+  background: #fff;
+}
+.list-area .table thead {
+  background: #f2fafa;
+}
+
 .tooltip {
   z-index: 1048;
 }
@@ -71,6 +82,27 @@
   top: 20%;
   width: 80%;
   margin: 0 10%;
+}
+.pending-app-loader {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 35px;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.3);
+  z-index: 10001;
+  text-align: center;
+}
+.pending-app-loader span {
+  position: relative;
+  top: 50%;
+  margin-top: -30px;
+  font-size: 24px;
+  color: #888;
+}
+.pending-app > .pending-app-loader {
+  display: block;
 }
 
 /* MENU */

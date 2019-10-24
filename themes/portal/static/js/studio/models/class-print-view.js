@@ -39,6 +39,16 @@ $.extend(Studio.ClassPrintViewModel.prototype, Studio.Model.prototype, {
     }
   },
 
+  getPreprocessor: function () {
+    var data = {
+      'itemdocx': 'itemToDocx',
+      'listdocx': 'listToDocx',
+      'itemxlsx': 'itemToExcel',
+      'listxlsx': 'listToExcel'
+    };
+    return 'ion://'+ data[this.data.type + this.data.extension];
+  },
+
   // STORE
 
   exportData: function () {

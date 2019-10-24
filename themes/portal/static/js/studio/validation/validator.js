@@ -36,7 +36,10 @@ $.extend(Studio.Validator.prototype, {
 
   execute: function () {
     var value = this.attr.getRawValue();
-    if ((this.params.skipOnError && this.attr.hasError()) || (this.params.skipOnEmpty && this.isEmptyValue(value))) {
+    if ((this.params.skipOnError && this.attr.hasError())
+        || (this.params.skipOnAnyError && this.attr.form.hasError())
+        || (this.params.skipOnEmpty && this.isEmptyValue(value))
+        || (this.params.when && !this.params.when(this))) {
       return false;
     }
     this.validate(value);
@@ -69,7 +72,7 @@ $.extend(Studio.HandlerValidator.prototype, Studio.Validator.prototype, {
 
 Studio.IdentifierValidator = function (attr, params) {
   Studio.Validator.call(this, attr, $.extend({
-    pattern: /^[a-zA-Z0-9-]+$/
+    pattern: /^[a-zA-Z0-9-_]+$/
   }, params));
 };
 

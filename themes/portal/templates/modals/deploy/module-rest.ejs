@@ -1,0 +1,33 @@
+<%
+let params = {
+  createTitle: 'New module',
+  updateTitle: 'Update module'
+};
+%>
+<div id="deploy-module-rest-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Rest deploy</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('./module-rest-auth-mode', {
+            name: 'authMode',
+            label: 'Authentication modes'
+          }) %>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-json btn btn-default l10n pull-right">JSON</button>
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

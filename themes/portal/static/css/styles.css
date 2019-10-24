@@ -1,5 +1,8 @@
 html {
 }
+.lh14 {
+  line-height: 1.4;
+}
 .mb0 {
   margin-bottom: 0 !important;
 }
@@ -133,6 +136,18 @@ html {
 .form-group.has-error .error-block {
   display: block;
 }
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #f4f4f4;
+}
+
+.label-hint {
+  font-size: 11px;
+  color: #06b;
+  position: relative;
+  top: -3px;
+}
 
 .alert:last-child {
   margin:0;
@@ -157,16 +172,16 @@ html {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.2);
   z-index: 10001;
   text-align: center;
 }
 .global-loader span {
   position: relative;
-  top: 50%;
+  top: 48%;
   margin-top: -30px;
-  font-size: 24px;
-  color: #888;
+  font-size: 20px;
+  color: #aaa;
 }
 
 fieldset + fieldset {
@@ -202,8 +217,74 @@ legend {
 }
 
 .help-content h3 {
-  margin: 10px 0 20px;
+  margin: 20px 0 20px;
 }
 .help-content h4 {
   margin: 20px 0 15px;
+}
+.help-content ul {
+  margin-bottom: 20px;
+}
+.help-content li {
+  margin-bottom: 10px;
+}
+.help-content li:last-child {
+  margin-bottom: 0;
+}
+.help-content .video {
+  margin: 20px auto 20px;
+  text-align: center;
+}
+.help-content .video iframe {
+  height: 320px;
+  max-width: 580px;
+  width: 100%;
+}
+
+.model-view {
+  height: calc(100% - 35px);
+  overflow: auto;
+}
+.model-view .form {
+  padding: 20px;
+  max-width: 1200px;
+}
+.model-view-title {
+  display: none;
+  font-size: 20px;
+  text-align: center;
+  color: #888;
+  margin-bottom: 0;
+  max-width: 1200px;
+}
+
+.column > .checkbox-inline {
+  display: block;
+  margin-left: 0;
+}
+
+.tab-content {
+  padding-top: 30px;
+}
+
+.not-set {
+  color: #aaa;
+  font-style: italic;
+  font-size: 90%;
+}
+
+.list-attr .table {
+  margin-bottom: 0;
+}
+.list-attr .table th,
+.list-attr .table td {
+  vertical-align: middle;
+}
+.list-attr .table .action-cell,
+.list-attr .table .action-cell {
+  text-align: center;
+}
+.list-attr .action-cell [data-action] {
+  font-size: 16px;
+  cursor: pointer;
 }

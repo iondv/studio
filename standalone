@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 8888;
+const deploy = require('./deploy.json');
+const moduleName = 'portal';
+const controllers = require('./controllers');
+const bodyParser = require('body-parser');
+
+let staticFolder = 'themes/portal/static';
+let template = 'themes/portal/templates';
+let defaultPage = 'index';
+let defaultPageNav = 'pages/index';
+
+app.engine('ejs', require('ejs-locals'));
+app.set('views', path.posix.join(__dirname, template));
+app.set('view engine', 'ejs');
+app.locals.pageEndContent = getDeploy( moduleName + '.pageEndContent') || getDeploy('pageEndContent') || '';
+app.use('/', express.static(__dirname));
+
+let limit = '1mb';
+app.use(bodyParser.text({type: 'text/*', limit}));
+app.use(bodyParser.json({type: 'application/json', limit}));
+app.use(bodyParser.urlencoded({extended: true, limit}));
+app.use(bodyParser.raw({limit}));
+
+app.post('/api/create', controllers.create);
+app.post('/api/get', controllers.get);
+app.post('/api/update', controllers.update);
+
+app.locals.standalone = {
+  api: {
+    create: 'api/create',
+    get: 'api/get',
+    update: 'api/update'
+  }
+};
+app.get('/' + defaultPage, (request, response) => {
+  response.render(defaultPageNav, {
+    module: '',
+    portal: staticFolder,
+    baseUrl: '/'
+  });
+});
+
+app.get('/*', (request, response) => {
+  response.redirect('/' + defaultPage);
+});
+
+app.listen(port, (err) => {
+  if (err) {
+    return console.log(JSON.stringify(err, null, '\t'));
+  }
+  console.log(`Server is listening on ${port}`);
+});
+
+// Emulate starting IONDV. Portal
+function getDeploy(deployParam) {
+  if (deployParam) {
+    const getParam = deployParam.split('.');
+    if (getParam.length === 1) {
+      return deploy.globals[getParam[0]] ? deploy.globals[getParam[0]] : null;
+    } else if (getParam.length === 2){
+      return deploy.modules[getParam[0]].globals[getParam[1]]
+        ? deploy.modules[getParam[0]].globals[getParam[1]] : null;
+    } else {
+      throw ('There is no way to handle more than two deploy parameters. It is necessary to run through the framework');
+    }
+  } else {
+    return null;
+  }
+}

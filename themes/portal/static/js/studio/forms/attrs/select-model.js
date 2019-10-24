@@ -66,6 +66,34 @@ $.extend(Studio.SelectGroupFormAttr.prototype, Studio.SelectModelFormAttr.protot
   }
 });
 
+// SELECT NAV SECTION
+
+Studio.SelectNavSectionFormAttr = function () {
+  Studio.SelectModelFormAttr.apply(this, arguments);
+};
+
+$.extend(Studio.SelectNavSectionFormAttr.prototype, Studio.SelectModelFormAttr.prototype, {
+  constructor: Studio.SelectNavSectionFormAttr,
+
+  getModels: function () {
+    return this.form.app.navSections;
+  }
+});
+
+// SELECT NAV ITEM
+
+Studio.SelectNavItemFormAttr = function () {
+  Studio.SelectModelFormAttr.apply(this, arguments);
+};
+
+$.extend(Studio.SelectNavItemFormAttr.prototype, Studio.SelectModelFormAttr.prototype, {
+  constructor: Studio.SelectNavItemFormAttr,
+
+  getModels: function () {
+    return this.form.getItems();
+  }
+});
+
 // SELECT INTERFACE
 
 Studio.SelectInterfaceFormAttr = function () {

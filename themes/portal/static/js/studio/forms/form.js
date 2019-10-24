@@ -3,11 +3,13 @@
 Studio.Form = function ($modal, studio) {
   this.studio = studio;
   this.$modal = $modal;
+  this.$modal = $modal;
   this.$form = $modal.find('form');
   this.params = $modal.data('params');
   this.$cancel = $modal.find('.form-cancel');
   this.$json = $modal.find('.form-json');
   this.events = new Helper.Events('form:');
+  this.data = {};
   this.init();
 };
 
@@ -15,15 +17,18 @@ $.extend(Studio.Form.prototype, {
 
   init: function () {
     this.createAttrs();
+    this.extension = new Studio.FormExtension(this);
     this.$cancel.click(this.onCancel.bind(this));
     this.$json.click(this.onJson.bind(this));
+    this.alert = new Studio.Alert(this.$modal.find('.form-alert'));
     this.$modal.on('hide.bs.modal', this.onClose.bind(this));
     this.$modal.on('hidden.bs.modal', this.onAfterClose.bind(this));
     this.$modal.on('shown.bs.modal', this.onAfterShow.bind(this));
+    this.$form.on('change', '.value', this.onChangeValue.bind(this));
   },
 
   getData: function () {
-    var data = {};
+    var data = Object.assign({}, this.data);
     this.attrs.forEach(function (attr) {
       data[attr.name] = attr.getValue();
     });
@@ -31,6 +36,7 @@ $.extend(Studio.Form.prototype, {
   },
 
   setData: function (data) {
+    this.data = data;
     this.attrs.forEach(function (attr) {
       attr.setValue(data[attr.name]);
     });
@@ -56,6 +62,19 @@ $.extend(Studio.Form.prototype, {
 
   setTitle: function (title) {
     this.$modal.find('.modal-title').html(title);
+  },
+
+  onChangeValue: function () {
+    if (!this.changed) {
+      this.changed = true;
+      setTimeout(function () {
+        this.changed = false;
+        this.events.trigger('change');
+      }.bind(this), 0);
+    }
+  },
+
+  onChangeAttr: function (attr, event) { // from attr
   },
 
   onCancel: function () {
@@ -91,9 +110,11 @@ $.extend(Studio.Form.prototype, {
   },
 
   show: function (defaults) {
+    this.alert.hide();
     this.prepareAttrs();
     this.setData(defaults || {});
     Studio.Behavior.execute('beforeShow', this);
+    this.events.trigger('beforeShow');
     this.$modal.modal('show');
   },
 
@@ -102,6 +123,7 @@ $.extend(Studio.Form.prototype, {
   },
 
   reset: function () {
+    this.alert.hide();
     this.$form.find('.has-error').removeClass('has-error');
     this.$form.get(0).reset();
   },
@@ -123,6 +145,23 @@ $.extend(Studio.Form.prototype, {
   getDefaultGroupId: function () {
     var group = this.studio.getActiveClassViewGroup() || this.view.getDefaultGroup();
     return group ? group.id : null;
+  },
+
+  getDefaultValue: function (name) {
+    if (this._defaults && this._defaults.hasOwnProperty(name)) {
+      return this._defaults[name];
+    }
+  },
+
+  getDefaultValues: function () {
+    var defaults = {};
+    this.attrs.forEach(function (attr) {
+      var value = attr.$attr.data('defaultValue');
+      if (value !== undefined) {
+        defaults[attr.name] = value;
+      }
+    });
+    return defaults;
   },
 
   // VALIDATION

@@ -20,6 +20,16 @@ $.extend(Studio.ClassPrintViewForm.prototype, Studio.ModelForm.prototype, {
     Studio.ModelForm.prototype.update.apply(this, arguments);
   },
 
+  getData: function () {
+    var data = Studio.ModelForm.prototype.getData.call(this);
+    var file = this.getAttr('file');
+    if (file.file) {
+      data.extension = file.getExtension();
+      data.mimeType = file.getMimeType();
+    }
+    return data;
+  },
+
   getValidationRules: function () {
     return {
       name: [
@@ -36,12 +46,6 @@ $.extend(Studio.ClassPrintViewForm.prototype, Studio.ModelForm.prototype, {
         }]
       ],
       type: [
-        ['required']
-      ],
-      mimeType: [
-        ['required']
-      ],
-      extension: [
         ['required']
       ],
       file: [

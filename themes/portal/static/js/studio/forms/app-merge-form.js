@@ -16,6 +16,7 @@ $.extend(Studio.AppMergeForm.prototype, Studio.Form.prototype, {
   show: function (app, data) {
     this.data = data;
     this.app = app;
+    this.alert.hide();
     this.classDataMap = Helper.Array.indexByKey('name', data.classes);
     this.workflowDataMap = Helper.Array.indexByKey('name', data.workflows);
     this.classMap = Studio.Model.indexByName(this.app.classes);

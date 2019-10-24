@@ -64,6 +64,7 @@ $.extend(Studio.ModelForm.prototype, Studio.Form.prototype, {
     this.setData(defaults || {});
     Studio.Behavior.execute('beforeCreate', this);
     Studio.Behavior.execute('beforeShow', this);
+    this.events.trigger('beforeShow');
     this.$modal.modal('show');
   },
 
@@ -74,6 +75,19 @@ $.extend(Studio.ModelForm.prototype, Studio.Form.prototype, {
     this.setData(defaults || {});
     Studio.Behavior.execute('beforeCreate', this);
     Studio.Behavior.execute('afterCreate', this);
+  },
+
+  onCreate: function () {
+    if (!this.validate()) {
+      return this.jumpToError();
+    }
+    Studio.Behavior.execute('afterCreate', this);
+    this.triggerCreate();
+    this.hide();
+  },
+
+  triggerCreate: function () {
+    this.events.trigger('create', this.getData());
   },
 
   update: function (model) {
@@ -87,16 +101,16 @@ $.extend(Studio.ModelForm.prototype, Studio.Form.prototype, {
     this.setData(model.getData());
     Studio.Behavior.execute('beforeUpdate', this);
     Studio.Behavior.execute('beforeShow', this);
+    this.events.trigger('beforeShow');
     this.$modal.modal('show');
   },
 
-  onCreate: function () {
-    if (!this.validate()) {
-      return this.jumpToError();
-    }
-    Studio.Behavior.execute('afterCreate', this);
-    this.triggerCreate();
-    this.hide();
+  updateHidden: function (model) {
+    this.model = null;
+    this.reset();
+    this.prepareAttrs();
+    this.setData(model.getData());
+    Studio.Behavior.execute('beforeUpdate', this);
   },
 
   onUpdate: function () {
@@ -109,11 +123,31 @@ $.extend(Studio.ModelForm.prototype, Studio.Form.prototype, {
     this.hide();
   },
 
-  triggerCreate: function () {
-    this.events.trigger('create', this.getData());
-  },
-
   triggerUpdate: function () {
     this.events.trigger('update', this.model);
-  }
+  },
+
+  // DATA
+
+   unpackData: function (keys, source, data) {
+     data = Object.assign({}, data);
+     source = data[source];
+     if (source) {
+       for (let key of keys) {
+         data[key] = source[key];
+       }
+     }
+     return data;
+   },
+
+   packData: function (keys, source, data) {
+     if (data) {
+       data[source] = data[source] || {};
+       for (let key of keys) {
+         data[source][key] = data[key];
+         delete data[key];
+       }
+     }
+     return data;
+   }
 });

@@ -20,7 +20,7 @@ $.extend(Studio.NavSectionModel.prototype, Studio.Model.prototype, {
 
   // NAV ITEM
 
-  getNestedItems: function (id) {
+  getNestedItems: function () {
     var items = this.items;
     for (var i = 0 ; i < this.items.length; ++i) {
       items = items.concat(this.items[i].getNestedItems());

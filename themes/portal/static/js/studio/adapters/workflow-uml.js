@@ -3,6 +3,7 @@
 Studio.WorkflowUmlAdapter = function ($container, studio) {
   this.studio = studio;
   this.menu = studio.menu;
+  this.events = new Helper.Events('workflowUmlAdapter:');
   this.$container = $container;
   this.uml = new Uml($container);
 };
@@ -12,6 +13,7 @@ $.extend(Studio.WorkflowUmlAdapter.prototype, {
   initListeners: function () {
     this.studio.events.on('changeContentMode', this.onChangeContentMode.bind(this));
     this.studio.events.on('createApp', this.onCreateApp.bind(this));
+    this.studio.events.on('loadApp', this.onLoadApp.bind(this));
     this.studio.events.on('createWorkflow', this.onCreateWorkflow.bind(this));
     this.studio.events.on('updateWorkflow', this.onUpdateWorkflow.bind(this));
     this.studio.events.on('removeWorkflow', this.onRemoveWorkflow.bind(this));
@@ -34,6 +36,10 @@ $.extend(Studio.WorkflowUmlAdapter.prototype, {
 
   onChangeContentMode: function (event, mode) {
     this.$container.toggle(mode === 'workflow');
+  },
+
+  onLoadApp: function (event, model) {
+    this.createPages(model);
   },
 
   onCreateApp: function (event, model) {
@@ -135,6 +141,7 @@ $.extend(Studio.WorkflowUmlAdapter.prototype, {
   onDragEnd: function (event, data) {
     var model = this.getActiveWorkflowItem();
     model.setUmlPosition(data.position);
+    this.events.trigger('dragEnd', model);
     this.studio.triggerChangeModel(model);
   },
 

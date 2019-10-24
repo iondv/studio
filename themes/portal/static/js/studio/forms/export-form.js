@@ -12,15 +12,14 @@ $.extend(Studio.ExportForm.prototype, Studio.Form.prototype, {
 
   init: function () {
     Studio.Form.prototype.init.call(this);
-    this.alert = new Studio.Alert(this.$modal.find('.form-alert'));
     this.$export = this.$modal.find('.form-export');
     this.$export.click(this.onExport.bind(this));
   },
 
   show: function (app) {
     this.app = app;
-    this.prepareAttrs();
     this.alert.hide();
+    this.prepareAttrs();
     this.$modal.modal('show');
   },
 

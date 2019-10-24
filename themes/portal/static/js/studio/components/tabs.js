@@ -19,6 +19,7 @@ $.extend(Studio.Tabs.prototype, {
 
   initListeners: function () {
     this.studio.events.on('createApp', this.onCreateApp.bind(this));
+    this.studio.events.on('loadApp', this.onLoadApp.bind(this));
     this.studio.events.on('updateApp', this.onUpdateApp.bind(this));
     this.studio.events.on('removeApp', this.onRemoveApp.bind(this));
     this.studio.events.on('changeActiveItem', this.onChangeActiveItem.bind(this));
@@ -26,11 +27,22 @@ $.extend(Studio.Tabs.prototype, {
 
   onCreateApp: function (event, model) {
     this.activate(this.createTab(model));
+    if (model.isServerSync() && !this.studio.appForm.exists) {
+      setTimeout(function () {
+        this.studio.toolbar.onUpdateApp();
+      }.bind(this), 0);
+    }
+  },
+
+  onLoadApp: function (event, model) {
+    this.onUpdateApp(event, model);
   },
 
   onUpdateApp: function (event, model) {
-    this.getTab(model.id).replaceWith(this.renderTab(model));
-    this.activate(this.getTab(model.id));
+    let $tab = this.getTab(model.id);
+    let active = this.isActive($tab);
+    $tab.replaceWith(this.renderTab(model));
+    this.getTab(model.id).toggleClass('active', active);
   },
 
   onRemoveApp: function (event, model) {

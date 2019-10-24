@@ -42,6 +42,14 @@ $.extend(Studio.WorkflowStateModel.prototype, Studio.Model.prototype, {
     }, this).length === 0;
   },
 
+  hasView: function (target) {
+    for (let view of this.views) {
+      if (view === target) {
+        return true;
+      }
+    }
+  },
+
   getView: function (cls) {
     cls = cls instanceof Studio.ClassModel ? cls.id : cls;
     return this.viewMap[cls] instanceof Studio.ClassViewModel ? this.viewMap[cls] : null;

@@ -11,6 +11,8 @@ $.extend(Studio.SidebarMenu.prototype, {
   initListeners: function () {
 
     this.studio.events.on('createApp', this.onCreateApp.bind(this));
+    this.studio.events.on('loadApp', this.onLoadApp.bind(this));
+    this.studio.events.on('updateApp', this.onUpdateApp.bind(this));
     this.studio.events.on('createClass', this.onCreateClass.bind(this));
     this.studio.events.on('createClassAttr', this.onCreateClassAttr.bind(this));
     this.studio.events.on('createWorkflow', this.onCreateWorkflow.bind(this));
@@ -44,6 +46,7 @@ $.extend(Studio.SidebarMenu.prototype, {
       case 'navItem': return this.getNavItemByItem($item);
       case 'task': return this.getTaskByItem($item);
       case 'interface': return this.getInterfaceByItem($item);
+      case 'deployModule': return this.getDeployModuleByItem($item);
     }
   },
 
@@ -80,9 +83,13 @@ $.extend(Studio.SidebarMenu.prototype, {
     this.studio.apps.forEach(this.createApp, this);
   },
 
+  createItems: function (items) {
+    return items instanceof Array ? items.map(this.createItem, this).join('') : '';
+  },
+
   createItem: function (data) {
     data.cssClass = data.cssClass || '';
-    data.cssClass += data.hasChildren ? ' has-children' : '';
+    data.cssClass += (data.children || data.hasChildren) ? ' has-children' : '';
     return this.studio.renderSample('studio-sidebar-menu-item', data);
   },
 
@@ -118,6 +125,9 @@ $.extend(Studio.SidebarMenu.prototype, {
         case Studio.TaskModel: this.studio.taskForm.update(model); break;
         case Studio.InterfaceModel: this.studio.interfaceForm.update(model); break;
       }
+      if (model instanceof Studio.DeployModuleModel || model instanceof Studio.DeployModuleRegistryModel) {
+        this.studio.getDeployModuleForm(model).update(model);
+      }
     }
   },
 
@@ -134,45 +144,30 @@ $.extend(Studio.SidebarMenu.prototype, {
     var modes;
     switch (type) {
       case 'class':
-      case 'classAttr':
-        modes = ['class', 'view', 'printView'];
-        break;
+      case 'classAttr': modes = ['class', 'view', 'printView']; break;
       case 'nav':
-      case 'navSection':
-        modes = ['nav'];
-        break;
-      case 'navItem':
-        if (model.isClassPage()) {
-          modes = ['listView'];
-        } else {
-          modes = ['nav'];
-        }
-        break;
+      case 'navSection': modes = ['nav']; break;
+      case 'navItem': modes = model.isClassPage() ? ['listView'] : ['nav']; break;
       case 'tasks':
-      case 'task':
-        modes = ['task'];
-        break;
-      case 'workflows':
-        modes = ['workflow'];
-        break;
+      case 'task': modes = ['task']; break;
+      case 'workflows': modes = ['workflow']; break;
       case 'workflow':
       case 'workflowState':
-      case 'workflowTransition':
-        modes = ['workflow', 'workflowView'];
-        break;
+      case 'workflowTransition': modes = ['workflow', 'workflowView']; break;
       case 'interfaces':
-      case 'interface':
-        modes = ['interface'];
-        break;
-      case 'changelog':
-        modes = ['changelog'];
-        break;
-      default:
-        modes = ['class'];
+      case 'interface': modes = ['interface']; break;
+      case 'changelog': modes = ['changelog']; break;
+      case 'deploy': modes = ['deploy']; break;
+      case 'deployGlobal': modes = ['deployGlobal']; break;
+      case 'deployGlobalModuleTitle': modes = ['deployGlobalModuleTitle']; break;
+      case 'deployGlobalTopMenu': modes = ['deployGlobalTopMenu']; break;
+      case 'deployGlobalPlugin': modes = ['deployGlobalPlugin']; break;
+      case 'deployGlobalJob': modes = ['deployGlobalJob']; break;
+      case 'deployModules': modes = ['deploy']; break;
+      case 'deployModule': modes = ['deployModule']; break;
+      default: modes = ['class'];
     }
-    return modes && modes.indexOf(this.studio.contentMode) === -1
-        ? modes[0]
-        : this.studio.contentMode;
+    return modes && modes.indexOf(this.studio.contentMode) === -1 ? modes[0] : this.studio.contentMode;
   },
 
   // ACTIVE
@@ -273,19 +268,28 @@ $.extend(Studio.SidebarMenu.prototype, {
     return this.studio.getApp($item.data('id'));
   },
 
+  onLoadApp: function (event, model) {
+    let $app = this.getItem(model.getId()).html($(this.createAppItem(model)).html());
+    this.activate(this.getItemByType('classes', $app));
+  },
+
   onCreateApp: function (event, model) {
     this.createApp(model);
     this.activate(this.getItem(model.id));
   },
 
   createApp: function (model) {
-    this.$menu.append(this.createItem({
+    this.$menu.append(this.createAppItem(model));
+  },
+
+  createAppItem: function (model) {
+    return this.createItem({
       'type': 'app',
       'id': model.id,
       'title': model.getTitle(),
       'hasChildren': true,
       'children': this.createAppSections(model)
-    }));
+    });
   },
 
   createAppSections: function (model) {
@@ -301,25 +305,29 @@ $.extend(Studio.SidebarMenu.prototype, {
       'type': 'workflows',
       'title': Helper.L10n.translate('Workflows'),
       'children': this.createWorkflows(model)
-    },/*{
+    },{
       'type': 'tasks',
       'title': Helper.L10n.translate('Task manager'),
       'children': this.createTasks(model)
-    },*/{
+    },{
       'type': 'interfaces',
       'title': Helper.L10n.translate('Interface constructor'),
       'children': this.createInterfaces(model)
-    }, {
+    },{
       'type': 'admin',
       'title': Helper.L10n.translate('Settings'),
       'children': this.createAdmin(model)
+    },{
+      'type': 'deploy',
+      'title': Helper.L10n.translate('Configurator'),
+      'children': this.createDeploy(model)
     }].map(function (data) {
       return this.createItem(this.getAppSectionParams(data, model));
     }.bind(this)).join('');
   },
 
   getAppSectionChildren: function (type, app) {
-    return this.getItem(app.id).find('[data-type="'+ type +'"]').children('.menu-item-children')
+    return this.getItem(app.id).find('[data-type="'+ type +'"]').children('.menu-item-children');
   },
 
   getAppSectionParams: function (data, app) {
@@ -327,6 +335,14 @@ $.extend(Studio.SidebarMenu.prototype, {
       cssClass: 'app-section',
       hasChildren: data.hasChildren !== false
     }, data);
+  },
+
+  onUpdateApp: function (event, model) {
+    var $item = this.getItemByType('deployModules');
+    this.getChildren($item).html(this.createDeployModules(model));
+    if (!this.getActiveType()) {
+      this.activate(this.getItemByType('deploy'));
+    }
   },
 
   // CLASS
@@ -734,5 +750,57 @@ $.extend(Studio.SidebarMenu.prototype, {
       'type': 'changelog',
       'title': Helper.L10n.translate('Changelog')
     });
+  },
+
+  // DEPLOY
+
+  getActiveDeployModule: function () {
+    var $item = this.getActive();
+    var $app = this.getClosestByType('app', $item);
+    return this.studio.getDeployModule($item.data('id'), $app.data('id'));
+  },
+
+  createDeploy: function (app) {
+    return this.createItems([{
+      'type': 'deployGlobal',
+      'title': Helper.L10n.translate('Global settings'),
+      'children': this.createDeployGlobal(app)
+    },{
+      'type': 'deployModules',
+      'title': Helper.L10n.translate('Modules'),
+      'children': this.createDeployModules(app),
+      'hasChildren': true
+    }]);
+  },
+
+  createDeployGlobal: function (app) {
+    return this.createItems([{
+      'type': 'deployGlobalModuleTitle',
+      'title': Helper.L10n.translate('Module titles')
+    },{
+      'type': 'deployGlobalTopMenu',
+      'title': Helper.L10n.translate('Explicit top menu')
+    },{
+      'type': 'deployGlobalPlugin',
+      'title': Helper.L10n.translate('Plugins')
+    },{
+      'type': 'deployGlobalJob',
+      'title': Helper.L10n.translate('Jobs')
+    }]);
+  },
+
+  createDeployModules: function (app) {
+    return this.createItems(app.getModuleNames().map(function (name) {
+      return {
+        'id': name,
+        'title': name,
+        'type': 'deployModule'
+      };
+    }));
+  },
+
+  getDeployModuleByItem: function ($item) {
+    var $app = this.getClosestByType('app', $item);
+    return this.studio.getDeployModule($item.data('id'), $app.data('id'));
   }
 });

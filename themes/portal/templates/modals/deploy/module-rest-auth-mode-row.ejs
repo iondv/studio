@@ -1,0 +1,18 @@
+
+<tr data-id="<%- id %>">
+    <td><input type="checkbox" name="active"></td>
+    <td>
+      <input name="name" type="text" class="form-control" <%- id !== 'custom' ? 'readonly' : '' %>
+             value="<%- id %>" >
+    </td>
+    <td>
+        <select name="type" class="form-control">
+            <option value="header">Header</option>
+            <option value="none">None</option>
+            <option value="token">Token</option>
+        </select>
+    </td>
+    <td class="action-cell hidden">
+      <span data-action="remove" class="fa fa-trash text-danger" title="Remove"></span>
+    </td>
+</tr>

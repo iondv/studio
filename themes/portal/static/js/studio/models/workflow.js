@@ -59,6 +59,14 @@ $.extend(Studio.WorkflowModel.prototype, Studio.Model.prototype, {
     return Studio.Model.getNestedModelByValue(value, key, this.states);
   },
 
+  getStateByView: function (view) {
+    for (let state of this.states) {
+      if (state.hasView(view)) {
+        return state;
+      }
+    }
+  },
+
   clearStates: function () {
     this.states = [];
     this.stateMap = {};

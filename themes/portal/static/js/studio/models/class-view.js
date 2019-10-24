@@ -81,6 +81,15 @@ $.extend(Studio.ClassViewModel.prototype, Studio.Model.prototype, {
     return item instanceof Studio.ClassViewGroupModel;
   },
 
+  getWorkflowState: function () {
+    for (let workflow of this.app.workflows) {
+      let state = workflow.getStateByView(this);
+      if (state) {
+        return state;
+      }
+    }
+  },
+
   getItem: function (id) {
     return this.getAttr(id) || this.getGroup(id);
   },

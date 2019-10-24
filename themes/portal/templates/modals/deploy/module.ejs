@@ -1,0 +1,47 @@
+<%
+let params = {
+  createTitle: 'New module',
+  updateTitle: 'Update module'
+};
+%>
+<div id="deploy-module-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Deploy</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('../attrs/json', {
+            name: 'globals',
+            label: 'Globals',
+            defaultValue: null
+          }) %>
+
+          <%- partial('../attrs/json', {
+            name: 'import',
+            label: 'Import',
+            defaultValue: null
+          }) %>
+
+          <%- partial('../attrs/json', {
+            name: 'statics',
+            label: 'Statics',
+            defaultValue: null
+          }) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!--
+        <button type="button" class="form-json btn btn-default l10n pull-right">JSON</button>
+        -->
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

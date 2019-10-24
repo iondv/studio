@@ -4,7 +4,10 @@
 %>
 <%- partial('./params', {params}) %>
 
-<div class="attr form-group<%- params.required %>" data-type="checkbox" data-name="<%- params.name %>">
+<div class="attr form-group<%- params.required %>" data-type="checkbox"
+     data-name="<%- params.name %>"
+     data-extension="<%= params.extension %>"
+     data-default-value="<%= params.defaultValue %>">
   <div class="col-sm-offset-3 col-sm-9">
     <div class="checkbox">
       <label>

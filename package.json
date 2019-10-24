@@ -7,7 +7,7 @@
     "url": "https://github.com/iondv/studio/issues"
   },
   "engines": {
-    "ion": "3.0.0"
+    "ion": "3.0.10"
   },
   "license": "Apache License 2.0",
   "repository": {
@@ -22,7 +22,7 @@
   },
   "private": true,
   "ionModulesDependencies": {
-    "portal": "1.4.0"
+    "portal": "1.4.1"
   },
   "ionMetaDependencies": {},
   "dependencies": {

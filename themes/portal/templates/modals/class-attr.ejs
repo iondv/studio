@@ -20,7 +20,7 @@ let params = {
             label: 'Name',
             required: true,
             mask: {
-              regex: '^[a-zA-Z0-9-]+$'
+              regex: '^[a-zA-Z0-9-_]+$'
             }
           }) %>
 
@@ -110,6 +110,12 @@ let params = {
           <%- partial('./attrs/integer', {
             name: 'orderNumber',
             label: 'Order number'
+          }) %>
+
+          <%- partial('./attrs/integer', {
+            name: 'mode',
+            label: 'Mode',
+            defaultValue: 0
           }) %>
 
           <%- partial('./attrs/integer', {
@@ -212,12 +218,14 @@ let params = {
 
             <%- partial('./attrs/checkbox', {
               name: 'indexed',
-              label: 'Indexed'
+              label: 'Indexed',
+              defaultValue: true
             }) %>
 
             <%- partial('./attrs/checkbox', {
               name: 'nullable',
-              label: 'Nullable'
+              label: 'Nullable',
+              defaultValue: true
             }) %>
 
             <%- partial('./attrs/checkbox', {

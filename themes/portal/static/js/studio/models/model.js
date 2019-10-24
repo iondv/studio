@@ -57,6 +57,10 @@ $.extend(Studio.Model.prototype, {
     return this.data.name;
   },
 
+  getOldName: function () {
+    return this.oldData.name;
+  },
+
   getTitle: function () {
     return this.data.caption === '' || this.data.caption === undefined
         ? this.getName()
@@ -75,6 +79,14 @@ $.extend(Studio.Model.prototype, {
 
   setOrderNumber: function (value) {
     this.data.orderNumber = value;
+  },
+
+  isNameChanged: function () {
+    return this.isValueChanged('name');
+  },
+
+  isValueChanged: function (attrName) {
+    return this.oldData[attrName] !== this.data[attrName];
   },
 
   getValue: function (attrName) {
@@ -179,7 +191,7 @@ $.extend(Studio.Model.prototype, {
   // STORE
 
   exportData: function () {
-    return this.getData();
+    return Object.assign({}, this.getData());
   },
 
   importData: function (data) {
@@ -211,6 +223,14 @@ $.extend(Studio.Model.prototype, {
 
   replaceClassAttrNameToId: function (key, data, cls) {
     this.replaceModelNameToId(key, data, cls.getOwnAttrByName.bind(cls));
+  },
+
+  replaceIdToNavSectionName: function (key, data) {
+    this.replaceIdToModelName(key, data, this.app.getNavSection);
+  },
+
+  replaceNavSectionNameToId: function (key, data) {
+    this.replaceModelNameToId(key, data, this.app.getNavSectionByName);
   },
 
   replaceIdToInterface: function (key, data) {

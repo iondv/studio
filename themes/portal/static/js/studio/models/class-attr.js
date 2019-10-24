@@ -96,5 +96,6 @@ $.extend(Studio.ClassAttrModel.prototype, Studio.Model.prototype, {
     this.replaceClassNameToId('itemsClass', data);
     this.replaceClassNameToId('backRef', data);
     this.replaceClassNameToId('backColl', data);
+    return data;
   }
 });

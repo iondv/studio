@@ -4,10 +4,12 @@
   params.label = typeof label === 'undefined' ? '' : label;
   params.placeholder = typeof placeholder === 'undefined' ? '' : placeholder;
   params.hint = typeof hint === 'undefined' ? '' : hint;
+  params.labelHint = typeof labelHint === 'undefined' ? '' : labelHint;
   params.defaultValue = typeof defaultValue === 'undefined' ? '' : defaultValue;
   params.value = typeof value === 'undefined' ? params.defaultValue : value;
   params.cssClass = typeof cssClass === 'undefined' ? '' : cssClass;
   params.mask = typeof mask === 'undefined' ? '' : typeof mask === 'string' ? mask : JSON.stringify(mask);
   params.readOnly = typeof readOnly === 'undefined' ? '' : readOnly ? 'readonly' : '';
   params.action = typeof action === 'undefined' ? '' : action;
+  params.extension = typeof extension === 'undefined' ? '' : JSON.stringify(extension);
 %>

@@ -1,0 +1,87 @@
+<%
+let params = {
+  createTitle: 'New top menu item',
+  updateTitle: 'Update top menu item'
+};
+%>
+<div id="deploy-global-top-menu-modal" class="modal" role="dialog" aria-hidden="true"
+     data-params="<%= JSON.stringify(params) %>">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title l10n">Deploy</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form form-horizontal">
+
+          <%- partial('../attrs/checkbox', {
+            name: 'system',
+            label: 'System'
+          }) %>
+
+          <%- partial('../attrs/select', {
+            type: 'selectHandler',
+            name: 'name',
+            label: 'Name',
+            items: [],
+            required: true,
+            extension: {
+              visibility: {system: true}
+            }
+          }) %>
+
+          <%- partial('../attrs/select-object', {
+            type: 'selectNavSection',
+            name: 'section',
+            label: 'Navigation section',
+            extension: {
+              visibility: {system: false}
+            }
+          }) %>
+
+          <%- partial('../attrs/select-object', {
+            type: 'selectNavItem',
+            name: 'item',
+            label: 'Navigation item',
+            depends: 'section',
+            extension: {
+              visibility: {system: false}
+            }
+          }) %>
+
+          <%- partial('../attrs/string', {
+            name: 'id',
+            label: 'ID',
+            extension: {
+              visibility: {system: false}
+            }
+          }) %>
+
+          <%- partial('../attrs/string', {
+            name: 'url',
+            label: 'URL',
+            labelHint: 'Link to the navigation item. Consists of: /module name/project_namespace@menu_item_name',
+            required: true,
+            extension: {
+              visibility: {system: false}
+            }
+          }) %>
+
+          <%- partial('../attrs/string', {
+            name: 'caption',
+            label: 'Caption',
+            extension: {
+              visibility: {system: false}
+            }
+          }) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="form-create btn btn-success l10n">Create</button>
+        <button type="button" class="form-update btn btn-primary l10n">Save</button>
+        <button type="button" class="form-cancel btn btn-default l10n">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

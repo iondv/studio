@@ -12,15 +12,14 @@ $.extend(Studio.ImportTaskForm.prototype, Studio.Form.prototype, {
 
   init: function () {
     Studio.Form.prototype.init.call(this);
-    this.alert = new Studio.Alert(this.$modal.find('.form-alert'));
     this.$import = this.$modal.find('.form-import');
     this.$import.click(this.onImport.bind(this));
   },
 
   show: function (app) {
     this.app = app;
-    this.prepareAttrs();
     this.alert.hide();
+    this.prepareAttrs();
     this.$modal.modal('show');
   },
 

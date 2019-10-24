@@ -3,6 +3,7 @@
 Studio.ClassUmlAdapter = function ($container, studio) {
   this.studio = studio;
   this.menu = studio.menu;
+  this.events = new Helper.Events('classUmlAdapter:');
   this.$container = $container;
   this.uml = new Uml($container);
 };
@@ -12,6 +13,7 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
   initListeners: function () {
     this.studio.events.on('changeContentMode', this.onChangeContentMode.bind(this));
     this.studio.events.on('createApp', this.onCreateApp.bind(this));
+    this.studio.events.on('loadApp', this.onLoadApp.bind(this));
     this.studio.events.on('createClass', this.onCreateClass.bind(this));
     this.studio.events.on('updateClass', this.onUpdateClass.bind(this));
     this.studio.events.on('removeClass', this.onRemoveClass.bind(this));
@@ -30,6 +32,11 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
 
   onChangeContentMode: function (event, mode) {
     this.$container.toggle(mode === 'class');
+  },
+
+  onLoadApp: function (event, model) {
+    this.removePages(model);
+    this.createPages(model);
   },
 
   onCreateApp: function (event, model) {
@@ -142,6 +149,7 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
   onDragEnd: function (event, data) {
     var model = this.studio.getActiveClass();
     model.setUmlPosition(data.position);
+    this.events.trigger('dragEnd', model);
     this.studio.triggerChangeModel(model);
   },
 
@@ -180,6 +188,10 @@ $.extend(Studio.ClassUmlAdapter.prototype, {
       'rects': this.getRects(app),
       'links': this.getLinks(app)
     });
+  },
+
+  removePages: function (app) {
+    this.uml.removePage(this.getPage('class', app));
   },
 
   // RECTS

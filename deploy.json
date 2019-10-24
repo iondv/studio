@@ -1,7 +1,7 @@
 {
   "namespace": "studio",
   "globals": {
-    "pageEndContent": "<div><img src=\"https://mc.iondv.com/watch/github/app/studio\" style=\"position:absolute; left:-9999px;\" alt=\"iondv-metrics\" /></div>"
+    "pageEndContent": "<div><img src=\"https://mc.iondv.com/watch/local/app/studio\" style=\"position:absolute; left:-9999px;\" alt=\"iondv-metrics\" /></div>"
   },
   "deployer": "built-in",
   "modules": {

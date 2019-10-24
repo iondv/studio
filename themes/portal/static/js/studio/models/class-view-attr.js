@@ -68,6 +68,7 @@ $.extend(Studio.ClassViewAttrModel.prototype, Studio.Model.prototype, {
 
   normalizeImportData: function (data) {
     this.replaceGroupNameToId(data);
+    return data;
   },
 
   replaceIdToGroupName: function (data) {

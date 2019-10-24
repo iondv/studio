@@ -51,8 +51,18 @@ window.Helper = {
     }, params));
   },
 
+  parseNestedJson: function (data) {
+    for (let key of Object.keys(data)) {
+      if (typeof data[key] === 'string') {
+        data[key] = Helper.parseJson(data[key]);
+      } else if (data[key]) {
+        Helper.parseNestedJson(data[key]);
+      }
+    }
+  },
+
   parseJson: function (value) {
-    if (typeof value !== 'string') {
+    if (typeof value !== 'string' || value === '') {
        return value;
     }
     try {
@@ -87,6 +97,11 @@ window.Helper = {
 
   createStaticUrl: function (url) {
     return document.body.dataset.static + url;
+  },
+
+  camelize: function (text) {
+    text = text.replace(/[\- ]+/g, '');
+    return text.charAt(0).toUpperCase() + text.slice(1);
   }
 };
 
@@ -143,12 +158,15 @@ Helper.Array = {
     return -1;
   },
 
-  indexByKey: function (key, items) {
+  indexByKey: function (key, items, removeKeyProp) {
     var map = {};
     if (items instanceof Array) {
       for (var i = 0; i < items.length; ++i) {
         if (items[i] && items[i][key]) {
           map[items[i][key]] = items[i];
+          if (removeKeyProp) {
+            delete items[i][key];
+          }
         }
       }
     }
@@ -220,12 +238,55 @@ Helper.Object = {
     return defaults;
   },
 
+  setNestedValue: function (key, data, value) {
+    var index = key.indexOf('.');
+    if (index === -1) {
+      return data[key] = value;
+    }
+    var part = key.substring(0, index);
+    if (!(data[part] instanceof Object)) {
+      data[part] = {};
+    }
+    Helper.Object.setNestedValue(key.substring(index + 1), data[part], value);
+  },
+
+  assignProperties: function (keys, target, source) {
+    for (var key of keys) {
+      target[key] = source[key];
+    }
+  },
+
   assignUndefinedProperties: function (map, target) {
     for (var key in map) {
       if (map.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
         target[key] = map[key];
       }
     }
+  },
+
+  getValuesWithKey: function (keyProp, map) {
+    var items = [];
+    if (map) {
+      for (var key of Object.keys(map)) {
+        if (map[key]) {
+          map[key][keyProp] = key;
+          items.push(map[key]);
+        }
+      }
+    }
+    return items;
+  },
+
+  sortByKeys: function (keys, data) {
+    var result = {};
+    if (data) {
+      for (var key of keys) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          result[key] = data[key];
+        }
+      }
+    }
+    return Object.assign(result, data);
   }
 };
 
@@ -274,7 +335,7 @@ Helper.L10n = {
   setLanguage: function (language) {
     if (typeof language === 'string') {
       language = language.split('-')[0];
-      var map = this.getMessageMap(null, language);
+      var map = this.getLanguageMap(language);
       if (map) {
         Helper.L10n.language = language;
         Helper.L10n.translateAll(map);
@@ -282,18 +343,20 @@ Helper.L10n = {
     }
   },
 
-  getMessageMap (category, language) {
+  getLanguageMap: function (language) {
     language = language || Helper.L10n.language;
-    return Helper.L10n.messages[language]
-        && Helper.L10n.messages[language][category || 'default'];
+    return Helper.L10n.messages[language];
+  },
+
+  getMessageMap: function (category, language) {
+    var map = Helper.L10n.getLanguageMap(language);
+    return map && map[category || 'default'];
   },
 
   translate: function (message, category) {
-    if (Helper.L10n.language) {
-      var map = Helper.L10n.getMessageMap(category );
-      if (map && map.hasOwnProperty(message)) {
-        return map[message];
-      }
+    var map = Helper.L10n.getMessageMap(category);
+    if (map && map.hasOwnProperty(message)) {
+      return map[message];
     }
     return message;
   },
@@ -317,12 +380,14 @@ Helper.L10n = {
   },
 
   translateInner: function (element, map) {
+    map = map[element.dataset.l10n || 'default'];
     if (map && map.hasOwnProperty(element.innerHTML)) {
       element.innerHTML = map[element.innerHTML];
     }
   },
 
   translateAttr: function (attr, element, map) {
+    map = map[element.dataset.l10n || 'default'];
     if (map && map.hasOwnProperty(element.getAttribute(attr))) {
       element.setAttribute(attr, map[element.getAttribute(attr)]);
     }
@@ -442,6 +507,16 @@ Helper.Format = {
     return Helper.L10n.translate(value ? 'Yes' : 'No');
   },
 
+  json: function (value, trimLength) {
+    value = typeof value !== 'string' ? JSON.stringify(value) : value;
+    value = value === undefined ? '' : value;
+    trimLength = 100;
+    if (value.length > trimLength) {
+      value = value.substring(0, trimLength) + '...';
+    }
+    return value;
+  },
+
   timestamp: function (value) {
     return value ? moment(value).format(Helper.L10n.translate('YYYY-MM-DD HH:mm:ss')) : '';
   }
@@ -456,7 +531,7 @@ Helper.DataTable = {
   },
 
   formatJson: function (data, type, col) {
-    return data ? Helper.stringifyJson(data, 1) : data;
+    return data ? Helper.Format.json(data) : data;
   }
 };
 

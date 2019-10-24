@@ -3,6 +3,7 @@
 Studio.NavItemModel = function (parent, data) {
   this.app = parent.app;
   this.parent = parent;
+  this.section = parent.section || parent;
   this.clear();
   Studio.Model.call(this, 'navItem:', this.app.studio, data);
 };
@@ -18,6 +19,12 @@ $.extend(Studio.NavItemModel.prototype, Studio.Model.prototype, {
     return this.isRootItem()
         ? this.data.name
         : this.parent.getCode() +'.'+ this.data.name;
+  },
+
+  getOldCode: function () {
+    return this.isRootItem()
+        ? this.oldData.name
+        : this.parent.getCode() +'.'+ this.oldData.name;
   },
 
   isGroup: function () {
@@ -134,6 +141,7 @@ $.extend(Studio.NavItemModel.prototype, Studio.Model.prototype, {
     var cls = this.getClass();
     if (cls) {
       this.listView = new Studio.ClassViewModel(cls, data);
+      this.listView.navItem = this;
       this.listView.copyAttrsFrom(cls.getViewByName('list'));
     }
     return this.listView;
@@ -191,6 +199,7 @@ $.extend(Studio.NavItemModel.prototype, Studio.Model.prototype, {
     if (this.data.listView && cls) {
       try {
         this.listView = new Studio.ClassViewModel(cls, this.data.listView);
+        this.listView.navItem = this;
       } catch (err) {
         console.error(err);
       }

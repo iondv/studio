@@ -9,7 +9,6 @@ $.extend(Studio.CodeEditorForm.prototype, Studio.Form.prototype, {
 
   init: function () {
     Studio.Form.prototype.init.call(this);
-    this.alert = new Studio.Alert(this.$modal.find('.form-alert'));
     this.$code = this.$modal.find('.code-editor-container');
     this.editor = ace.edit(this.$code.get(0));
     this.editor.$blockScrolling = Infinity;
@@ -20,12 +19,12 @@ $.extend(Studio.CodeEditorForm.prototype, Studio.Form.prototype, {
 
   show: function (value, mode, afterSave) {
     this.afterSave = afterSave;
+    this.alert.hide();
     this.editor.session.setMode('ace/mode/'+ mode);
     this.editor.setValue(Helper.stringifyJson(value, 3));
     //this.editor.clearSelection();
     this.editor.selection.moveTo(0, 0);
     this.editor.focus();
-    this.alert.hide();
     this.$modal.modal('show');
   },
 

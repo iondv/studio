@@ -5,6 +5,7 @@ Studio.ViewMaker = function ($container, studio) {
   this.studio = studio;
   this.modeName = 'view';
   this.selectViewMessage = 'Select a view to display elements';
+  this.events = new Helper.Events('viewMaker:');
   this.$targetContainer = this.$container.children('.studio-view-target');
   this.$targetTabNav = this.$targetContainer.children('.nav-tabs');
   this.$targetTabContent = this.$targetContainer.children('.tab-content');
@@ -323,6 +324,7 @@ $.extend(Studio.ViewMaker.prototype, {
     }
     if (data.viewItem && this.dropViewItem(data)) {
       this.redraw(this.view.isTabItem(data.viewItem) ? data.viewItem.id : null);
+      this.events.trigger('dragEnd', this.view);
       this.studio.triggerChangeModel(data.viewItem);
     }
   },

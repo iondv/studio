@@ -1,12 +1,16 @@
 <!-- select-object -->
 <%
-  let params = {};
+  let params = {
+    'targetAttr': typeof targetAttr === 'undefined' ? '' : targetAttr
+  };
 %>
 <%- partial('./params', {params}) %>
 
 <div class="attr <%- params.cssClass %> form-group<%- params.required %>"
      data-type="<%- type %>"
      data-name="<%- params.name %>"
+     data-extension="<%= params.extension %>"
+     data-target-attr="<%= params.targetAttr %>"
      data-action="<%- params.action %>">
   <label class="control-label col-sm-3 l10n"><%- params.label %></label>
   <div class="col-sm-9">
