@@ -38,13 +38,7 @@ $.extend(Studio.DeployModuleRestForm.prototype, Studio.DeployModuleForm.prototyp
     data.di = data.di || {};
     for (var key of Object.keys(data.authMode)) {
       if (data.authMode[key]) {
-        if (key === 'acceptor') {
-          data.di[key] = {module: 'modules/rest/lib/impl/acceptor'};
-        } else  if (key === 'crud') {
-          data.di[key] = {module: 'modules/rest/lib/impl/crud'};
-        } else {
-          data.di[key] = {module: 'applications/'+ this.app.getName() +'/service/'+ key};
-        }
+        data.di[key] = Object.assign(this.getDefaultServiceData(key), data.di[key]);
         if (data.authMode[key] === 'header') {
           delete data.authMode[key];
         }
@@ -53,6 +47,24 @@ $.extend(Studio.DeployModuleRestForm.prototype, Studio.DeployModuleForm.prototyp
         delete data.authMode[key];
       }
     }
+  },
+
+  getDefaultServiceData: function (key) {
+    switch (key) {
+      case 'acceptor':
+        return {
+          module: 'modules/rest/lib/impl/acceptor'
+        };
+      case 'crud':
+        return {
+          module: 'modules/rest/lib/impl/crud',
+          options: {
+            auth: 'ion://auth',
+            dataRepo: 'ion://dataRepo'
+          }
+        };
+    }
+    return {module: 'applications/' + this.app.getName() + '/service/' + key};
   },
 
   setHeaderAuthModes: function (data) {

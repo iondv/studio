@@ -466,12 +466,12 @@ function ${name}(options) {
   this._route = function(router) {
     this.addHandler(router, '/', 'POST', (req) => {
       return Promise.resolve({
-        echo: 'ok'
+        echo: 'peekaboo'
       });
     });
     this.addHandler(router, '/', 'GET', (req) => {
       return Promise.resolve({
-        echo: 'ok'
+        echo: 'peekaboo'
       });
     });
   };

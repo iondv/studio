@@ -204,7 +204,6 @@ Helper.L10n.messages.ru.default = {
 
   'Language': 'Язык',
   'Launch': 'Параметры запуска',
-  'Link to the navigation item. Consists of: /module name/project_namespace@menu_item_name': 'Ссылка на пункт навигации. Состоит из: /наименование_модуля/простанство_имен_проекта@системное_наименование_пункта_меню',
   'List': 'Список',
   'List print views': 'Печатные формы списка',
   'Local storage limit exceeded': 'Превышен лимит локального хранилища',
