@@ -13,6 +13,6 @@ $.extend(Studio.RadioListFormAttr.prototype, Studio.FormAttr.prototype, {
 
   setValue: function (value) {
     this.$value.filter('[value="'+ value +'"]').prop('checked', true);
-    this.$value.first().change();
+    this.triggerChange();
   }
 });

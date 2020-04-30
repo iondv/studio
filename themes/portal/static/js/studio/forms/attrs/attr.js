@@ -11,13 +11,17 @@ Studio.FormAttr = function ($attr, form) {
 };
 
 Studio.FormAttr.create = function ($attr, form) {
-  var Attr = Studio.FormAttr;
+  let Attr = Studio.FormAttr;
   switch ($attr.data('type')) {
     case 'checkbox': Attr = Studio.CheckboxFormAttr; break;
     case 'checkList': Attr = Studio.CheckListFormAttr; break;
     case 'code': Attr = Studio.CodeFormAttr; break;
+    case 'commands': Attr = Studio.CommandsFormAttr; break;
+    case 'condition': Attr = Studio.ConditionFormAttr; break;
     case 'dateTime': Attr = Studio.DateTimeFormAttr; break;
     case 'deployRestAuthMode': Attr = Studio.DeployRestAuthModeFormAttr; break;
+    case 'entry': Attr = Studio.EntryFormAttr; break;
+    case 'selectionEntry': Attr = Studio.SelectionEntryFormAttr; break;
     case 'file': Attr = Studio.FileFormAttr; break;
     case 'integer': Attr = Studio.IntegerFormAttr; break;
     case 'json': Attr = Studio.JsonFormAttr; break;
@@ -41,6 +45,14 @@ $.extend(Studio.FormAttr.prototype, {
 
   init: function () {
     this.$value.change(this.onChange.bind(this));
+  },
+
+  isDisabled: function () {
+    return this.$attr.hasClass('disabled');
+  },
+
+  isHidden: function () {
+    return this.$attr.hasClass('hidden');
   },
 
   getType: function () {
@@ -73,14 +85,15 @@ $.extend(Studio.FormAttr.prototype, {
   },
 
   setMask: function () {
-    var mask = this.$attr.data('mask');
+    const mask = this.$attr.data('mask');
     if (mask) {
       this.$value.inputmask(mask);
     }
   },
 
   clearValue: function () {
-    this.$value.val('').change();
+    this.$value.val('');
+    this.triggerChange();
   },
 
   getRawValue: function () {
@@ -95,11 +108,12 @@ $.extend(Studio.FormAttr.prototype, {
     if (value === null || value === undefined) {
       value = this.getDefaultValue();
     }
-    this.$value.val(value).change();
+    this.$value.val(value);
+    this.triggerChange();
   },
 
   getDefaultValue: function () {
-    var value = this.$attr.data('defaultValue');
+    const value = this.$attr.data('defaultValue');
     return value === null || value === undefined ? '' : value;
   },
 
@@ -122,6 +136,10 @@ $.extend(Studio.FormAttr.prototype, {
 
   toggle: function (state) {
     this.$attr.toggle(state);
+  },
+
+  triggerChange: function () {
+    this.$value.first().change();
   },
 
   setTargetAttr: function () {

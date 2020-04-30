@@ -28,6 +28,10 @@ Helper.L10n.messages.ru.default = {
   'Action': 'Действие',
   'Actions': 'Действия',
   'Active task': 'Задача активна',
+  'Add': 'Добавить',
+  'Add condition': 'Добавить условие',
+  'Add entry': 'Добавить запись',
+  'Add nested condition': 'Добавить вложенное условие',
   'Address': 'Адрес',
   'Administration': 'Администрирование',
   'Align items?': 'Выровнять элементы по колонкам?',
@@ -122,6 +126,7 @@ Helper.L10n.messages.ru.default = {
   'Decimals': 'Десятичные',
   'Default path': 'Путь по умолчанию',
   'Default value': 'Значение по умолчанию',
+  'Delete': 'Удалить',
   'Description': 'Описание',
   'Dependencies': 'Зависимости',
   'Dependency injection': 'Внедрение зависимости',
@@ -134,6 +139,7 @@ Helper.L10n.messages.ru.default = {
   'Drop-down list': 'Выпадающий список',
 
   'Eager loading': 'Жадная загрузка',
+  'Edit': 'Править',
   'Edit app': 'Редактировать приложение',
   'Edit form': 'Форма редактирования',
   'End date': 'Дата окончания',
@@ -257,6 +263,7 @@ Helper.L10n.messages.ru.default = {
   'Obligation': 'Обязательность',
   'Old value': 'Исходное значение',
   'Once': 'Однократно',
+  'Operation': 'Операция',
   'Options': 'Опции',
   'Order number': 'Порядковый номер',
 
@@ -273,14 +280,13 @@ Helper.L10n.messages.ru.default = {
   'Plugins': 'Плагины',
   'portal': 'Портал',
   'Print view': 'Печатная форма',
+  'Property': 'Атрибут',
   'Property permissions': 'Атрибутные разрешения',
 
   'Read only': 'Только для чтения',
   'Ready': 'Готово',
   'Real number': 'Вещественное число',
   'Record': 'Запись',
-  'registry': 'Реестр',
-  'report': 'Аналитика',
   'Reference': 'Ссылка',
   'Reference class': 'Ссылочный класс',
   'Remove': 'Удалить',
@@ -292,8 +298,10 @@ Helper.L10n.messages.ru.default = {
   'Remove class attribute?': 'Удалить атрибут класса?',
   'Remove class?': 'Удалить класс?',
   'Remove class view?': 'Удалить представление класса?',
+  'Remove condition': 'Удалить условие',
   'Remove group': 'Удалить группу',
   'Remove group?': 'Удалить группу?',
+  'Remove entry': 'Удалить запись',
   'Remove interface': 'Удалить интерфейс',
   'Remove interface?': 'Удалить интерфейс?',
   'Remove item': 'Удалить пункт',
@@ -417,6 +425,7 @@ Helper.L10n.messages.ru.default = {
   'Use edit models': 'Использовать модели редактирования',
   'User': 'Пользователь',
 
+  'Value': 'Значение',
   'Value cannot be blank': 'Значение не может быть пустым',
   'Value is already in use': 'Значение уже используется',
   'Value must be an identifier': 'Значение должно быть идентификатором',
@@ -432,7 +441,10 @@ Helper.L10n.messages.ru.default = {
   'Workflows': 'Бизнес-процессы',
 
   'Yes': 'Да',
-  'YYYY-MM-DD HH:mm:ss': 'DD.MM.YYYY HH:mm:ss'
+  'YYYY-MM-DD HH:mm:ss': 'DD.MM.YYYY HH:mm:ss',
+
+  'registry': 'Реестр',
+  'report': 'Аналитика',
 };
 
 Helper.L10n.messages.ru.changelog = {
@@ -452,4 +464,29 @@ Helper.L10n.messages.ru.view = {
   'create': 'создание',
   'item': 'редактирование',
   'list': 'список'
+};
+
+Helper.L10n.messages.ru.commands = {
+  'Add': 'Добавить',
+  'Create': 'Создать',
+  'Delete': 'Удалить',
+  'Edit': 'Править',
+  'Remove': 'Отвязать',
+  'Save': 'Сохранить',
+  'Save and close': 'Сохранить и закрыть'
+};
+
+Helper.L10n.messages.ru.operation = {
+  'Contains': 'Содержит',
+  'Empty': 'Пустое',
+  'Equal': 'Равно',
+  'Not equal': 'Не равно',
+  'Not empty': 'Не пустое',
+  'In': 'Входит в массив',
+  'Less': 'Меньше',
+  'Less or equal': 'Меньше или равно',
+  'Like': 'Похоже',
+  'More': 'Больше',
+  'More or equal': 'Больше или равно',
+  'Operation': 'Операция'
 };

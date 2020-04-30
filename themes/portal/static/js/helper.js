@@ -362,18 +362,23 @@ Helper.L10n = {
   },
 
   translateAll: function (map) {
-    var $body = $(document.body);
-    $body.find('.l10n').each(function () {
+    this.translateContainer($(document.body), map);
+  },
+
+  translateContainer: function ($container, map) {
+    map = map || this.getLanguageMap();
+    $container.find('.l10n').each(function () {
       Helper.L10n.translateInner(this, map);
     });
-    var attrs = [
+    const attrs = [
       'title',
       'placeholder',
+      'data-placeholder',
       'data-confirm-message',
       'data-select-message'
     ];
-    for (var i = 0; i < attrs.length; ++i) {
-      $body.find('['+ attrs[i] +']').each(function () {
+    for (let i = 0; i < attrs.length; ++i) {
+      $container.find('['+ attrs[i] +']').each(function () {
         Helper.L10n.translateAttr(attrs[i], this, map);
       });
     }

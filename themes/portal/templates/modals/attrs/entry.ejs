@@ -1,0 +1,50 @@
+<!-- entry -->
+<%
+  const params = {
+    type: typeof type === 'undefined' ? 'entry' : type
+  };
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %>"
+     data-type="<%- params.type %>"
+     data-name="<%- params.name %>"
+     data-extension="<%= params.extension %>"
+     data-action="<%- params.action %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <input type="hidden" class="form-control value" value="">
+    <div class="entry empty">
+
+      <div class="entry-empty">
+        <div class="entry-new" title="Add entry">
+          <span class="glyphicon glyphicon-plus-sign text-success"></span>
+        </div>
+      </div>
+
+      <div class="entry-list"></div>
+
+      <template data-id="item">
+        <div class="entry-item">
+          <div class="entry-item-head">
+            <div class="entry-item-new" title="Add entry">
+              <span class="glyphicon glyphicon-plus-sign text-success"></span>
+            </div>
+            <div class="entry-item-key">
+              <input type="text" class="form-control" placeholder="Key">
+            </div>
+            <div class="entry-item-value">
+              <input type="text" class="form-control" placeholder="Value">
+            </div>
+            <div class="entry-item-remove" title="Remove entry">
+              <span class="glyphicon glyphicon-trash text-danger"></span>
+            </div>
+          </div>
+        </div>
+      </template>
+
+    </div>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

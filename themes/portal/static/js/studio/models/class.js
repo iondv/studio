@@ -68,12 +68,12 @@ $.extend(Studio.ClassModel.prototype, Studio.Model.prototype, {
   },
 
   getAttr: function (id) {
-    var parent = this.getParent();
+    const parent = this.getParent();
     return this.attrMap[id] || (parent && parent.getAttr(id));
   },
 
   getAttrByName: function (name) {
-    var map = this.getAttrMapByName();
+    const map = this.getAttrMapByName();
     return map.hasOwnProperty(name) ? map[name] : null;
   },
 
@@ -82,13 +82,17 @@ $.extend(Studio.ClassModel.prototype, Studio.Model.prototype, {
   },
 
   getAttrMapByName: function () {
-    var map = this.indexAttrsByName();
-    var parent = this.getParent();
+    let map = this.indexAttrsByName();
+    let parent = this.getParent();
     while (parent) {
       Helper.Object.assignUndefinedProperties(parent.indexAttrsByName(), map);
       parent = parent.getParent();
     }
     return map;
+  },
+
+  getAttrNames: function () {
+    return this.getAttrs().map(attr => attr.getName());
   },
 
   isOwnEmpty: function () {

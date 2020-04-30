@@ -64,16 +64,14 @@ let params = {
             label: 'Confirmation message'
           }) %>
 
-          <%- partial('./attrs/json', {
+          <%- partial('./attrs/entry', {
             name: 'assignments',
-            label: 'Assignments',
-            defaultValue: []
+            label: 'Assignments'
           }) %>
 
-          <%- partial('./attrs/json', {
+          <%- partial('./attrs/condition', {
             name: 'conditions',
-            label: 'Conditions',
-            defaultValue: []
+            label: 'Conditions'
           }) %>
 
           <%- partial('./attrs/json', {

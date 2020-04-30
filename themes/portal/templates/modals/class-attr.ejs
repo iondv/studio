@@ -15,7 +15,7 @@ let params = {
       <div class="modal-body">
         <form class="form form-horizontal">
 
-          <%- partial('./attrs/string', {
+            <%- partial('./attrs/string', {
             name: 'name',
             label: 'Name',
             required: true,
@@ -172,8 +172,7 @@ let params = {
           <%- partial('./attrs/select-object', {
             type: 'selectClass',
             name: 'backColl',
-            label: 'Back collection',
-            //cssClass: 'hidden'
+            label: 'Back collection'
           }) %>
 
           <%- partial('./attrs/text', {
@@ -186,9 +185,10 @@ let params = {
             label: 'Binding'
           }) %>
 
-          <%- partial('./attrs/json', {
+          <%- partial('./attrs/condition', {
             name: 'selConditions',
-            label: 'Selection conditions'
+            label: 'Selection conditions',
+            classAttrs: 'refClass,itemsClass'
           }) %>
 
           <%- partial('./attrs/json', {
@@ -196,9 +196,10 @@ let params = {
             label: 'Sorting selection'
           }) %>
 
-          <%- partial('./attrs/json', {
+          <%- partial('./attrs/entry', {
             name: 'selectionProvider',
-            label: 'Selection provider'
+            label: 'Selection provider',
+             type: 'selectionEntry'
           }) %>
 
           <%- partial('./attrs/json', {

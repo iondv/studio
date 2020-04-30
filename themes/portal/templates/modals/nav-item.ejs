@@ -94,10 +94,10 @@ let params = {
             label: 'URL'
           }) %>
 
-          <%- partial('./attrs/json', {
+          <%- partial('./attrs/condition', {
             name: 'conditions',
             label: 'Conditions',
-            defaultValue: []
+            classAttrs: 'classname'
           }) %>
 
           <%- partial('./attrs/json', {

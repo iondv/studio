@@ -1,0 +1,73 @@
+<!-- condition -->
+<%
+  const params = {
+    classAttrs: typeof classAttrs === 'undefined' ? '' : classAttrs
+  };
+%>
+<%- partial('./params', {params}) %>
+
+<div class="attr form-group<%- params.required %>"
+     data-type="condition"
+     data-name="<%- params.name %>"
+     data-extension="<%= params.extension %>"
+     data-action="<%- params.action %>">
+  <label class="control-label col-sm-3 l10n"><%- params.label %></label>
+  <div class="col-sm-9">
+    <input type="hidden" class="form-control value" value="">
+    <div class="conditions empty" data-class-attrs="<%- params.classAttrs %>">
+
+      <div class="condition-empty">
+        <div class="condition-new" title="Add condition">
+          <span class="glyphicon glyphicon-plus-sign text-success"></span>
+        </div>
+      </div>
+
+      <div class="condition-list"></div>
+
+      <template data-id="item">
+        <div class="condition-item">
+          <div class="condition-item-head">
+            <div class="condition-item-toggle">
+              <span class="glyphicon glyphicon-menu-right"></span>
+            </div>
+            <div class="condition-item-new" title="Add condition">
+              <span class="glyphicon glyphicon-plus-sign text-success"></span>
+            </div>
+            <div class="condition-item-property">
+              <input type="text" class="form-control" placeholder="Property">
+            </div>
+            <div class="condition-item-operation">
+              <select class="form-control" data-placeholder="Operation" data-minimum-results-for-search="20">
+                <option value=""></option>
+                <option value="0" class="l10n" data-l10n="operation">Equal</option>
+                <option value="1" class="l10n" data-l10n="operation">Not equal</option>
+                <option value="2" class="l10n" data-l10n="operation">Empty</option>
+                <option value="3" class="l10n" data-l10n="operation">Not empty</option>
+                <option value="4" class="l10n" data-l10n="operation">Like</option>
+                <option value="5" class="l10n" data-l10n="operation">Less</option>
+                <option value="6" class="l10n" data-l10n="operation">More</option>
+                <option value="7" class="l10n" data-l10n="operation">Less or equal</option>
+                <option value="8" class="l10n" data-l10n="operation">More or equal</option>
+                <option value="9" class="l10n" data-l10n="operation">In</option>
+                <option value="10" class="l10n" data-l10n="operation">Contains</option>
+              </select>
+            </div>
+            <div class="condition-item-value">
+              <input type="text" class="form-control" placeholder="Value">
+            </div>
+            <div class="condition-item-nested" title="Add nested condition">
+              <span class="glyphicon glyphicon-plus text-success"></span>
+            </div>
+            <div class="condition-item-remove" title="Remove condition">
+              <span class="glyphicon glyphicon-trash text-danger"></span>
+            </div>
+          </div>
+          <div class="condition-item-body"></div>
+        </div>
+      </template>
+
+    </div>
+    <div class="hint-block l10n"><%- params.hint %></div>
+    <div class="error-block"></div>
+  </div>
+</div>

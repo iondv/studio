@@ -91,14 +91,14 @@ $.extend(Studio.prototype, {
       store.set(this.VISITED_STORE_KEY, true);
     }.bind(this), 0);
 
-    /*
-    setTimeout(function () {
-      $('.menu-item[data-type="deploy"]').find('>.menu-item-head >.menu-item-title').click();
-      $('.menu-item[data-type="deployModules"]').find('>.menu-item-head >.menu-item-title').click();
+    /*setTimeout(function () {
+      //$('.menu-item[data-type="deploy"]').find('>.menu-item-head >.menu-item-title').click();
+      //$('.menu-item[data-type="deployModules"]').find('>.menu-item-head >.menu-item-title').click();
       //$('.btn[data-action="viewMode"]').click();
       //var $select = $('[data-action="selectClassView"]');
       //$select.val($select.find('option').last().attr('value'));
-    }.bind(this), 300); //*/
+      //$('.uml-rect-attr').first().dblclick();
+    }.bind(this), 500); //*/
   },
 
   initListeners: function () {
@@ -177,7 +177,7 @@ $.extend(Studio.prototype, {
   },
 
   canExport: function () {
-    var app = this.getActiveApp();
+    const app = this.getActiveApp();
     return !!(app && app.classes.length);
   },
 
@@ -195,7 +195,7 @@ $.extend(Studio.prototype, {
   },
 
   setContentMode: function (mode) {
-    var app = this.getActiveApp();
+    const app = this.getActiveApp();
     if (!app) {
       mode = null;
     }

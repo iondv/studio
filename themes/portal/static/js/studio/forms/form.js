@@ -27,6 +27,10 @@ $.extend(Studio.Form.prototype, {
     this.$form.on('change', '.value', this.onChangeValue.bind(this));
   },
 
+  getAttr: function (name) {
+    return this.attrMap.hasOwnProperty(name) ? this.attrMap[name] : null;
+  },
+
   getData: function () {
     var data = Object.assign({}, this.data);
     this.attrs.forEach(function (attr) {
@@ -44,10 +48,6 @@ $.extend(Studio.Form.prototype, {
 
   getValue: function (attrName) {
     return this.getAttr(attrName).getValue();
-  },
-
-  getAttr: function (name) {
-    return this.attrMap.hasOwnProperty(name) ? this.attrMap[name] : null;
   },
 
   createAttrs: function () {

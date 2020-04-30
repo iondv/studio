@@ -20,6 +20,6 @@ $.extend(Studio.CheckListFormAttr.prototype, Studio.FormAttr.prototype, {
     this.$value.each(function () {
        $(this).prop('checked', values.includes(this.value))
     });
-    this.$value.first().change();
+    this.triggerChange();
   }
 });

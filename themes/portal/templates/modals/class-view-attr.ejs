@@ -138,6 +138,14 @@ let params = {
             defaultValue: 0
           }) %>
 
+          <%- partial('./attrs/commands', {
+            name: 'commands',
+            label: 'Commands',
+            extension: {
+              enabled: {type: ['2','3']}
+            }
+          }) %>
+
           <%- partial('./attrs/checkbox', {
             name: 'required',
             label: 'Required'

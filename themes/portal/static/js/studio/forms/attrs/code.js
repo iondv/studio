@@ -39,7 +39,7 @@ $.extend(Studio.JsonFormAttr.prototype, Studio.CodeFormAttr.prototype, {
   },
 
   getDefaultValue: function () {
-    var value = this.$attr.data('defaultValue');
+    let value = this.$attr.data('defaultValue');
     return value === undefined ? null : value;
   },
 
@@ -49,6 +49,7 @@ $.extend(Studio.JsonFormAttr.prototype, Studio.CodeFormAttr.prototype, {
     } else if (typeof value === 'string') {
       value = Helper.parseJson(value);
     }
-    this.$value.val(Helper.stringifyJson(value)).change();
+    this.$value.val(Helper.stringifyJson(value));
+    this.triggerChange();
   }
 });

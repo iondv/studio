@@ -51,6 +51,7 @@ $.extend(Studio.FormExtensionElement.prototype, {
 
   createAction: function (id, data) {
     switch (id) {
+      case 'enabled': return new Studio.FormExtensionEnabled(this, data);
       case 'visibility': return new Studio.FormExtensionVisibility(this, data);
     }
     console.error('Invalid extension action:', id);
@@ -63,15 +64,15 @@ $.extend(Studio.FormExtensionElement.prototype, {
   }
 });
 
-// VISIBILITY
+// BASE ACTION
 
-Studio.FormExtensionVisibility = function (element, data) {
+Studio.FormExtensionBaseAction = function (element, data) {
   this.element = element;
   this.data = data;
   this.condition = new Studio.FormCondition(data, element.extension.form);
 };
 
-$.extend(Studio.FormExtensionVisibility.prototype, {
+$.extend(Studio.FormExtensionBaseAction.prototype, {
 
   isValid: function () {
     return this.condition.isValid();
@@ -80,6 +81,40 @@ $.extend(Studio.FormExtensionVisibility.prototype, {
   update: function () {
     this.isValid() ? this.setValid() : this.setInvalid();
   },
+
+  setValid: function () {
+  },
+
+  setInvalid: function () {
+  }
+});
+
+// ENABLED
+
+Studio.FormExtensionEnabled = function () {
+  Studio.FormExtensionBaseAction.apply(this, arguments);
+};
+
+$.extend(Studio.FormExtensionEnabled.prototype, Studio.FormExtensionBaseAction.prototype, {
+  constructor: Studio.FormExtensionEnabled,
+
+  setValid: function () {
+    this.element.attr.disable(false);
+  },
+
+  setInvalid: function () {
+    this.element.attr.disable(true);
+  }
+});
+
+// VISIBILITY
+
+Studio.FormExtensionVisibility = function (element, data) {
+  Studio.FormExtensionBaseAction.apply(this, arguments);
+};
+
+$.extend(Studio.FormExtensionVisibility.prototype, Studio.FormExtensionBaseAction.prototype, {
+  constructor: Studio.FormExtensionVisibility,
 
   setValid: function () {
     this.element.attr.$attr.removeClass('hidden');
