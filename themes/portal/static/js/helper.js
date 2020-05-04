@@ -385,16 +385,20 @@ Helper.L10n = {
   },
 
   translateInner: function (element, map) {
-    map = map[element.dataset.l10n || 'default'];
-    if (map && map.hasOwnProperty(element.innerHTML)) {
-      element.innerHTML = map[element.innerHTML];
+    if (map) {
+      map = map[element.dataset.l10n || 'default'];
+      if (map && map.hasOwnProperty(element.innerHTML)) {
+        element.innerHTML = map[element.innerHTML];
+      }
     }
   },
 
   translateAttr: function (attr, element, map) {
-    map = map[element.dataset.l10n || 'default'];
-    if (map && map.hasOwnProperty(element.getAttribute(attr))) {
-      element.setAttribute(attr, map[element.getAttribute(attr)]);
+    if (map) {
+      map = map[element.dataset.l10n || 'default'];
+      if (map && map.hasOwnProperty(element.getAttribute(attr))) {
+        element.setAttribute(attr, map[element.getAttribute(attr)]);
+      }
     }
   }
 };
