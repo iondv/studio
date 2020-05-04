@@ -6,6 +6,10 @@ window.Helper = {
     return Date.now() +'-'+ Math.round(Math.random() * 99999999);
   },
 
+  getRandom: function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  },
+
   resolveTemplate: function (text, data) {
     return text.replace(/{{(\w+)}}/g, function (match, val) {
       return data.hasOwnProperty(val) ? data[val] : '';

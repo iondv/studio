@@ -1,11 +1,18 @@
 <%
-let mod = `${module}/${portal}/`;
-let studio = `${mod}js/studio/`;
-let standaloneData = typeof standalone !== 'undefined' ? JSON.stringify(standalone) : '';
+const mod = `${module}/${portal}/`;
+const studio = `${mod}js/studio/`;
+const standaloneData = typeof standalone !== 'undefined' ? JSON.stringify(standalone) : '';
+const sandbox = {
+  //url: process.env.STUDIO_SANDBOX || 'https://playground.iondv.com/rest/sandbox',
+  url: 'localhost:3000/rest/sandbox',
+  token: process.env.STUDIO_TOKEN || '23af810e'
+};
 %>
 <% layout('../layouts/main') -%>
 
-<div class="studio-main" data-standalone="<%= standaloneData %>">
+<div class="studio-main"
+     data-standalone="<%= standaloneData %>"
+     data-sandbox="<%= JSON.stringify(sandbox) %>">
 
   <%- partial('../parts/tabs') %>
 
@@ -118,6 +125,7 @@ let standaloneData = typeof standalone !== 'undefined' ? JSON.stringify(standalo
 <% script(`${studio}components/form-condition.js`) -%>
 <% script(`${studio}components/form-extension.js`) -%>
 <% script(`${studio}components/standalone.js`) -%>
+<% script(`${studio}components/sandbox.js`) -%>
 
 <% script(`${studio}components/deploy/module-list.js`) -%>
 <% script(`${studio}components/deploy/global-module-title-list.js`) -%>

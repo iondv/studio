@@ -67,6 +67,7 @@ window.Studio = function ($main) {
   this.deployModule = new Studio.DeployModuleModelView(this.$main.find('.studio-deploy-module'), this);
 
   this.standalone = new Studio.Standalone(this, this.$main.data('standalone'));
+  this.sandbox = new Studio.Sandbox(this, this.$main.data('sandbox'));
 
   this.init();
 };
@@ -85,7 +86,6 @@ $.extend(Studio.prototype, {
     this.toggleLoader(false);
     this.menu.setActiveFirstApp();
     this.toggleCreateTooltip(!this.apps.length);
-    this.resolveAutoHelp();
 
     setTimeout(function () {
       store.set(this.VISITED_STORE_KEY, true);
@@ -116,6 +116,7 @@ $.extend(Studio.prototype, {
     this.taskArea.initListeners();
     this.changelogArea.initListeners();
     this.standalone.initListeners();
+    this.sandbox.initListeners();
 
     this.deploy.initListeners();
     this.deployGlobal.initListeners();

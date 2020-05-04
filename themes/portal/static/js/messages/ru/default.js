@@ -131,6 +131,7 @@ Helper.L10n.messages.ru.default = {
   'Dependencies': 'Зависимости',
   'Dependency injection': 'Внедрение зависимости',
   'Deployer': 'Параметр конфигурирования сборки',
+  'Deploy for free in the sandbox': 'Развернуть в песочнице',
   'Deploy settings': 'Настройки развертывания',
   'Do not create SITEX-classes (upload only)': 'Не создавать SITEX-классы (только выгрузка данных)',
   'Do not restore class hierarchy': 'Не восстанавливать иерархию классов',

@@ -22,8 +22,8 @@ $.extend(Studio.AppDownload.prototype, {
   },
 
   execute: function () {
-    var zip = new JSZip;
-    var root = zip.folder(this.app.getName());
+    const zip = new JSZip;
+    const root = zip.folder(this.app.getName());
     this.saveMeta(root.folder('meta'));
     this.saveViews(root.folder('views'));
     this.savePrintViews(root.folder('export'));
