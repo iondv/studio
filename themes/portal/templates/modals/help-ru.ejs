@@ -1,0 +1,99 @@
+<div id="studio-modal-help-ru" class="modal-alert modal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">IONDV. Studio Помощь</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-loadable loadable-container loading loaded" data-url="<%= module %>/help">
+          <div class="loadable-content">
+            <div class="help-content">
+             <h2>
+              Как создать приложение?
+             </h2>
+              <h4 class="lh14">
+                Посмотрите короткое видео о создании простого приложения -
+                <a href="https://github.com/iondv/nutrition-tickets" target="_blank">IONDV. Nutrition-tickets</a>
+                in <strong>IONDV. Studio</strong>.
+                <br>
+                <a href="https://github.com/iondv/nutrition-tickets/blob/master/tutorial/en/index.md" target="_blank">Tutorial</a>
+                is available in the <strong>IONDV. Nutrition-Tickets</strong> repository.
+              </h4>
+              <div class="video">
+                <iframe frameborder="0" scrolling="no"
+                        src="https://www.youtube.com/embed/TnrLmLqsX6Q?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0"></iframe>
+              </div>
+              <ul>
+                <li>Create an application by clicking on the plus. In the pop-up window, fill in the required fields.
+                  The tab of the application you created appears in the upper left corner and easy to control as a browser tabs.</li>
+
+                <li>A side menu appears - the application's working panel. The classes section is used to create classes and attributes.</li>
+
+                <li>An application starts with a class. We click on the class and in the workspace we make <strong>+ Class</strong>.
+                  And in the pop-up window we fill in the required fields. Description of the fields can be found here (link).</li>
+
+                <li>We have a class and the ID attribute is automatically created.</li>
+
+                <li>When a class is highlighted, you can add attributes to it by clicking on the + attribute.
+                  Description of properties and attribute types can be found here (link).</li>
+
+                <li>When you have at least 2 classes, you can configure connections between them.
+                  This is done by setting the data type when creating a class attribute.
+                  The main types are
+                  <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/atr_itemclass_backcoll.md" target="_blank">Collection</a>
+                  and <a href="https://github.com/iondv/framework/blob/master/docs/en/2_system_description/metadata_structure/meta_class/atr_ref_backref.md" target="_blank">Reference</a>.
+                  The specified data type of the attribute will be displayed in the workspace as a connecting line.</li>
+              </ul>
+              <p>
+                In the <strong>Class</strong> section the classes you created and their attributes will appear. This is
+                called the project tree, which will guide you when the application classes become larger.
+              </p>
+              <p>
+                This is the base steps to create an app.
+              </p>
+              <p>
+                Below is a short introduction in the metadata types. Please read it to become more confident in using
+                <strong>IONDV. Studio</strong>. Read the full version on
+                <a href="https://github.com/iondv/studio#description" target="_blank">Github</a>.
+              </p>
+              <h3>
+                Metadata Description
+              </h3>
+              <p>
+                <a href="https://iondv.com" target="_blank">IONDV. Framework</a> is based on metadata.
+                Metadata (Meta) - a complex of JSON files that describe the set of structures, which the app uses to operate.
+                We have three main types of meta: meta class, meta view and meta navigation.
+                In this sandbox you should configure only the meta class, the system creates the view and navigation for classes by itself.
+              </p>
+              <h4>
+                Сlass and Attributes
+              </h4>
+              <p>
+                Click plus to create a new class, you will see a new window with five fields to fill in.
+                Two of them - marked with a red asterisk - are mandatory to fill: <strong>Name</strong> and <strong>Caption</strong>.
+                The other three fields are the properties that describe а class: <strong>Ancestor</strong>, <strong>Creation tracker</strong>,
+                <strong>Modification tracker</strong>.
+              </p>
+              <p>
+                Click plus to create a new class attribute, and you will see a new window with seven fildes to fill in.<br>
+                Three of them are mandatory to fill - <strong>Name</strong> and <strong>Caption</strong> mean the same as for class.
+              </p>
+              <h4>
+                IONDV.Framework Documentation
+              </h4>
+              <p>
+                The IONDV.Framework documentation is available in two languages —  English and Russian.
+                See the full detailed information in our
+                <a href="https://github.com/iondv/framework/blob/master/docs/en/index.md" target="_blank"><strong>documentation</strong></a>.
+              </p>
+            </div>
+          </div>
+          <div class="loadable-overlay">
+            <span class="fa fa-refresh fa-spin"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

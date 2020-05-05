@@ -25,7 +25,7 @@ $.extend(Studio.Modal.prototype, {
   },
 
   execLoadable: function () {
-    var $container = this.$modal.find('.modal-loadable');
+    const $container = this.$modal.find('.modal-loadable');
     if ($container.length && !$container.hasClass('loading')) {
       $container.addClass('loading');
       $.get($container.data('url')).always(function () {
@@ -34,5 +34,28 @@ $.extend(Studio.Modal.prototype, {
         $container.find('.loadable-content').html(data);
       });
     }
+  },
+
+  appendAlert: function (type, content) {
+    return this.appendContent(this.renderAlert(type, content));
+  },
+
+  setAlert: function (type, content) {
+    return this.setContent(this.renderAlert(type, content));
+  },
+
+  renderAlert: function (type, content) {
+    content = Helper.L10n.translate(content);
+    return '<div class="alert alert-'+ type +'">'+ content +'</div>';
+  },
+
+  appendContent: function (content) {
+    this.$modal.find('.modal-body').append(content);
+    return this;
+  },
+
+  setContent: function (content) {
+    this.$modal.find('.modal-body').html(content);
+    return this;
   }
 });

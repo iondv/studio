@@ -13,6 +13,7 @@ let mod = `${module}/${portal}`;
   <link href="<%- mod %>/vendor/font-awesome-min/css/font-awesome.min.css" rel="stylesheet">
   <link href="<%- mod %>/vendor/icheck/skins/flat/flat.css" rel="stylesheet">
   <link href="<%- mod %>/vendor/select2/css/select2.min.css" rel="stylesheet">
+  <link href="<%- mod %>/vendor/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet">
   <link href="<%- mod %>/vendor/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
   <%- stylesheets %>
@@ -33,6 +34,8 @@ let mod = `${module}/${portal}`;
 
 <script src="<%- mod %>/vendor/js-cookie/src/js.cookie.js"></script>
 <script src="<%- mod %>/vendor/store-js/store.modern.min.js"></script>
+<script src="<%- mod %>/vendor/jquery-ui-dist/jquery-ui.min.js"></script>
+<script>$.widget.bridge('uibutton', $.ui.button);</script>
 <script src="<%- mod %>/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%- mod %>/vendor/moment/moment.min.js"></script>
 <script src="<%- mod %>/vendor/moment/moment-with-locales.min.js"></script>
