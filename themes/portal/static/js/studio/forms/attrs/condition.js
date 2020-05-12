@@ -184,7 +184,7 @@ $.extend(Studio.ConditionItem.prototype, {
   serialize: function () {
     const property = this.$property.val().trim();
     const operation = parseInt(this.$operation.val());
-    if (!property || !operation) {
+    if (!property || !Number.isInteger(operation)) {
       return null;
     }
     let value = this.$value.val().trim();
