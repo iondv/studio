@@ -7,20 +7,20 @@ let mod = `${module}/${portal}`;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
   <base id="baseUrl" href="<%= baseUrl %>">
-  <link href="<%- mod %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/font-awesome-min/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/icheck/skins/flat/flat.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/select2/css/select2.min.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet">
-  <link href="<%- mod %>/vendor/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/icheck/skins/flat/flat.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/select2/dist/css/select2.min.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet">
+  <link href="<%- mod %>/node_modules/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
   <%- stylesheets %>
 
   <link href="<%- mod %>/css/styles.css" rel="stylesheet">
 
-  <script src="<%-mod%>/vendor/jquery/jquery.min.js"></script>
+  <script src="<%-mod%>/node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body data-static="<%= mod %>/">
@@ -32,22 +32,22 @@ let mod = `${module}/${portal}`;
 
 <div id="global-loader" class="global-loader"><span class="fa fa-refresh fa-spin"></span></div>
 
-<script src="<%- mod %>/vendor/js-cookie/src/js.cookie.js"></script>
-<script src="<%- mod %>/vendor/store-js/store.modern.min.js"></script>
-<script src="<%- mod %>/vendor/jquery-ui-dist/jquery-ui.min.js"></script>
+<script src="<%- mod %>/node_modules/js-cookie/src/js.cookie.js"></script>
+<script src="<%- mod %>/node_modules/store-js/dist/store.modern.min.js"></script>
+<script src="<%- mod %>/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
 <script>$.widget.bridge('uibutton', $.ui.button);</script>
-<script src="<%- mod %>/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="<%- mod %>/vendor/moment/moment.min.js"></script>
-<script src="<%- mod %>/vendor/moment/moment-with-locales.min.js"></script>
-<script src="<%- mod %>/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="<%- mod %>/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<%- mod %>/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
-<script src="<%- mod %>/vendor/icheck/icheck.min.js"></script>
-<script src="<%- mod %>/vendor/select2/js/select2.min.js"></script>
-<script src="<%- mod %>/vendor/select2/js/i18n/ru.js"></script>
-<script src="<%- mod %>/vendor/inputmask/jquery.inputmask.min.js"></script>
-<script src="<%- mod %>/vendor/jszip/jszip.min.js"></script>
-<script src="<%- mod %>/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="<%- mod %>/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<%- mod %>/node_modules/moment/min/moment.min.js"></script>
+<script src="<%- mod %>/node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="<%- mod %>/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="<%- mod %>/node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%- mod %>/node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js"></script>
+<script src="<%- mod %>/node_modules/icheck/icheck.min.js"></script>
+<script src="<%- mod %>/node_modules/select2/dist/js/select2.min.js"></script>
+<script src="<%- mod %>/node_modules/select2/dist/js/i18n/ru.js"></script>
+<script src="<%- mod %>/node_modules/inputmask/dist/jquery.inputmask.min.js"></script>
+<script src="<%- mod %>/node_modules/jszip/dist/jszip.min.js"></script>
+<script src="<%- mod %>/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
 
 <%- scripts %>
 
