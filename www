@@ -9,6 +9,7 @@ let staticFolder = 'themes/portal/static';
 let template = 'themes/portal/templates';
 let defaultPage = 'index';
 let defaultPageNav = 'pages/index';
+const default404 = '404';
 
 app.engine('ejs', require('ejs-locals'));
 app.set('views', path.posix.join(__dirname, template));
@@ -34,7 +35,7 @@ const moduleName = 'portal';
 
 app.locals.pageEndContent = getDeploy( moduleName + '.pageEndContent') || getDeploy('pageEndContent') || '';
 
-app.use('/', express.static(__dirname));
+app.use('/', express.static(__dirname, { maxAge: 86400000 }));
 
 const pageTemplates = getDeploy( moduleName + '.pageTemplates');
 const navigation = pageTemplates ? pageTemplates.navigation : null;
@@ -58,10 +59,25 @@ if(navigation) {
     });
   });
 }
-app.get('/*', (request, response) => {
+
+
+
+app.get('/', (request, response) => {
   response.redirect('/' + defaultPage);
 });
 
+// app.get('/*', (request, response) => {
+//   response.redirect('/' + defaultPage);
+// });
+
+app.use(function(request, response, next){
+  response.status(404);
+  response.render(default404, {
+    module: '',
+    portal: staticFolder,
+    baseUrl: '/'
+  });
+});
 
 app.listen(port, (err) => {
   if (err) {

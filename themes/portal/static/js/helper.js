@@ -6,6 +6,10 @@ window.Helper = {
     return Date.now() +'-'+ Math.round(Math.random() * 99999999);
   },
 
+  getRandom: function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  },
+
   resolveTemplate: function (text, data) {
     return text.replace(/{{(\w+)}}/g, function (match, val) {
       return data.hasOwnProperty(val) ? data[val] : '';
@@ -15,8 +19,8 @@ window.Helper = {
   updateTemplate: function (id, $template, data) {
     Object.keys(data).forEach(function (key) {
       $template.find('[data-'+ id +'="'+ key +'"]').html(data[key]);
-      var dataKey = id +'-'+ key;
-      var $item = $template.find('[data-'+ dataKey +']');
+      const dataKey = id +'-'+ key;
+      const $item = $template.find('[data-'+ dataKey +']');
       if ($item.length) {
         $item.attr($item.data(dataKey), data[key]);
       }
@@ -24,7 +28,7 @@ window.Helper = {
   },
 
   getBaseName: function (name) {
-    var pos = name.lastIndexOf('.');
+    const pos = name.lastIndexOf('.');
     return pos !== -1 ? name.substring(0, pos) : name;
   },
 
@@ -451,9 +455,9 @@ Helper.File = {
   },
 
   sync: function (map) {
-    var prefix = Helper.File.getStoreId('');
-    var unusedKeys = [];
-    store.forEach(function (key, value) {
+    const prefix = Helper.File.getStoreId('');
+    const unusedKeys = [];
+    store.each(function (value, key) {
       if (key.indexOf(prefix) === 0 && !map.hasOwnProperty(key.substring(prefix.length))) {
         unusedKeys.push(key);
       }

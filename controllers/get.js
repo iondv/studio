@@ -6,7 +6,7 @@ const validator = require('../backend/validator');
 module.exports = function (req, res, next) {
   try {
     let data = req.body;
-    if (!data) {
+    if (!data || typeof data.path !== 'string') {
       return res.status(400).send('Invalid data');
     }
     let root = base.resolvePath(data.path);

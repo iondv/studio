@@ -473,7 +473,7 @@ $.extend(Studio.Toolbar.prototype, {
   },
 
   onRemoveClassAttr: function () {
-    var model = this.studio.getActiveClassAttr();
+    const model = this.studio.getActiveClassAttr();
     if (model && model.isKey()) {
       return this.studio.alert.warning(Helper.L10n.translate('Cannot remove class key attribute'));
     }
@@ -487,7 +487,7 @@ $.extend(Studio.Toolbar.prototype, {
   },
 
   onSelectClassView: function () {
-    var state = !!this.$selectClassView.val();
+    const state = !!this.$selectClassView.val();
     this.getSection('classViewAttr').toggle(state);
     this.getSection('classViewGroup').toggle(state);
     this.studio.triggerSelectClassView();
@@ -920,7 +920,7 @@ $.extend(Studio.Toolbar.prototype, {
   },
 
   onHelp: function () {
-    this.studio.modalHelp.show();
+    (Helper.L10n.getLanguage() === 'ru' ? this.studio.modalHelpRu : this.studio.modalHelp).show();
   },
 
   // DEPLOY

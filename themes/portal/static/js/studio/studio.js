@@ -46,6 +46,7 @@ window.Studio = function ($main) {
   this.deployModuleRestForm = new Studio.DeployModuleRestForm($('#deploy-module-rest-modal'), this);
 
   this.modalHelp = new Studio.Modal($('#studio-modal-help'), this);
+  this.modalHelpRu = new Studio.Modal($('#studio-modal-help-ru'), this);
   this.alert = new Studio.ModalAlert($('#studio-modal-alert'), this);
   this.classUml = new Studio.ClassUmlAdapter(this.$main.find('.studio-class-uml'), this);
   this.workflowUml = new Studio.WorkflowUmlAdapter(this.$main.find('.studio-workflow-uml'), this);
@@ -67,6 +68,7 @@ window.Studio = function ($main) {
   this.deployModule = new Studio.DeployModuleModelView(this.$main.find('.studio-deploy-module'), this);
 
   this.standalone = new Studio.Standalone(this, this.$main.data('standalone'));
+  this.sandbox = new Studio.Sandbox(this, this.$main.data('sandbox'));
 
   this.init();
 };
@@ -85,7 +87,7 @@ $.extend(Studio.prototype, {
     this.toggleLoader(false);
     this.menu.setActiveFirstApp();
     this.toggleCreateTooltip(!this.apps.length);
-    this.resolveAutoHelp();
+    //this.resolveAutoHelp();
 
     setTimeout(function () {
       store.set(this.VISITED_STORE_KEY, true);
@@ -116,6 +118,7 @@ $.extend(Studio.prototype, {
     this.taskArea.initListeners();
     this.changelogArea.initListeners();
     this.standalone.initListeners();
+    this.sandbox.initListeners();
 
     this.deploy.initListeners();
     this.deployGlobal.initListeners();
@@ -246,7 +249,7 @@ $.extend(Studio.prototype, {
   },
 
   renderSample: function (id, params) {
-    var content = this.$samples.filter('[data-id="'+ id +'"]').html();
+    const content = this.$samples.filter('[data-id="'+ id +'"]').html();
     return Helper.resolveTemplate(content, params);
   },
 
@@ -720,7 +723,7 @@ $.extend(Studio.prototype, {
   // UTIL
 
   syncFiles: function () {
-    var result = {};
+    const result = {};
     Helper.Array.eachMethod('indexFiles', this.apps, result);
     Helper.File.sync(result);
   },
@@ -739,7 +742,9 @@ $.extend(Studio.prototype, {
 
   resolveAutoHelp: function () {
     if (!store.get(this.VISITED_STORE_KEY)) {
-      this.toolbar.getTool('help').click();
+      setTimeout(function () {
+        this.toolbar.getTool('help').click();
+      }.bind(this), 500);
     }
   },
 

@@ -160,17 +160,17 @@ let options = {
 };
 %>
 
-<% stylesheet(`${mod}vendor/grapesjs/css/grapes.min.css`) -%>
-<% stylesheet(`${mod}vendor/grapesjs-preset-webpage/grapesjs-preset-webpage.min.css`) -%>
+<% stylesheet(`${mod}node_modules/grapesjs/dist/css/grapes.min.css`) -%>
+<% stylesheet(`${mod}node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css`) -%>
 <% stylesheet(`${mod}css/grapesjs.css`) -%>
 
-<% script(`${mod}vendor/grapesjs/grapes.min.js`) -%>
-<% script(`${mod}vendor/grapesjs-preset-webpage/grapesjs-preset-webpage.min.js`) -%>
-<% script(`${mod}vendor/grapesjs-tabs/grapesjs-tabs.min.js`) -%>
-<% script(`${mod}vendor/grapesjs-lory-slider/grapesjs-lory-slider.min.js`) -%>
-<% script(`${mod}vendor/grapesjs-custom-code/grapesjs-custom-code.min.js`) -%>
-<% script(`${mod}vendor/grape-table/grapesjs-tables.min.js`) -%>
-<% script(`${mod}vendor/grape-iondv-studio/grapesjs-studio.min.js`) -%>
+<% script(`${mod}node_modules/grapesjs/dist/grapes.min.js`) -%>
+<% script(`${mod}node_modules/grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.js`) -%>
+<% script(`${mod}node_modules/grapesjs-tabs/dist/grapesjs-tabs.min.js`) -%>
+<% script(`${mod}node_modules/grapesjs-lory-slider/dist/grapesjs-lory-slider.min.js`) -%>
+<% script(`${mod}node_modules/grapesjs-custom-code/dist/grapesjs-custom-code.min.js`) -%>
+<% script(`${mod}node_modules/grape-table/dist/grapesjs-tables.min.js`) -%>
+<% script(`${mod}node_modules/grape-iondv-studio/dist/grapesjs-studio.min.js`) -%>
 
 <div class="studio-interface-container" data-options="<%= JSON.stringify(options) %>">
   <div id="gjs"></div>

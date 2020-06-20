@@ -4,7 +4,7 @@ let params = {
 };
 %>
 
-<% script(`${mod}vendor/ace-builds/src-min-noconflict/ace.js`) -%>
+<% script(`${mod}node_modules/ace-builds/src-min-noconflict/ace.js`) -%>
 
 <div id="code-editor-modal" class="modal" role="dialog" aria-hidden="true"
      data-params="<%= JSON.stringify(params) %>">

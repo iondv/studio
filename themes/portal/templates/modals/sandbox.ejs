@@ -1,0 +1,65 @@
+
+<div id="sandbox-modal" class="modal-alert modal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">IONDV. Studio Message</h4>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+
+<template data-id="sandbox-pending">
+  <div class="alert-info alert">
+    <h4 class="l10n">Deploy in progress...</h4>
+    <ul>
+      <li><span class="l10n">Queue number</span> - <b>{{queue}}</b></li>
+      <li><span class="l10n">Estimated wait time</span> - <b>{{waitTime}}</b></li>
+      <li><span class="l10n">App address after ready</span> - {{url}}</li>
+    </ul>
+  </div>
+</template>
+
+<template data-id="sandbox-stopped">
+  <div class="alert-warning alert">
+    <h4 class="l10n">The app was stopped...</h4>
+  </div>
+  <div class="text-center">
+    {{redeploy}}
+  </div>
+</template>
+
+<template data-id="sandbox-ready">
+  <div class="alert-success alert">
+    <h4 class="l10n">The application is ready to use</h4>
+    <ul>
+      <li><span class="l10n">App address</span> - <a href="{{url}}" target="_blank"><b>{{url}}</b></a></li>
+    </ul>
+  </div>
+  {{limits}}
+  <div class="text-center">
+    {{redeploy}}
+  </div>
+</template>
+
+<template data-id="sandbox-limits">
+  <div class="alert-warning alert">
+    <ul>{{limits}}</ul>
+  </div>
+</template>
+
+<template data-id="sandbox-limit-end">
+  <li><span class="l10n">App will be removed after</span> {{end}}</li>
+</template>
+
+<template data-id="sandbox-limit-repeat">
+  <li><span class="l10n">App can be redeploy after</span> {{repeat}}</li>
+</template>
+
+<template data-id="sandbox-redeploy">
+  <button type="button" class="btn-default btn" data-action="redeploy">
+    <span class="l10n">Deploy again</span>
+  </button>
+</template>
