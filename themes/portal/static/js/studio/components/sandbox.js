@@ -30,6 +30,9 @@ $.extend(Studio.Sandbox.prototype, {
     if (!data || !data.state) {
       return this.showError('Invalid response');
     }
+    if (data.state === 'stopped') {
+      return this.renderStopped(data);
+    }
     if (data.url) {
       return this.renderReady(data);
     }
@@ -62,6 +65,11 @@ $.extend(Studio.Sandbox.prototype, {
       data.limits = this.resolveTemplate('sandbox-limits', data);
     }
     this.showModalTemplate('sandbox-ready', data);
+  },
+
+  renderStopped: function (data) {
+    data.redeploy = this.resolveTemplate('sandbox-redeploy');
+    this.showModalTemplate('sandbox-stopped', data);
   },
 
   deploy: function () {
