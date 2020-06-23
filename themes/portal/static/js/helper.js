@@ -272,7 +272,7 @@ Helper.Object = {
     var items = [];
     if (map) {
       for (var key of Object.keys(map)) {
-        if (map[key]) {
+        if (map[key] && typeof map[key] === 'object') {
           map[key][keyProp] = key;
           items.push(map[key]);
         }

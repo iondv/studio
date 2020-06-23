@@ -948,3 +948,23 @@
   font-size: 18px;
   cursor: pointer;
 }
+
+/* SANDBOX */
+
+.sandbox-message {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.sandbox-ready {
+  color: #484;
+}
+.sandbox-pending {
+  color: #860;
+}
+.sandbox-pending .fa {
+  margin-right: 5px;
+}
+.sandbox-try {
+  color: #337ab7;
+}

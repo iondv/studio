@@ -20,14 +20,25 @@
       <li><span class="l10n">App address after ready</span> - {{url}}</li>
     </ul>
   </div>
+  <div class="text-center">
+    {{refresh}}
+  </div>
 </template>
 
 <template data-id="sandbox-stopped">
   <div class="alert-warning alert">
-    <h4 class="l10n">The app was stopped...</h4>
+    <h4 class="l10n">The app has been stopped</h4>
+    <p class="l10n">The demo period of 1 hour has ended. Redeploy it if you want to try again.</p>
   </div>
   <div class="text-center">
     {{redeploy}}
+  </div>
+</template>
+
+<template data-id="sandbox-info">
+  <div class="alert-info alert">{{message}}</div>
+  <div class="text-center">
+    {{refresh}} {{redeploy}}
   </div>
 </template>
 
@@ -62,4 +73,29 @@
   <button type="button" class="btn-default btn" data-action="redeploy">
     <span class="l10n">Deploy again</span>
   </button>
+</template>
+
+<template data-id="sandbox-refresh">
+  <button type="button" class="btn-default btn" data-action="refresh">
+    <span class="l10n">Refresh status</span>
+  </button>
+</template>
+
+<template data-id="sandbox-message-try">
+  <div class="sandbox-try sandbox-message" data-sandbox="try">
+    <span class="l10n">Try to play</span>
+  </div>
+</template>
+
+<template data-id="sandbox-message-pending">
+  <div class="sandbox-pending sandbox-message" data-sandbox="pending">
+    <span class="fa fa-refresh fa-spin"></span>
+    <span class="l10n">Deploy in progress...</span>
+  </div>
+</template>
+
+<template data-id="sandbox-message-ready">
+  <div class="sandbox-ready sandbox-message" data-sandbox="ready" data-url="{{url}}">
+    <span class="l10n">App ready</span>
+  </div>
 </template>

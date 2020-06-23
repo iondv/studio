@@ -291,7 +291,7 @@ $.extend(Studio.Standalone.prototype, {
   },
 
   remove: function (app, type, id, skipStudioData) {
-    this.change(app, 'remove', type, id, null, skipStudioData);
+    // this.change(app, 'remove', type, id, null, skipStudioData);
   },
 
   // SAVE

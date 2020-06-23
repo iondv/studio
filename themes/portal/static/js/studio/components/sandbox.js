@@ -13,16 +13,36 @@ $.extend(Studio.Sandbox.prototype, {
     this.$play.click(this.onPlay.bind(this));
     this.modal = new Studio.Modal($('#sandbox-modal'), this.studio);
     this.modal.$modal.on('click', '[data-action="redeploy"]', this.onRedeploy.bind(this));
+    this.modal.$modal.on('click', '[data-action="refresh"]', this.onRefresh.bind(this));
+    this.studio.events.on('sandbox:ready', this.onReadyStatus.bind(this));
+    this.studio.events.on('sandbox:stopped', this.onStoppedStatus.bind(this));
+    this.studio.events.on('sandbox:pending', this.onPendingStatus.bind(this));
+    this.studio.$main.on('click', '[data-sandbox="try"]', this.onTryClick.bind(this));
+    this.studio.$main.on('click', '[data-sandbox="pending"]', this.onPendingClick.bind(this));
+    this.studio.$main.on('click', '[data-sandbox="ready"]', this.onReadyClick.bind(this));
+    this.studio.events.one('changeActiveItem', this.onToggleApp.bind(this));
+  },
+
+  getPlayUrl: function () {
+    return this.data.url +'/'+ this.getClientId();
+  },
+
+  onToggleApp: function () {
+    if (this.studio.getActiveApp()) {
+      this.requestWatching();
+    }
   },
 
   onPlay: function () {
     const app = this.studio.getActiveApp();
     if (app) {
       this.showLoader();
-      $.get(this.data.url +'/'+ this.getClientId())
+      $.get(this.getPlayUrl())
         .always(this.hideLoader.bind(this))
         .done(this.onDonePlay.bind(this))
-        .fail(this.onFailPlay.bind(this));
+        .done(this.onDoneWatching.bind(this))
+        .fail(this.onFailPlay.bind(this))
+        .fail(this.onFailWatching.bind(this));
     }
   },
 
@@ -36,8 +56,10 @@ $.extend(Studio.Sandbox.prototype, {
     if (data.url) {
       return this.renderReady(data);
     }
-    const text = Helper.L10n.translate(data.stateText || data.state);
-    this.showAlert('info', text);
+    data.message = Helper.L10n.translate(data.stateText || data.state);
+    data.refresh = this.resolveTemplate('sandbox-refresh');
+    data.redeploy = this.resolveTemplate('sandbox-redeploy');
+    this.showModalTemplate('sandbox-info', data);
   },
 
   onFailPlay: function (data) {
@@ -75,6 +97,8 @@ $.extend(Studio.Sandbox.prototype, {
   deploy: function () {
     const app = this.studio.getActiveApp();
     if (app) {
+      this.abortWatching();
+      this.setNotification('pending');
       this.showLoader();
       (new Studio.AppDownload(app)).execute()
         .then(this.onBlob.bind(this), this.onFailBlob.bind(this));
@@ -90,7 +114,7 @@ $.extend(Studio.Sandbox.prototype, {
     const data = new FormData;
     data.append('cid', this.getClientId());
     data.append('token', this.getToken());
-    //data.append('app', this.getBlobName());
+    data.append('name', this.getBlobName());
     data.append('app', blob);
     xhr.send(data);
   },
@@ -98,10 +122,16 @@ $.extend(Studio.Sandbox.prototype, {
   onBlobChangeState: function (xhr) {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       this.hideLoader();
+      if (xhr.status === 413) {
+        return this.showError('Application file size exceeds 1 Mb');
+      }
       if (xhr.status !== 200) {
         return this.showError(xhr.statusText);
       }
-      this.showModalTemplate('sandbox-pending', xhr.response);
+      const data = xhr.response;
+      data.refresh = this.resolveTemplate('sandbox-refresh');
+      this.showModalTemplate('sandbox-pending', data);
+      this.watch();
     }
   },
 
@@ -115,6 +145,13 @@ $.extend(Studio.Sandbox.prototype, {
     this.deploy();
   },
 
+  onRefresh: function () {
+    this.showLoader();
+    this.requestWatching()
+      .always(this.hideLoader.bind(this))
+      .done(this.onDoneWatching.bind(this));
+  },
+
   showLoader: function () {
     this.studio.toggleLoader(true);
   },
@@ -124,7 +161,7 @@ $.extend(Studio.Sandbox.prototype, {
   },
 
   getBlobName: function () {
-    return 'sandbox.zip';
+    return this.studio.getActiveApp().getName();
   },
 
   getToken: function () {
@@ -161,5 +198,88 @@ $.extend(Studio.Sandbox.prototype, {
   resolveTemplate: function (name, data) {
     const $template = $('template').filter('[data-id="'+ name +'"]');
     return Helper.resolveTemplate($template.html(), data);
+  },
+
+  watch: function () {
+    this.abortWatching();
+    this._watchingTimer = setTimeout(this.requestWatching.bind(this), 15000);
+  },
+
+  abortWatching: function () {
+    if (this._watchingTimer) {
+      clearTimeout(this._watchingTimer);
+    }
+    if (this._watchingRequest) {
+      this._watchingRequest.abort();
+    }
+  },
+
+  requestWatching: function () {
+    this.abortWatching();
+    this._watchingRequest = $.get(this.getPlayUrl())
+      .done(this.onDoneWatching.bind(this))
+      .fail(this.onFailWatching.bind(this));
+    return this._watchingRequest;
+  },
+
+  onDoneWatching: function (data) {
+    if (!data || !data.state) {
+      return null;
+    }
+    let event = null;
+    if (data.state === 'stopped') {
+      event = 'sandbox:stopped';
+    } else if (data.url) {
+      event = 'sandbox:ready';
+    } else {
+      event = 'sandbox:pending';
+      this.watch();
+    }
+    this.studio.events.trigger(event, data);
+  },
+
+  onFailWatching: function (xhr) {
+      if (xhr.status === 404) {
+        this.studio.events.trigger('sandbox:stopped');
+      }
+  },
+
+  onPendingStatus: function (event, data) {
+    if (this.modal.isShown()) {
+      this.onDonePlay(data);
+    }
+  },
+
+  onReadyStatus: function (event, data) {
+    this.setNotification('ready', data);
+    if (this.modal.isShown()) {
+      this.onDonePlay(data);
+    }
+  },
+
+  onStoppedStatus: function (event, data) {
+    this.setNotification('try');
+  },
+
+  clearNotification: function () {
+    this.$play.parent().find('.sandbox-message').remove();
+  },
+
+  setNotification: function (type, data) {
+    this.clearNotification();
+    this.$play.before(this.resolveTemplate('sandbox-message-'+ type, data));
+  },
+
+  onReadyClick: function (event) {
+    const url = $(event.currentTarget).data('url');
+    url ? window.open(url, '_blank').focus() : this.onPlay();
+  },
+
+  onTryClick: function () {
+    this.onPlay();
+  },
+
+  onPendingClick: function (event) {
+    this.onPlay();
   }
 });
