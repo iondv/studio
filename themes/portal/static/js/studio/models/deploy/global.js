@@ -33,8 +33,16 @@ $.extend(Studio.DeployGlobalModel.prototype, Studio.Model.prototype, {
   },
 
   createModuleTitles: function (data) {
-    if (data instanceof Array) {
-      data.forEach(this.createModuleTitle, this);
+    if (data) {
+      for (const key of Object.keys(data)) {
+        if (data[key]) {
+          if (typeof data[key] === 'string') {
+            data[key] = {description: data[key]};
+          }
+          data[key].type = key;
+          this.createModuleTitle(data[key]);
+        }
+      }
     }
   },
 
@@ -140,7 +148,7 @@ $.extend(Studio.DeployGlobalModel.prototype, Studio.Model.prototype, {
     data = data || {};
     this.setData(data);
     this.clear();
-    this.createModuleTitles(Helper.Object.getValuesWithKey('type', data.moduleTitles));
+    this.createModuleTitles(data.moduleTitles);
     this.createTopMenu(data.explicitTopMenu);
     this.createPlugins(Helper.Object.getValuesWithKey('code', data.plugins));
     this.createJobs(Helper.Object.getValuesWithKey('code', data.jobs));

@@ -11,6 +11,10 @@ $.extend(Studio.Modal.prototype, {
   init: function () {
   },
 
+  isShown: function () {
+    return this.$modal.is(':visible');
+  },
+
   onClose: function (event) {
     this.hide();
   },

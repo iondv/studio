@@ -60,15 +60,13 @@ if(navigation) {
   });
 }
 
-
-
 app.get('/', (request, response) => {
   response.redirect('/' + defaultPage);
 });
 
-// app.get('/*', (request, response) => {
-//   response.redirect('/' + defaultPage);
-// });
+app.get('/portal', (request, response) => {
+  response.redirect('/' + defaultPage);
+});
 
 app.use(function(request, response, next){
   response.status(404);
