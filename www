@@ -34,7 +34,6 @@ function getDeploy(deployParam) {
 const moduleName = 'portal';
 
 app.locals.pageEndContent = getDeploy( moduleName + '.pageEndContent') || getDeploy('pageEndContent') || '';
-
 app.use('/', express.static(__dirname, { maxAge: 86400000 }));
 
 const pageTemplates = getDeploy( moduleName + '.pageTemplates');
