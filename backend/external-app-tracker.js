@@ -1,37 +1,35 @@
 'use strict';
 
-module.exports = {
-  init,
-  getFrontItems
-};
+const fs = require('fs');
+const request = require('request');
 
 const config = {
   items: [],
   tempZip: 'applications/studio/temp.zip',
   updateInterval: 0 // seconds
 };
-const fs = require('fs');
-const request = require('request');
 
-function init (data) {
-  Object.assign(config, data);
-  createFrontItems();
-  checkout().then(update);
-}
-
-function getFrontItems () {
-  return config.frontItems;
-}
+module.exports = function (data) {
+  if (data && Array.isArray(data.items) && data.items.length) {
+    Object.assign(config, data);
+    checkout().then(update);
+    const frontItems = createFrontItems();
+    return {
+      getFrontItems: () => frontItems
+    };
+  }
+};
 
 function createFrontItems () {
-  config.frontItems = [];
+  const frontItems = [];
   for (const item of config.items) {
-    config.frontItems.push({
+    frontItems.push({
       title: item.title,
       url: getFrontLink(item),
       language: item.language
     });
   }
+  return frontItems;
 }
 
 function getFrontLink ({name}) {

@@ -8,13 +8,8 @@ const deploy = require('./deploy.json');
 const moduleName = 'portal';
 const controllers = require('./controllers');
 const bodyParser = require('body-parser');
+const externalAppTracker = require('./backend/external-app-tracker')(getDeploy('externalAppTracker'));
 
-let externalAppTracker = null;
-let externalAppTrackerConfig = getDeploy('externalAppTracker');
-if (externalAppTrackerConfig) {
-  externalAppTracker = require('./backend/external-app-tracker');
-  externalAppTracker.init(externalAppTrackerConfig);
-}
 let staticFolder = 'themes/portal/static';
 let template = 'themes/portal/templates';
 let defaultPage = 'index';
