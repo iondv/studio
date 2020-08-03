@@ -111,6 +111,7 @@ $.extend(Studio.Form.prototype, {
 
   show: function (defaults) {
     this.alert.hide();
+    this.clearErrors();
     this.prepareAttrs();
     this.setData(defaults || {});
     Studio.Behavior.execute('beforeShow', this);

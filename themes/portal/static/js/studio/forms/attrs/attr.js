@@ -51,6 +51,10 @@ $.extend(Studio.FormAttr.prototype, {
     return this.$attr.hasClass('disabled');
   },
 
+  isEmpty: function () {
+    return !this.getRawValue();
+  },
+
   isHidden: function () {
     return this.$attr.hasClass('hidden');
   },

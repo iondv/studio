@@ -39,13 +39,20 @@ app.use('/', express.static(__dirname, { maxAge: 86400000 }));
 const pageTemplates = getDeploy( moduleName + '.pageTemplates');
 const navigation = pageTemplates ? pageTemplates.navigation : null;
 
+let externalAppTracker = null;
+let externalAppTrackerConfig = getDeploy('externalAppTracker');
+if (externalAppTrackerConfig) {
+  externalAppTracker = require('./backend/external-app-tracker');
+  externalAppTracker.init(externalAppTrackerConfig);
+}
 if(navigation) {
   Object.keys(navigation).forEach((item) => {
     app.get('/' + item, (request, response) => {
       response.render(navigation[item], {
         module: '',
         portal: staticFolder,
-        baseUrl: '/'
+        baseUrl: '/',
+        externalAppTracker
       });
     });
   });
@@ -54,7 +61,8 @@ if(navigation) {
     response.render(defaultPageNav, {
       module: '',
       portal: staticFolder,
-      baseUrl: '/'
+      baseUrl: '/',
+      externalAppTracker
     });
   });
 }

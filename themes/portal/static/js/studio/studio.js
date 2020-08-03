@@ -32,6 +32,7 @@ window.Studio = function ($main) {
   this.externalServiceForm = new Studio.ExternalServiceForm($('#external-service-modal'), this);
   this.exportForm = new Studio.ExportForm($('#export-modal'), this);
   this.importTaskForm = new Studio.ImportTaskForm($('#import-task-modal'), this);
+  this.importExternalAppForm = new Studio.ImportExternalAppForm($('#import-external-app-modal'), this);
   this.codeEditorForm = new Studio.CodeEditorForm($('#code-editor-modal'), this);
 
   this.deployForm = new Studio.DeployForm($('#deploy-modal'), this);

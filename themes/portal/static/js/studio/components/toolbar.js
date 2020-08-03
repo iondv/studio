@@ -420,8 +420,8 @@ $.extend(Studio.Toolbar.prototype, {
   },
 
   onDownloadApp: function () {
-    var $tool = this.getTool('downloadApp');
-    var app = this.studio.getActiveApp();
+    const $tool = this.getTool('downloadApp');
+    const app = this.studio.getActiveApp();
     app ? (new Studio.AppDownload(app)).download()
         : this.alertNotice($tool.data('selectMessage'));
   },

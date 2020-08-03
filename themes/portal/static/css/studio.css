@@ -788,7 +788,8 @@
 .studio-tabs .active .tab-close {
   display: block;
 }
-.studio-tabs .tab-add {
+.studio-tabs .tab-add,
+.studio-tabs .tab-import {
   top: 8px;
   left: 2px;
   position: relative;
@@ -797,8 +798,12 @@
   cursor: pointer;
   color: #666;
 }
-.studio-tabs .tab-add:hover {
+.studio-tabs .tab-add:hover,
+.studio-tabs .tab-import:hover {
   color: #000;
+}
+.studio-tabs .tab-add {
+  margin-right: 15px;
 }
 .studio-logo {
   display: block;

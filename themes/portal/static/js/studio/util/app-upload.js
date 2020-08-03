@@ -167,3 +167,29 @@ $.extend(Studio.AppUpload.prototype, {
     }
   }
 });
+
+
+Studio.AppImport = function (data, studio) {
+  this.source = data;
+  this.studio = studio;
+};
+
+$.extend(Studio.AppImport.prototype, Studio.AppUpload.prototype, {
+  constructor: Studio.AppImport,
+
+  execute: function () {
+    this.studio.toggleLoader(true);
+    setTimeout(function () {
+      JSZip.loadAsync(this.source).then(this.handleData.bind(this), this.handleError.bind(this));
+    }.bind(this), 100);
+  },
+
+  handleData: function (zip) {
+    this.getZipData(zip).then(function (data) {
+      this.data = data;
+      this.parser = new Studio.MetaParser(data);
+      data = this.getApp(data);
+      this.studio.onUploadApp(data);
+    }.bind(this));
+  }
+});

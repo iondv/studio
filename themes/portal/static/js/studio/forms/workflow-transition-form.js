@@ -45,7 +45,7 @@ $.extend(Studio.WorkflowTransitionForm.prototype, Studio.ModelForm.prototype, {
         ['required']
       ],
       assignments: [
-          ['json']
+        ['json']
       ],
       conditions: [
         ['json']

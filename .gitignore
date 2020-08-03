@@ -6,11 +6,13 @@ patches/
 !/data/data.zip
 .git
 /.git-*/**
+/temp.zip
 
 themes/portal/vendor
 themes/portal/static/vendor
 themes/portal/static/js/*.min.js
 themes/portal/static/css/*.min.css
+themes/portal/static/archives
 
 ### Eclipse template
 *.pydevproject

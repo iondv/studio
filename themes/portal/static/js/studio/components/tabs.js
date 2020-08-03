@@ -5,6 +5,7 @@ Studio.Tabs = function ($container, studio) {
   this.$container = $container;
   this.$list = $container.find('.tab-list');
   this.$add = $container.find('.tab-add');
+  this.$import = $container.find('.tab-import');
   this.init();
 };
 
@@ -15,6 +16,7 @@ $.extend(Studio.Tabs.prototype, {
     this.$list.on('click', '.tab', this.onSelectTab.bind(this));
     this.$list.on('dblclick', '.active.tab', this.onUpdateTab.bind(this));
     this.$add.click(this.onAdd.bind(this));
+    this.$import.click(this.onImport.bind(this));
   },
 
   initListeners: function () {
@@ -79,8 +81,12 @@ $.extend(Studio.Tabs.prototype, {
     }
   },
 
-  onAdd: function (event) {
+  onAdd: function () {
     this.studio.appForm.create();
+  },
+
+  onImport: function () {
+    this.studio.importExternalAppForm.show();
   },
 
   restore: function () {

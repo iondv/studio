@@ -9,6 +9,12 @@ const moduleName = 'portal';
 const controllers = require('./controllers');
 const bodyParser = require('body-parser');
 
+let externalAppTracker = null;
+let externalAppTrackerConfig = getDeploy('externalAppTracker');
+if (externalAppTrackerConfig) {
+  externalAppTracker = require('./backend/external-app-tracker');
+  externalAppTracker.init(externalAppTrackerConfig);
+}
 let staticFolder = 'themes/portal/static';
 let template = 'themes/portal/templates';
 let defaultPage = 'index';
@@ -41,7 +47,8 @@ app.get('/' + defaultPage, (request, response) => {
   response.render(defaultPageNav, {
     module: '',
     portal: staticFolder,
-    baseUrl: '/'
+    baseUrl: '/',
+    externalAppTracker
   });
 });
 
