@@ -21,6 +21,7 @@
       "front": "/themes/portal/static/archives/",
       "storage": "applications/studio/themes/portal/static/archives/",
       "tempZip": "applications/studio/temp.zip",
+      "enableUpdate": false,
       "updateInterval": 86400
     }
   },

@@ -202,6 +202,47 @@ Three of them are mandatory to fill - Name and Caption mean the same as for clas
 5. В меню Files options, поставьте галочку на путкте Compress.
 6. Нажмите Process и дождитесь результата.
 
+#### External App Tracker
+
+Вся настройка в deploy.json -> globals -> externalAppTracker
+
+    {
+      "items": [{
+        "name": "dnt",
+        "title": "Develop and test",
+        "url": "https://github.com/iondv/develop-and-test/archive/master.zip"
+      }, {
+        "name": "crm-en",
+        "title": "CRM EN",
+        "url": "https://github.com/iondv/crm-en/archive/master.zip",
+        "language": "en"
+      }, {
+        "name": "crm-ru",
+        "title": "CRM RU",
+        "url": "https://github.com/iondv/crm-ru/archive/master.zip",
+        "language": "ru"
+      }],
+      "front": "/themes/portal/static/archives/",
+      "storage": "applications/studio/themes/portal/static/archives/",
+      "tempZip": "applications/studio/temp.zip",
+      "enableUpdate": false,
+      "updateInterval": 86400
+    }
+
+- item.name - задает имя файла при сохранении архива
+- item.title - отображается на клиенте при выборе приложения
+- item.url - удаленный адрес архива приложения
+- item.front - адрес архива для клиента, если не указан, создается по общей настройке и имени
+- item.language - если не указан, то приложение отобразится в любом языке
+
+- storage - место сохранения архивов приложений
+- front - ссылка до архивов с клиента
+- tempzip  - временный файл при удаленной закачки с другого сервера
+- enableUpdate  - вкл/выкл  синхронизацию с удаленным сервером. При старте сервера проверяется наличие архивов, и если нет, то скачиваются с указанных URL. По истечению периода updateInterval  архивы обновляются
+- updateInterval  - период повторной загрузки архива на сервер (секунды)
+
+На клиенте можно указать custom URL, но нужно иметь в виду, что браузер разрешает загрузки с чужих хостов только явно разрешенные через Access-Control-Allow-Origin
+
 Оригинальная инструкция на английском представлена на сайте 
 **https://github.com/nwjs/nw.js/wiki/How-to-package-and-distribute-your-apps** в пункте 
 **An alternative way to make an executable file in Windows**

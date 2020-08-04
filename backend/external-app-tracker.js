@@ -6,13 +6,16 @@ const request = require('request');
 const config = {
   items: [],
   tempZip: 'applications/studio/temp.zip',
+  enableUpdate: false,
   updateInterval: 0 // seconds
 };
 
 module.exports = function (data) {
   if (data && Array.isArray(data.items) && data.items.length) {
     Object.assign(config, data);
-    checkout().then(update);
+    if (config.enableUpdate) {
+      checkout().then(update);
+    }
     const frontItems = createFrontItems();
     return {
       getFrontItems: () => frontItems
@@ -32,8 +35,8 @@ function createFrontItems () {
   return frontItems;
 }
 
-function getFrontLink ({name}) {
-  return config.front + name + '.zip';
+function getFrontLink ({front, name}) {
+  return front || config.front + name + '.zip';
 }
 
 function getItemFile ({name}) {

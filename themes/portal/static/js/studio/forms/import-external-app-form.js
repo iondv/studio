@@ -65,11 +65,14 @@ $.extend(Studio.ImportExternalAppForm.prototype, Studio.Form.prototype, {
     const xhr = new XMLHttpRequest;
     xhr.open('GET', this.getSelectedUrl(), true);
     xhr.responseType = 'arraybuffer';
-    xhr.onload = function (event) {
+    xhr.addEventListener('load', function (event) {
       xhr.status === 200
         ? this.onDone(xhr.response)
         : this.onFail(xhr);
-    }.bind(this);
+    }.bind(this));
+    xhr.addEventListener('error', function () {
+      this.onFail(xhr);
+    }.bind(this));
     xhr.send();
   },
 
