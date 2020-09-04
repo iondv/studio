@@ -15,6 +15,7 @@ const nestedNodeId = 'GUID';
 const workflowId = 'GUID';
 const stateId = 'GUID';
 const transitionId = 'GUID';
+
 /*
 Требования:
   1. мета классов
@@ -29,7 +30,6 @@ const transitionId = 'GUID';
   10.Переработка визуального конструктора веб-стрниц для модуля portal
   11 Реализация конструкторов для geomap, report
 */
-
 
 /*
 План:
@@ -184,7 +184,8 @@ const transitionId = 'GUID';
       }
     },
     currentSolution: solution1.Id,
-    solutionsManager: false
+    solutionsManager: false,
+    showHelp: false,
   };
 
   const actions = {
@@ -195,27 +196,27 @@ const transitionId = 'GUID';
     SUBMIT_CREATE_SOLUTION: 'SUBMIT_CREATE_SOLUTION', //Создать на основе переданного объекта в state.solutions новое решение, записать false в state.solutionsManager
     EDIT_SOLUTION: 'EDIT_SOLUTION',                   //Редактировать решение из state.solutions и записать его идентификатор в state.solutionsManager
     REMOVE_SOLUTION: 'REMOVE_SOLUTION',               //Удалить из state.solutions элемент с переданным идентификатором.
-    //TODO Как быть c state.currentSolution, если удаляется текущее решение. Тот же вопрос возникает в случае первого запуска, когда state.solutions ещё пуст.
-    //какая логика выбора решения по-умолчанию и как реализоавть её без повторения кода.
+
+    TOGGLE_HELP: 'SHOW_HELP', //записать в state.showHelp переданное значение
 
     SHOW_VIEW: 'SHOW_VIEW',                     //заптисать в текущее решение в activeElement переданный путь.
     TOGGLE_SIDEBAR_NODE: 'TOGGLE_SIDEBAR_NODE', //по переданному пути записать переданное значение в solutions.expandedElements
   };
 
-//3.TODO Основная сетка:
+//3. Основная сетка:
   const studio = <>     {/* корневой контейнер растягивается по ширине и высоте */}
     <Header>            {/* заголовок, растягивается по ширине, фиксированная высота */}
       <Logo/>           {/* логотип */}
       <SelectSolution/> {/* кнопка, вызывающая действие SHOW_SOLUTIONS_MANAGER */}
       <AddApplication/> {/* кнопка, вызывающая действие ?TODO */}
-      <ShowHelp/>       {/* кнопка, вызывающая действие ?TODO */}
+      <ShowHelp/>       {/* кнопка, вызывающая действие TOGGLE_HELP(true) */}
       <SelectLanguage/> {/* кнопка, вызывающая действие ?TODO */}
     </Header>
     <Sidebar/>              {/* растягивается по высоте, фиксированная высота */}
     <ViewSwitcher/>         {/* растягивается по высоте и ширине, отступая сверху и слева. */}
     <SolutionsManager/>     {/* модальное окно с блокировкой фона */}
     <ApplicationsManager/>  {/* модальное окно с блокировкой фона */}
-    <Help/>                 {/* модальное окно с блокировкой фона */}
+    <Help/>                 {/* модальное окно с блокировкой фона, отображаемое если state.showHelp === true */}
   </>;
 
 //4. SolutionManager:
@@ -352,34 +353,33 @@ const transitionId = 'GUID';
 
 //7.TODO ViewSwitcher:
     switch (state.solutions[state.currentSolution].activeElement) {
-      //TODO
-      case '': break;
-      case applicationId: break;
-      case `${applicationId}.edit`: break;
-      case `${applicationId}.classes`: break;
-      case `${applicationId}.classes.${classId}`: break;
-      case `${applicationId}.classes.${classId}.edit`: break;
-      case `${applicationId}.classes.${classId}.properties.${propertyId}`: break;
-      case `${applicationId}.classes.${classId}.properties.${propertyId}.edit`: break;
+      case '':                                                                  /* UML-диаграмма всех классов всех приложений решения */break;
+      case applicationId:                                                       /* UML-диаграмма всех классов выбранного приложения */break;
+      case `${applicationId}.edit`:                                             /* Редактирование выбранного приложения. Тут настройки и конфигурации из сайдбара старой версии */break;
+      case `${applicationId}.classes`:                                          /* UML-диаграмма всех классов выбранного приложения */break;
+      case `${applicationId}.classes.${classId}`:                               /* UML-диаграмма всех классов выбранного приложения с фокусом на выбранном классе */break;
+      case `${applicationId}.classes.${classId}.edit`:                          /* Редактирование выбранного класса */break;
+      case `${applicationId}.classes.${classId}.properties.${propertyId}`:      /* UML-диаграмма всех классов выбранного приложения с фокусом на выбранном классе и атрибуте */break;
+      case `${applicationId}.classes.${classId}.properties.${propertyId}.edit`: /* Редактирование выбранного атрибута */break;
       case `${applicationId}.navgation`: break;
       case `${applicationId}.navgation.${sectionId}`: break;
-      case `${applicationId}.navgation.${sectionId}.edit`: break;
+      case `${applicationId}.navgation.${sectionId}.edit`:                                        /* Реактирование выбраной секции */break;
       case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}`: break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.edit`: break;
+      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.edit`:                        /* Редактирование выбранного узла */break;
       {/* На произвольную глубину вложенности */}
       case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}`: break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}.edit`: break;
+      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}.edit`:  /* Редактирование выбранного узла */break;
       case `${applicationId}.workflows`: break;
-      case `${applicationId}.workflows.${workflowId}`: break;
-      case `${applicationId}.workflows.${workflowId}.edit`: break;
-      case `${applicationId}.workflows.${workflowId}.states.${stateId}`: break;
-      case `${applicationId}.workflows.${workflowId}.states.${stateId}.edit`: break;
-      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}`: break;
-      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}.edit`: break;
+      case `${applicationId}.workflows.${workflowId}`:                                  /* UML-диаграмма выбранного бизнесс-процесса */break;
+      case `${applicationId}.workflows.${workflowId}.edit`:                             /* Редактирование выбранного бизнесс-процесса */break;
+      case `${applicationId}.workflows.${workflowId}.states.${stateId}`:                /* UML-диаграмма выбранного бизнесс-процесса с фокусом на выбранном состоянии */break;
+      case `${applicationId}.workflows.${workflowId}.states.${stateId}.edit`:           /* Редактирование выбранного состояния */break;
+      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}`:      /* UML-диаграмма выбранного бизнесс-процесса с фокусом на выбранном переходе */break;
+      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}.edit`: /* Редактирование выбранного перехода */break;
       case `${applicationId}.tasks`: break;
       case `${applicationId}.tasks.${taskId}`: break;
       case `${applicationId}.tasks.${taskId}.edit`: break;
       default: break;
     }
 
-//* TODO Разработка представлений
+//* TODO Разработка представлений.
