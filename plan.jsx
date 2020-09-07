@@ -15,6 +15,7 @@ const nestedNodeId = 'GUID';
 const workflowId = 'GUID';
 const stateId = 'GUID';
 const transitionId = 'GUID';
+const taskId = 'GUID';
 
 /*
 Требования:
@@ -259,7 +260,8 @@ const transitionId = 'GUID';
   const Sidebar = <ul>
     <SidebarNode caption="ТЕКУЩЕЕ РЕШЕНИЕ"
                   onClick=      {actions.SHOW_VIEW()}
-                  onDoubleClick={actions.SHOW_VIEW() + actions.EDIT_SOLUTION(state.currentSolution)}
+                  onDoubleClick={actions.SHOW_VIEW();
+                                  actions.EDIT_SOLUTION(state.currentSolution)}
     >
       <ul>
       <SidebarNode caption="КАЖДОЕ ПРИЛОЖЕНИЕ РЕШЕНИЯ"
@@ -331,7 +333,7 @@ const transitionId = 'GUID';
                   onClick=      {actions.SHOW_VIEW(`${applicationId}.tasks`)}
                   onDoubleClick={actions.SHOW_VIEW(`${applicationId}.tasks`)}
           >
-            <ul><SidebarNode caption="КАЖДАЯ ЗАДАЧА ПРИЛОЖЕНИЯ"taskId
+            <ul><SidebarNode caption="КАЖДАЯ ЗАДАЧА ПРИЛОЖЕНИЯ"
                   onClick=      {actions.SHOW_VIEW(`${applicationId}.tasks.${taskId}`)}
                   onDoubleClick={actions.SHOW_VIEW(`${applicationId}.tasks.${taskId}.edit`)}
             /></ul>
@@ -351,35 +353,51 @@ const transitionId = 'GUID';
     </SidebarNode>
   </ul>
 
-//7.TODO ViewSwitcher:
+//7. ViewSwitcher:
     switch (state.solutions[state.currentSolution].activeElement) {
-      case '':                                                                  /* UML-диаграмма всех классов всех приложений решения */break;
-      case applicationId:                                                       /* UML-диаграмма всех классов выбранного приложения */break;
-      case `${applicationId}.edit`:                                             /* Редактирование выбранного приложения. Тут настройки и конфигурации из сайдбара старой версии */break;
-      case `${applicationId}.classes`:                                          /* UML-диаграмма всех классов выбранного приложения */break;
-      case `${applicationId}.classes.${classId}`:                               /* UML-диаграмма всех классов выбранного приложения с фокусом на выбранном классе */break;
-      case `${applicationId}.classes.${classId}.edit`:                          /* Редактирование выбранного класса */break;
-      case `${applicationId}.classes.${classId}.properties.${propertyId}`:      /* UML-диаграмма всех классов выбранного приложения с фокусом на выбранном классе и атрибуте */break;
-      case `${applicationId}.classes.${classId}.properties.${propertyId}.edit`: /* Редактирование выбранного атрибута */break;
-      case `${applicationId}.navgation`: break;
-      case `${applicationId}.navgation.${sectionId}`: break;
-      case `${applicationId}.navgation.${sectionId}.edit`:                                        /* Реактирование выбраной секции */break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}`: break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.edit`:                        /* Редактирование выбранного узла */break;
+      case '':                      <ClassUMLAdapter/>; break;
+      case applicationId:           <ClassUMLAdapter application={applicationId}/>; break;
+      case `${applicationId}.edit`: /*TODO Редактирование выбранного приложения. Тут настройки и конфигурации из сайдбара старой версии */break;
+      case `${applicationId}.classes`:                                          <ClassUMLAdapter application={applicationId}/>; break;
+      case `${applicationId}.classes.${classId}`:                               <ClassUMLAdapter application={applicationId} class={classId}/>; break;
+      case `${applicationId}.classes.${classId}.edit`:                          /*TODO Редактирование выбранного класса */break;
+      case `${applicationId}.classes.${classId}.properties.${propertyId}`:      <ClassUMLAdapter application={applicationId} class={classId} property={propertyId}/>; break;
+      case `${applicationId}.classes.${classId}.properties.${propertyId}.edit`: /*TODO Редактирование выбранного атрибута */break;
+      case `${applicationId}.navgation`:                                                          /*TODO Просмотр всей навигации (на данный момент только тулбар) */ break;
+      case `${applicationId}.navgation.${sectionId}`:                                             /*TODO Просмотр выбранной секции (так же только тулбар) */break;
+      case `${applicationId}.navgation.${sectionId}.edit`:                                        /*TODO Реактирование выбраной секции */break;
+      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}`:                             /*TODO Просмотр выбранного узла (так же только тулбар) */break;
+      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.edit`:                        /*TODO Редактирование выбранного узла */break;
       {/* На произвольную глубину вложенности */}
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}`: break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}.edit`:  /* Редактирование выбранного узла */break;
-      case `${applicationId}.workflows`: break;
-      case `${applicationId}.workflows.${workflowId}`:                                  /* UML-диаграмма выбранного бизнесс-процесса */break;
-      case `${applicationId}.workflows.${workflowId}.edit`:                             /* Редактирование выбранного бизнесс-процесса */break;
-      case `${applicationId}.workflows.${workflowId}.states.${stateId}`:                /* UML-диаграмма выбранного бизнесс-процесса с фокусом на выбранном состоянии */break;
-      case `${applicationId}.workflows.${workflowId}.states.${stateId}.edit`:           /* Редактирование выбранного состояния */break;
-      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}`:      /* UML-диаграмма выбранного бизнесс-процесса с фокусом на выбранном переходе */break;
-      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}.edit`: /* Редактирование выбранного перехода */break;
-      case `${applicationId}.tasks`: break;
-      case `${applicationId}.tasks.${taskId}`: break;
-      case `${applicationId}.tasks.${taskId}.edit`: break;
+      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}`:       /*TODO Просмотр выбранного узла, его представлений */break;
+      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}.edit`:  /*TODO Редактирование выбранного узла */break;
+      case `${applicationId}.workflows`:                                                /*TODO Просмотр всех БП (на данный момент только тулбар) */break;
+      case `${applicationId}.workflows.${workflowId}`:                                  <WorkflowUMLAdapter workflow={workflowId}/>; break;
+      case `${applicationId}.workflows.${workflowId}.edit`:                             /*TODO Редактирование выбранного бизнесс-процесса */break;
+      case `${applicationId}.workflows.${workflowId}.states.${stateId}`:                <WorkflowUMLAdapter workflow={workflowId} state={stateId}/>; break;
+      case `${applicationId}.workflows.${workflowId}.states.${stateId}.edit`:           /*TODO Редактирование выбранного состояния */break;
+      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}`:      <WorkflowUMLAdapter workflow={workflowId} transition={transitionId}/>; break;
+      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}.edit`: /*TODO Редактирование выбранного перехода */break;
+      case `${applicationId}.tasks`:                /*TODO Список задач */break;
+      case `${applicationId}.tasks.${taskId}`:      /*TODO Cписок задач с фокусом на выбранной */break;
+      case `${applicationId}.tasks.${taskId}.edit`: /*TODO Редактирование выбранной задачи */break;
       default: break;
     }
 
+/*8.TODO UML:
+    https://github.com/STRML/react-draggable
+    https://github.com/kdeloach/react-lineto
+*/
+/*9.TODO ClassUMLAdapter:
+    *application - фильтр по приложению, если не указан, то используются классы всех приложений.
+    *class - класс под фокусом. Если не указан, то не фокусировать
+    *property - аттрибут под фокусом. Если не указан, то фокусировать по классу. Если не указан класс, то игнорируется.
+    *Тулбар зависит от фокуса
+*/
+/*10.TODO WorkflowUMLAdapter:
+    *workflow - отображаемый БП. Обязательный
+    *state и transition - состояние и переход для наведения фокуса. Если ни один не указан - не фокусировать. Если указаны оба - фокусировать на состоянии.
+    *Тулбар зависит от фокуса
+*/
 //* TODO Разработка представлений.
+
