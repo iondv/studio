@@ -186,7 +186,10 @@ const taskId = 'GUID';
     },
     currentSolution: solution1.Id,
     solutionsManager: false,
-    showHelp: false,
+    applicationsManager: {
+      mode: 0,
+    },
+    showHelp: false
   };
 
   const actions = {
@@ -198,6 +201,8 @@ const taskId = 'GUID';
     EDIT_SOLUTION: 'EDIT_SOLUTION',                   //Редактировать решение из state.solutions и записать его идентификатор в state.solutionsManager
     REMOVE_SOLUTION: 'REMOVE_SOLUTION',               //Удалить из state.solutions элемент с переданным идентификатором.
 
+    TOGGLE_APPLICATIONS_MANAGER: 'SHOW_APPLICATIONS_MANAGER', //записать переданное значение в state.applicationsManager.mode
+
     TOGGLE_HELP: 'SHOW_HELP', //записать в state.showHelp переданное значение
 
     SHOW_VIEW: 'SHOW_VIEW',                     //заптисать в текущее решение в activeElement переданный путь.
@@ -208,10 +213,10 @@ const taskId = 'GUID';
   const studio = <>     {/* корневой контейнер растягивается по ширине и высоте */}
     <Header>            {/* заголовок, растягивается по ширине, фиксированная высота */}
       <Logo/>           {/* логотип */}
-      <SelectSolution/> {/* кнопка, вызывающая действие SHOW_SOLUTIONS_MANAGER */}
-      <AddApplication/> {/* кнопка, вызывающая действие ?TODO */}
-      <ShowHelp/>       {/* кнопка, вызывающая действие TOGGLE_HELP(true) */}
-      <SelectLanguage/> {/* кнопка, вызывающая действие ?TODO */}
+      <button onClick={() => actions.SHOW_SOLUTIONS_MANAGER()}/>
+      <button onClick={() => actions.TOGGLE_APPLICATIONS_MANAGER(1)}/>
+      <button onClick={() => actions.TOGGLE_HELP(true)}/>
+      <button onClick={/*TODO SelectLanguage*/}/>
     </Header>
     <Sidebar/>              {/* растягивается по высоте, фиксированная высота */}
     <ViewSwitcher/>         {/* растягивается по высоте и ширине, отступая сверху и слева. */}
@@ -220,7 +225,7 @@ const taskId = 'GUID';
     <Help/>                 {/* модальное окно с блокировкой фона, отображаемое если state.showHelp === true */}
   </>;
 
-//4. SolutionManager:
+//4.TODO SolutionManager:
   if (state.solutionsManager === true) {
     /*
     Показать модальное окно со списком решений из state.solutions. В этом списке можно выбрать решение. Так же выводятся кнопки:
@@ -239,19 +244,31 @@ const taskId = 'GUID';
   } if (state.solutions[state.solutionsManager]) {
     /*
     Показывать модальное окно с формой редактирования решения state.solutions[state.solutionsManager].
-      * Редактирование формы вызывает действие EDIT_SOLUTION
+      * Редактирование формы вызывает действие EDIT_SOLUTION и передачу в него ИД решения и данные с формыЫ
       * Закрытие формы вызывает действие HIDE_SOLUTIONS_MANAGER
     */
   } else {
     //Не показывать ничего
   }
   
-/*5.TODO ApplicationsManager:
-  * Import External Application
-  * Upload Application
-  * Create New Application
-  * Remove Application
-*/
+//5. ApplicationsManager:
+  const ApplicationsManager = () => <>
+    {state.applicationsManager.mode !== 0 && <Modal>
+      <button onClick={() => actions.TOGGLE_APPLICATIONS_MANAGER(0)}/>
+      {/* TODO Список приложений, каждое из которых можно удалить */}
+      <select value={state.applicationsManager.mode} onChange={event => actions.TOGGLE_APPLICATIONS_MANAGER(event.target.value)}>
+        <option value="1">Create new application</option>
+        <option value="2">Upload application</option>
+        <option value="3">Load demo app</option>
+        <option value="4">Load from custom URL</option>
+      </select>
+      {state.applicationsManager.mode === 1 && {/* TODO Форма создания приложения */}}
+      {state.applicationsManager.mode === 2 && {/* TODO Кнопка загрузки файла */}}
+      {state.applicationsManager.mode === 3 && {/* TODO Выбор демо-прилложения */}}
+      {state.applicationsManager.mode === 4 && {/* TODO Ввод кастомного URl */}}
+    </Modal>}
+  </>;
+
 
 //6. Sidebar:
   //Компонент sidebarNode отвечает за отображение узла в соответствии с solution.expandedElements и solution.activeElement
@@ -260,7 +277,7 @@ const taskId = 'GUID';
   const Sidebar = <ul>
     <SidebarNode caption="ТЕКУЩЕЕ РЕШЕНИЕ"
                   onClick=      {actions.SHOW_VIEW()}
-                  onDoubleClick={actions.SHOW_VIEW();
+                  onDoubleClick={actions.SHOW_VIEW() + 
                                   actions.EDIT_SOLUTION(state.currentSolution)}
     >
       <ul>
@@ -351,53 +368,430 @@ const taskId = 'GUID';
       </SidebarNode>
       </ul>
     </SidebarNode>
-  </ul>
+  </ul>;
 
-//7. ViewSwitcher:
-    switch (state.solutions[state.currentSolution].activeElement) {
-      case '':                      <ClassUMLAdapter/>; break;
-      case applicationId:           <ClassUMLAdapter application={applicationId}/>; break;
-      case `${applicationId}.edit`: /*TODO Редактирование выбранного приложения. Тут настройки и конфигурации из сайдбара старой версии */break;
-      case `${applicationId}.classes`:                                          <ClassUMLAdapter application={applicationId}/>; break;
-      case `${applicationId}.classes.${classId}`:                               <ClassUMLAdapter application={applicationId} class={classId}/>; break;
-      case `${applicationId}.classes.${classId}.edit`:                          /*TODO Редактирование выбранного класса */break;
-      case `${applicationId}.classes.${classId}.properties.${propertyId}`:      <ClassUMLAdapter application={applicationId} class={classId} property={propertyId}/>; break;
-      case `${applicationId}.classes.${classId}.properties.${propertyId}.edit`: /*TODO Редактирование выбранного атрибута */break;
-      case `${applicationId}.navgation`:                                                          /*TODO Просмотр всей навигации (на данный момент только тулбар) */ break;
-      case `${applicationId}.navgation.${sectionId}`:                                             /*TODO Просмотр выбранной секции (так же только тулбар) */break;
-      case `${applicationId}.navgation.${sectionId}.edit`:                                        /*TODO Реактирование выбраной секции */break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}`:                             /*TODO Просмотр выбранного узла (так же только тулбар) */break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.edit`:                        /*TODO Редактирование выбранного узла */break;
-      {/* На произвольную глубину вложенности */}
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}`:       /*TODO Просмотр выбранного узла, его представлений */break;
-      case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}.nodes.${nestedNodeId}.edit`:  /*TODO Редактирование выбранного узла */break;
-      case `${applicationId}.workflows`:                                                /*TODO Просмотр всех БП (на данный момент только тулбар) */break;
-      case `${applicationId}.workflows.${workflowId}`:                                  <WorkflowUMLAdapter workflow={workflowId}/>; break;
-      case `${applicationId}.workflows.${workflowId}.edit`:                             /*TODO Редактирование выбранного бизнесс-процесса */break;
-      case `${applicationId}.workflows.${workflowId}.states.${stateId}`:                <WorkflowUMLAdapter workflow={workflowId} state={stateId}/>; break;
-      case `${applicationId}.workflows.${workflowId}.states.${stateId}.edit`:           /*TODO Редактирование выбранного состояния */break;
-      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}`:      <WorkflowUMLAdapter workflow={workflowId} transition={transitionId}/>; break;
-      case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}.edit`: /*TODO Редактирование выбранного перехода */break;
-      case `${applicationId}.tasks`:                /*TODO Список задач */break;
-      case `${applicationId}.tasks.${taskId}`:      /*TODO Cписок задач с фокусом на выбранной */break;
-      case `${applicationId}.tasks.${taskId}.edit`: /*TODO Редактирование выбранной задачи */break;
-      default: break;
-    }
+/*7. PathProvider:
+  const PathProvider = {
+    parse: функция, принимающая строку пути и возвращающая объект с типом страницы и данными, полученными при разборе пути
+    getPath: функция, принимающая тип страницы и данные, необходимые для составления пути. Возращает строку пути.
+  }
+*/
 
-/*8.TODO UML:
-    https://github.com/STRML/react-draggable
-    https://github.com/kdeloach/react-lineto
+//8. ViewSwitcher:
+  switch (state.solutions[state.currentSolution].activeElement) {
+    case '': <SolutionView/>; break;
+    case    applicationId:                  <Application application={applicationId}/>; break;
+    case `${applicationId}.edit`:           <ApplicationForm application={applicationId}/>; break;
+    case `${applicationId}.changeLog`:      <ChangeLog application={applicationId}/>; break;
+    case `${applicationId}.configuration`:  <Configuration application={applicationId}/>; break;
+    case `${applicationId}.classes`:                        <Classes application={applicationId}/>; break;
+    case `${applicationId}.createClass`:                    <ClassCreationForm application={applicationId}/>; break;
+    case `${applicationId}.classes.${classId}`:             <Class application={applicationId} class={classId}/>; break;
+    case `${applicationId}.classes.${classId}.edit`:        <ClassForm application={applicationId} class={classId}/>; break;
+    case `${applicationId}.classes.${classId}.views`:       <ClassViews application={applicationId} class={classId}/>; break;
+    case `${applicationId}.classes.${classId}.properties`:  <Properties application={applicationId} class={calssId}/>; break;
+    case `${applicationId}.classes.${classId}.properties.${propertyId}`:
+                                                            <Property application={applicationId} class={classId} property={propertyId}/>; break;
+    case `${applicationId}.classes.${classId}.properties.${propertyId}.edit`:
+                                                            <Properties application={applicationId} class={calssId} property={propertyId}/>; break;
+    case `${applicationId}.navgation`:
+    case `${applicationId}.createSection`:                      <SectionCreationForm application={applicationId}/>; break;
+    case `${applicationId}.navgation.${sectionId}`:
+    case `${applicationId}.navgation.${sectionId}.edit`:        <SectionForm application={applicationId} section={sectionId}/>; break;
+    case `${applicationId}.navgation.${sectionId}.createNode`:  <NodeCreationForm application={applicationId} section={sectionId}/>; break;
+    case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}...`:
+    case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}...edit`:
+                                                                <NodeForm application={applicationId} section={sectionId} node={nodeId}/>; break;
+    case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}...createNode`: 
+                                                                <NodeCreationForm application={applicationId} section={sectionId} node={nodeId}/>; break;
+    case `${applicationId}.navgation.${sectionId}.nodes.${nodeId}...views`:
+                                                                <NodeViews application={applicationId} section={sectionId} node={nodeId}/>; break;
+    case `${applicationId}.workflows`:
+    case `${applicationId}.createWorkflow`:                             <WorkflowCreationForm application={applicationId}/>; break;
+    case `${applicationId}.workflows.${workflowId}`:                    <Workflow application={applicationId} workflow={workflowId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.edit`:               <WorkflowForm application={applicationId} workflow={workflowId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.createState`:        <StateCreationForm application={applicationId} workflow={workflowId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.createTransition`:   <TransitionCreationForm application={applicationId} workflow={workflowId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.states.${stateId}`:  <State application={applicationId} workflow={workflowId} state={stateId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.states.${stateId}.edit`:
+                                                                        <StateForm application={applicationId} workflow={workflowId} state={stateId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.states.${stateId}.views`:
+                                                                        <StateViews application={applicationId} workflow={workflowId} state={stateId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}`:
+                                                                        <Transition application={applicationId} workflow={workflowId} transition={transitionId}/>; break;
+    case `${applicationId}.workflows.${workflowId}.transitions.${transitionId}.edit`:
+                                                                        <TransitionForm application={applicationId} workflow={workflowId} transition={transitionId}/>; break;
+    case `${applicationId}.tasks`:                <Tasks application={applicationId}/>; break;
+    case `${applicationId}.createTask`:           <TaskCreationForm application={applicationId}/>; break;
+    case `${applicationId}.tasks.${taskId}`:      <Task application={applicationId} task={taskId}/>; break;
+    case `${applicationId}.tasks.${taskId}.edit`: <TaskForm application={applicationId} task={taskId}/>; break;
+    default: break;
+  }
+
+/*9.TODO UML:
+  https://github.com/STRML/react-draggable
+  https://github.com/kdeloach/react-lineto
+
+  * Рисовать фигуры на плоскости
+  * Передвигать фигуры
+  * Автоматическая расстановка фигур
+  * Рисовать связи между фигурами
+  * Прокладывать связи между фигурами
+  * Фокусировка на элементах и связях
+  * onClick и onDoubleClick
 */
-/*9.TODO ClassUMLAdapter:
-    *application - фильтр по приложению, если не указан, то используются классы всех приложений.
-    *class - класс под фокусом. Если не указан, то не фокусировать
-    *property - аттрибут под фокусом. Если не указан, то фокусировать по классу. Если не указан класс, то игнорируется.
-    *Тулбар зависит от фокуса
-*/
-/*10.TODO WorkflowUMLAdapter:
+
+//10.TODO ClassUML: Адаптер для компонента UML
+  const ClassUML = ({applications, _class, property}) => <>
+    {/*
+      applications - приложения, классы которых будут отображены
+      _class - класс под фокусом. Если не указан, то не фокусировать
+      property - аттрибут под фокусом. Если не указан, то фокусировать по классу. Если не указан класс, то игнорируется.
+     */}
+  </>;
+
+//11. SolutionView:
+  const SolutionView = <>
+    <Toolbar>
+      <button onClick={actions.EDIT_SOLUTION(state.currentSolution)}/>
+    </Toolbar>
+    <ClassUML applications={/*Массив проектов текущего решения*/}/>
+  </>
+
+//12.TODO Представления приложения:
+//#region
+    //TODO Надо пересмотреть и продумать структуру представлений.
+    const ApplicationTabs = active => <Tabs>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}`)}/>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.edit`)}/>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.changelog`)}/>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.configuration`)}/>
+    </Tabs>
+    const ApplicationToolbar = <Toolbar>
+      <button onClick={actions.SHOW_VIEW(`${application}.createClass`)}/>
+      <button onClick={/*TODO Развернуть в песочнице*/}/>
+      <button onClick={/*TODO Скачать приложение*/}/>
+    </Toolbar>;
+
+    const Application = application => <>
+      <ApplicationTabs/>
+      <ApplicationToolbar/>
+      <ClassUML applications={[application]}/>
+    </>;
+
+    const ApplicationForm = (application) => <>
+      <ApplicationTabs/>
+      <ApplicationToolbar/>
+      {/* TODO Edit application form */}
+    </>;
+
+    const ChangeLog = (application) => <>
+      <ApplicationTabs/>
+      <ApplicationToolbar/>
+      {/* TODO changelog */}
+    </>;
+
+    const Configuration = (application) => <>
+      <ApplicationTabs/>
+      <ApplicationToolbar/>
+      {/* TODO configuration */}
+    </>;
+//#endregion
+
+//13. Представления классов:
+//#region
+    const ClassTabs = ({active}) => <Tabs>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.classes.${classId}`)}/>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.classes.${classId}.edit`)}/>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.classes.${classId}.properties`)}/>
+      <button onClick={actions.SHOW_VIEW(`${applicationId}.classes.${classId}.views`)}/>
+    </Tabs>;
+    const ClassToolbar = () => <Toolbar>
+      <button onClick={actions.SHOW_VIEW(`${application}.createClass`)}/>
+      <button onClick={/*TODO Клонировать класс*/}/>
+      <button onClick={/*TODO Добавить аттрибут*/}/>
+      <button onClick={/*TODO Удалить класс*/}/>
+    </Toolbar>;
+
+    const Classes = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.classes`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.createClass`)}/>
+      </Tabs>
+      <ClassUML applications={[application]}/>
+    </>;
+
+    const ClassCreationForm = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.classes`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.createClass`)}/>
+      </Tabs>
+      {/* TODO Форма создания класса */}
+    </>;
+
+    const Class = ({application, classId}) => <>
+      <ClassTabs/>
+      <ClassToolbar/>
+      <ClassUML applications={[application]} class={classId}/>
+    </>;
+
+    const ClassForm = ({application, classId}) => <>
+      <ClassTabs/>
+      <ClassToolbar/>
+      {/* TODO форма редактирования класса */}
+    </>;
+
+    const ClassViews = ({application, classId}) => <>
+      <ClassTabs/>
+      <ClassToolbar/>
+      {/* TODO представление для управления представлениями класса */}
+    </>;
+
+    const Properties = ({application, classId, property}) => <>
+      <ClassTabs/>
+      <ClassToolbar/>
+      {/* TODO список аттрибутов класса, где они вывводятся по указанному порядку. с приведением ключевых данных. С возможностью раскрыть один для редактирования, либо удалять их */}
+    </>;
+
+    const Property = ({application, classId, property}) => <>
+      <ClassTabs/>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createClass`)}/>
+        <button onClick={/*TODO Клонировать класс*/}/>
+        <button onClick={/*TODO Добавить аттрибут*/}/>
+        <button onClick={/*TODO Удалить класс*/}/>
+        <button onClick={/*TODO Редактировать атрибут (переход на список атрибутов с открытым текущим) */}/>
+        <button onClick={/*TODO Удалить атрибут (переход на список атрибутов с открытым текущим) */}/>
+      </Toolbar>
+      <ClassUML applications={[application]} class={classId} property={property}/>
+    </>;
+//#endregion
+
+//14. Представления навигации:
+//#region
+    const SectionCreationForm = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.createSection`)}/>
+      </Tabs>
+      {/* TODO Форма добавления секции навигации */}
+    </>;
+
+    const SectionForm = ({application, section}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.createNode`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createSection`)}/>
+        <button onClick={/*TODO Удалить секцию*/}/>
+      </Toolbar>
+      {/* TODO Форма редактирования секции навигации */}
+    </>;
+
+    const NodeCreationForm = ({application, section, node}) => <>
+      <Tabs>
+        {!node  && <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.edit`)}/>}
+        {node   && <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.nodes.${node}.edit`)}/>}
+        <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.createNode`)}/>
+      </Tabs>
+      {/* TODO Форма создания узла навигации */}
+    </>;
+
+    const NodeForm = ({application, section, node}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.nodes.${nodePath}.edit`)}/>
+        {node.type === 'группа' && <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.nodes.${nodePath}.createNode`)}/>}
+        {node.type !== 'группа' && <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.nodes.${nodePath}.views`)}/>}
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createSection`)}/>
+        <button onClick={/*TODO Удалить узел*/}/>
+      </Toolbar>
+      {/* TODO Форма редактирования узла навигации */}
+    </>;
+
+    const NodeViews = ({application, section, node}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.nodes.${nodePath}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.navgation.${section}.nodes.${nodePath}.views`)}/>
+      </Tabs>
+      <Toolbar>{/* TODO */}</Toolbar>
+      {/* TODO Страница управления представлениями узла */}
+    </>;
+//#endregion
+
+/*15.TODO WorkflowUML:
+    *application
     *workflow - отображаемый БП. Обязательный
     *state и transition - состояние и переход для наведения фокуса. Если ни один не указан - не фокусировать. Если указаны оба - фокусировать на состоянии.
-    *Тулбар зависит от фокуса
 */
-//* TODO Разработка представлений.
 
+//16. Представления бизнесс-процессов
+//#region
+    const WorkflowCreationForm = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+      </Tabs>
+      {/* TODO Форма добавления бизнесс-процесса */}
+    </>;
+
+    const Workflow = ({application, workflow}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createState`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createTransition`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+        <button onClick={/* TODO Клонировать */}/>
+        <button onClick={/* TODO Удалить */}/>
+      </Toolbar>
+      <WorkflowUML application={application} workflow={workflow}/>
+    </>;
+
+    const WorkflowForm = ({application, workflow}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createState`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createTransition`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+        <button onClick={/* TODO Клонировать */}/>
+        <button onClick={/* TODO Удалить */}/>
+      </Toolbar>
+      {/* TODO Форма редактирования бизнесс-процесса */}
+    </>;
+
+    const StateCreationForm = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createState`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createTransition`)}/>
+      </Tabs>
+      {/* TODO Форма добавления состояния бизнесс-процесса */}
+    </>;
+
+    const TransitionCreationForm = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createState`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.createTransition`)}/>
+      </Tabs>
+      {/* TODO Форма добавления перехода бизнесс-процесса */}
+    </>;
+
+    const State = ({application, workflow, state}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}.views`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+        <button onClick={/* TODO Удалить */}/>
+      </Toolbar>
+      <WorkflowUML application={application} workflow={workflow} state={state}/>
+    </>;
+
+    const StateForm = ({application, workflow, state}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}.views`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+        <button onClick={/* TODO Удалить */}/>
+      </Toolbar>
+      {/* TODO Форма редактирования состояния бизнесс-процесса */}
+    </>;
+
+    const StateViews = ({application, workflow, state}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}.edit`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.states.${state}.views`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+        <button onClick={/* TODO Удалить */}/>
+      </Toolbar>
+      {/* TODO Страница управления представлениями состояния бизнесс-процесса */}
+    </>;
+
+    const Transition = ({application, workflow, transition}) => <>
+    <Tabs>
+      <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.transitions.${transition}`)}/>
+      <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.transitions.${transition}.edit`)}/>
+    </Tabs>
+    <Toolbar>
+      <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+      <button onClick={/* TODO Удалить */}/>
+    </Toolbar>
+    <WorkflowUML application={application} workflow={workflow} transition={transition}/>
+    </>;
+
+    const TransitionForm = ({application, workflow, transition}) => <>
+    <Tabs>
+      <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.transitions.${transition}`)}/>
+      <button onClick={actions.SHOW_VIEW(`${application}.workflows.${workflow}.transitions.${transition}.edit`)}/>
+    </Tabs>
+    <Toolbar>
+      <button onClick={actions.SHOW_VIEW(`${application}.createWorkflow`)}/>
+      <button onClick={/* TODO Удалить */}/>
+    </Toolbar>
+    {/* TODO Форма редактирования перехода бизнесс-процесса */}
+    </>;
+//#endregion
+
+//17. Представления задач
+//#region
+    const Tasks = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.tasks`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.createTask`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={/*TODO импортировать*/}/>
+      </Toolbar>
+      {/* TODO Список задач */}
+    </>;
+
+    const TaskCreationForm = application => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.tasks`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.createTask`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={/*TODO импортировать*/}/>
+      </Toolbar>
+      {/* TODO Форма добавления задачи*/}
+    </>;
+
+    const Task = ({application, task}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.tasks.${task}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.tasks.${task}.edit`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={/*TODO удалить*/}/>
+      </Toolbar>
+      {/* TODO Список задач c фокусом на задаче */}
+    </>;
+
+    const TaskForm = ({application, task}) => <>
+      <Tabs>
+        <button onClick={actions.SHOW_VIEW(`${application}.tasks.${task}`)}/>
+        <button onClick={actions.SHOW_VIEW(`${application}.tasks.${task}.edit`)}/>
+      </Tabs>
+      <Toolbar>
+        <button onClick={/*TODO удалить*/}/>
+      </Toolbar>
+      {/* TODO Форма редактирования задачи */}
+    </>;
+//#endregion
