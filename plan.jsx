@@ -377,7 +377,7 @@ const taskId = 'GUID';
   }
 */
 
-//8. ViewSwitcher:
+//8. ViewSwitcher: Тут использовать динамический импорт подключаемых компонентов, каждый из которых является компонент-конейнером(влияет на состояние)
   switch (state.solutions[state.currentSolution].activeElement) {
     case '': <SolutionView/>; break;
     case    applicationId:                  <Application application={applicationId}/>; break;
