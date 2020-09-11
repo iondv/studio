@@ -14,6 +14,9 @@ themes/portal/static/js/*.min.js
 themes/portal/static/css/*.min.css
 themes/portal/static/archives
 
+
+themes/react/public/assets
+
 ### Eclipse template
 *.pydevproject
 .metadata

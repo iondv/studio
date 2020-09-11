@@ -40,6 +40,19 @@ const pageTemplates = getDeploy( moduleName + '.pageTemplates');
 const navigation = pageTemplates ? pageTemplates.navigation : null;
 const externalAppTracker = require('./backend/external-app-tracker')(getDeploy('externalAppTracker'));
 
+const statics = getDeploy( moduleName + '.statics');
+if (statics) {
+  for (let name in statics) {
+    if (statics.hasOwnProperty(name)) {
+      let pth = statics[name];
+      if (!path.isAbsolute(pth)) {
+        pth = path.normalize(path.join(__dirname, '../..', pth));
+      }
+      app.use((name[0] === '/' ? '' : '/') + name, express.static(pth));
+    }
+  }
+}
+
 if(navigation) {
   Object.keys(navigation).forEach((item) => {
     app.get('/' + item, (request, response) => {
@@ -63,10 +76,6 @@ if(navigation) {
 }
 
 app.get('/', (request, response) => {
-  response.redirect('/' + defaultPage);
-});
-
-app.get('/portal', (request, response) => {
   response.redirect('/' + defaultPage);
 });
 

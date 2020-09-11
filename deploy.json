@@ -62,12 +62,14 @@
           "applications/studio/themes/portal/templates"
         ],
         "statics": {
-          "studio": "applications/studio/themes/portal/static"
+          "studio": "applications/studio/themes/portal/static",
+          "/react/assets": "applications/studio/themes/react/public/assets"
         },
         "pageTemplates": {
           "navigation": {
             "index": "pages/index",
-            "help": "pages/help"
+            "help": "pages/help",
+            "old": "pages/old"
           }
         }
       }
