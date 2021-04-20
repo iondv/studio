@@ -30,7 +30,8 @@
     "ejs-locals": "^1.0.2",
     "express": "^4.16.2",
     "merge": "^1.2.0",
-    "extend": "^3.0.1"
+    "extend": "^3.0.1",
+    "request": "*"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
