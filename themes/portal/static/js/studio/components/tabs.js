@@ -95,10 +95,14 @@ $.extend(Studio.Tabs.prototype, {
   onXls: async function () {
     const xlsFile = await this.$xlsFile[0].files[0].arrayBuffer();
     this.$xlsFile[0].value = '';
-    const app = await fetch('/api/xls', {
+    let app;
+    const requestOptions = {
       method: 'PUT',
       body: xlsFile
-    }).then(response => response.arrayBuffer());
+    };
+    app = await fetch('/api/xls', requestOptions)
+      .catch(err => fetch('/rest/dbToMetadata/xls', requestOptions))
+      .then(response => response.arrayBuffer());
     this.studio.toggleLoader(false);
     (new Studio.AppImport(app, this.studio)).execute();
   },

@@ -10,17 +10,22 @@ function DbToMetadata(options) {
      */
     this.addHandler(router, '/xls', 'PUT', (req) => {
       const chunks = [];
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         req.on('data', (chunk) => {
           chunks.push(chunk);
         });
         req.on('end', async () => {
-          const source = Buffer.concat(chunks);
-          const appName = 'generated-ion-app';
-          const app = new appMaker(appName);
-          const zip = await (app).fromXls(source);
-          await app.clean();
-          resolve(zip);
+          try {
+            const source = Buffer.concat(chunks);
+            const appName = 'generated-ion-app';
+            const app = new appMaker(appName);
+            const zip = await (app).fromXls(source);
+            await app.clean();
+            return resolve(zip);
+          } catch (err) {
+            console.error(err);
+            return reject('conversion failed');
+          }
         });
       });
     });
