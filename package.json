@@ -22,7 +22,8 @@
   },
   "private": true,
   "ionModulesDependencies": {
-    "portal": "1.4.1"
+    "portal": "1.4.1",
+    "rest": "*"
   },
   "ionMetaDependencies": {},
   "dependencies": {
