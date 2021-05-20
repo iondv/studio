@@ -1,0 +1,52 @@
+{
+  "property": "",
+  "caption": "",
+  "type": 2,
+  "orderNumber": 0,
+  "hint": "",
+  "size": null,
+  "maskName": "",
+  "mask": "",
+  "mode": 0,
+  "commands": [
+    {
+      "id": "CREATE",
+      "caption": "Create",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "EDIT",
+      "caption": "Edit",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": true,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "SELECT",
+      "caption": "Add",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    }
+  ],
+  "required": true,
+  "readonly": false,
+  "sorted": false,
+  "selectionPaginated": false,
+  "visibility": "",
+  "enablement": "",
+  "obligation": "",
+  "historyDisplayMode": 0,
+  "tags": ""
+}

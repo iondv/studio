@@ -1,0 +1,11 @@
+{
+  "\\w+@\\w+?.\\w+": {
+    "name": "email",
+    "structure": {
+      "address": {
+        "_dataType": "string"
+      },
+      "_value": "address"
+    }
+  }
+}

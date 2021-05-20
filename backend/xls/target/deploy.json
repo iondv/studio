@@ -1,0 +1,17 @@
+{
+  "namespace": "",
+  "parametrised": true,
+  "deployer": "built-in",
+  "globals": {
+    "staticOptions": {
+      "maxAge": 3600000
+    },
+    "lang": "en",
+    "moduleTitles": {},
+    "explicitTopMenu": [],
+    "plugins": {},
+    "jobs": {}
+  },
+
+  "modules": {}
+}

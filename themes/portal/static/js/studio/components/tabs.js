@@ -6,6 +6,8 @@ Studio.Tabs = function ($container, studio) {
   this.$list = $container.find('.tab-list');
   this.$add = $container.find('.tab-add');
   this.$import = $container.find('.tab-import');
+  this.$xls = $container.find('.tab-xls');
+  this.$xlsFile = this.$xls.find('#xlsFile');
   this.init();
 };
 
@@ -17,6 +19,7 @@ $.extend(Studio.Tabs.prototype, {
     this.$list.on('dblclick', '.active.tab', this.onUpdateTab.bind(this));
     this.$add.click(this.onAdd.bind(this));
     this.$import.click(this.onImport.bind(this));
+    this.$xls.on('input', this.onXls.bind(this));
   },
 
   initListeners: function () {
@@ -87,6 +90,17 @@ $.extend(Studio.Tabs.prototype, {
 
   onImport: function () {
     this.studio.importExternalAppForm.show();
+  },
+
+  onXls: async function () {
+    const xlsFile = await this.$xlsFile[0].files[0].arrayBuffer();
+    this.$xlsFile[0].value = '';
+    const app = await fetch('/api/xls', {
+      method: 'PUT',
+      body: xlsFile
+    }).then(response => response.arrayBuffer());
+    this.studio.toggleLoader(false);
+    (new Studio.AppImport(app, this.studio)).execute();
   },
 
   restore: function () {

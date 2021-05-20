@@ -3,5 +3,6 @@
 module.exports = {
   'create': require('./create'),
   'get': require('./get'),
-  'update': require('./update')
+  'update': require('./update'),
+  'dbToApp': require('./dbToApp')
 };

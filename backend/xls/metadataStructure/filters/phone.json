@@ -1,0 +1,29 @@
+{
+  "\\+99999999999": {
+    "name": "phone",
+    "structure": {
+      "number": {
+        "_dataType": "string"
+      }
+    },
+    "_value": "number"
+  },
+  "\\+999999999999": {
+    "name": "phone",
+    "structure": {
+      "number": ":this"
+    }
+  },
+  "\\+9999999999999": {
+    "name": "phone",
+    "structure": {
+      "number": ":this"
+    }
+  },
+  "\\+\\d+?-999-999-9999": {
+    "name": "phone",
+    "structure": {
+      "number": ":this"
+    }
+  }
+}
