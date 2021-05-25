@@ -71,6 +71,20 @@
           }
         }
       }
+    },
+    "rest": {
+      "globals": {
+        "authMode": {
+          "dbToMetadata": "none"
+        },
+        "di": {
+          "dbToMetadata": {
+            "module": "applications/studio/services/dbToApp",
+            "options": {
+            }
+          }
+        }
+      }
     }
   }
 }

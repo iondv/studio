@@ -30,12 +30,14 @@ app.use(bodyParser.raw({limit}));
 app.post('/api/create', controllers.create);
 app.post('/api/get', controllers.get);
 app.post('/api/update', controllers.update);
+app.put('/api/xls', controllers.dbToApp);
 
 app.locals.standalone = {
   api: {
     create: 'api/create',
     get: 'api/get',
-    update: 'api/update'
+    update: 'api/update',
+    dbToApp: 'api/xls'
   }
 };
 app.get('/' + defaultPage, (request, response) => {

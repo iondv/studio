@@ -1,0 +1,7 @@
+{
+  "PROPERTY_NAMES_TO_IGNORE": [
+    "_value",
+    "_deducedClass",
+    "_dataType"
+  ]
+}

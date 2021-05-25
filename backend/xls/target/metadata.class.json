@@ -1,0 +1,48 @@
+{
+  "name": "",
+  "namespace": "",
+  "caption": "",
+  "key": [
+    "guid"
+  ],
+  "semantic": "",
+  "version": "",
+  "ancestor": "",
+  "container": "",
+  "creationTracker": null,
+  "changeTracker": null,
+  "journaling": false,
+  "isStruct": false,
+  "compositeIndexes": [],
+  "properties": [
+    {
+      "name": "guid",
+      "caption": "ID",
+      "type": 12,
+      "orderNumber": 10,
+      "size": 24,
+      "decimals": 0,
+      "allowedFileTypes": "",
+      "maxFileCount": 0,
+      "hint": "",
+      "semantic": "",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "defaultValue": null,
+      "binding": null,
+      "selConditions": null,
+      "selSorting": null,
+      "selectionProvider": null,
+      "formula": null,
+      "eagerLoading": false,
+      "readonly": true,
+      "indexed": true,
+      "nullable": false,
+      "unique": true,
+      "autoassigned": true,
+      "indexSearch": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "property": "",
+  "caption": "",
+  "type": 1,
+  "orderNumber": 0,
+  "hint": "",
+  "size": null,
+  "maskName": "",
+  "mask": "",
+  "mode": 0,
+  "commands": null,
+  "required": true,
+  "readonly": false,
+  "sorted": false,
+  "selectionPaginated": false,
+  "visibility": "",
+  "enablement": "",
+  "obligation": "",
+  "historyDisplayMode": 0,
+  "tags": ""
+}
